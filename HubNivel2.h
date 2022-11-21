@@ -3,7 +3,7 @@
 #include <iostream>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
-#include <thread>
+//#include <thread>
 
 using namespace std;
 
@@ -33,7 +33,7 @@ public:
     coordenadasEntradas entradaAbierta;
     void validarMinijuego(ALLEGRO_BITMAP* obsP, coordenadasEntradas entrada,
         coordenadasEntradas warp, string minijuegoAjugar);
-    void crearColisionesEntradas(coordenadasEntradas entrada,string minjuegoP);
+    void crearColisionesEntradas(coordenadasEntradas entrada, string minjuegoP);
     bool crearColisionesWarp(coordenadasEntradas entrada, string minjuegoP);
 
     double x, y;
@@ -52,7 +52,7 @@ private:
 };
 
 
-void HubN2::validarMinijuego(ALLEGRO_BITMAP * obsP, coordenadasEntradas entrada, coordenadasEntradas warp, string minijuegoAjugar) {
+void HubN2::validarMinijuego(ALLEGRO_BITMAP* obsP, coordenadasEntradas entrada, coordenadasEntradas warp, string minijuegoAjugar) {
     if (minijuegoAjugar == entrada.minijuego)
     {
         coordWarp.xRect = warp.xRect;
@@ -68,7 +68,7 @@ void HubN2::validarMinijuego(ALLEGRO_BITMAP * obsP, coordenadasEntradas entrada,
 
 void HubN2::crearColisionesEntradas(coordenadasEntradas entrada, string minijuegoP)
 {
-    if(entrada.minijuego != minijuegoP)
+    if (entrada.minijuego != minijuegoP)
     {
         if (y * desplaza < entrada.yRect + 40 && y * desplaza >(entrada.yRect + 40) - 8
             && (x * desplaza < entrada.xRect + 40) && (x * desplaza + 32.5 > entrada.xRect))
@@ -101,32 +101,32 @@ void HubN2::crearColisionesEntradas(coordenadasEntradas entrada, string minijueg
 bool HubN2::crearColisionesWarp(coordenadasEntradas warp, string minijuegoP)
 {
 
-        if (y * desplaza < warp.yRect + 40 && y * desplaza >(warp.yRect + 40) - 8
-            && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
-        {
-            cout << "COLLISION TRUE!" << endl;
-            return true;
-        }
-        if (y * desplaza + 35 > warp.yRect && (y * desplaza + 35 < warp.yRect + 8)
-            && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
-        {
-            cout << "COLLISION TRUE!" << endl;
-            return true;
-        }
+    if (y * desplaza < warp.yRect + 40 && y * desplaza >(warp.yRect + 40) - 8
+        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
+    {
+        cout << "COLLISION TRUE!" << endl;
+        return true;
+    }
+    if (y * desplaza + 35 > warp.yRect && (y * desplaza + 35 < warp.yRect + 8)
+        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
+    {
+        cout << "COLLISION TRUE!" << endl;
+        return true;
+    }
 
-        if (x * desplaza < warp.xRect + 40 && x * desplaza >(warp.xRect + 40) - 8
-            && (y * desplaza < warp.yRect + 40) && (y * desplaza + 35 > warp.yRect))
-        {
-            cout << "COLLISION TRUE WARP!" << endl;
-            return true;
-        }
-        if (x * desplaza + 32.5 > warp.xRect && x * desplaza + 32.5 < warp.xRect + 8
-            && (y * desplaza < warp.yRect + 40) && (y * desplaza + 35 > warp.yRect))
-        {
-            cout << "COLLISION TRUE!" << endl;
-            return true;
-        }
-    
+    if (x * desplaza < warp.xRect + 40 && x * desplaza >(warp.xRect + 40) - 8
+        && (y * desplaza < warp.yRect + 40) && (y * desplaza + 35 > warp.yRect))
+    {
+        cout << "COLLISION TRUE WARP!" << endl;
+        return true;
+    }
+    if (x * desplaza + 32.5 > warp.xRect && x * desplaza + 32.5 < warp.xRect + 8
+        && (y * desplaza < warp.yRect + 40) && (y * desplaza + 35 > warp.yRect))
+    {
+        cout << "COLLISION TRUE!" << endl;
+        return true;
+    }
+
     return false;
 }
 
@@ -136,15 +136,15 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
     pantalla = pantallaMain;
     minijuego = "";
 }
- void HubN2::crearNivel2(string minijuegoP)
+void HubN2::crearNivel2(string minijuegoP)
 
 {
-     minijuego = minijuegoP;
+    minijuego = minijuegoP;
 
-     const int maxFrame = 7;
-     int curFrame = 0;
-     int frameCount = 0;
-     int frameDelay = 2;
+    const int maxFrame = 7;
+    int curFrame = 0;
+    int frameCount = 0;
+    int frameDelay = 2;
 
 
     al_set_window_title(pantalla, "HUB Nivel 2");
@@ -158,15 +158,12 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
     // defino lista de eventos
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
-
-
-    ALLEGRO_EVENT evento;
-
+    //ALLEGRO_EVENT evento;
     ALLEGRO_TIMER* timer;
     // creo lista de eventos
 
     Mis_eventos = al_create_event_queue();
-    timer = al_create_timer(1.0 / 60);
+    timer = al_create_timer(1.0 / 15);
 
     // asigno eventos a la lista de eventos
 
@@ -183,9 +180,9 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
 
     // inicializar vbles
 
-    x = 350/4;
+    x = 350 / 4;
 
-    y = 280/4;
+    y = 280 / 4;
 
 
     desplaza = 4;
@@ -203,7 +200,7 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
     entradaPolit = { 250,280 ,"POLITICA" };
     entradaCiencia = { 455,280,"CIENCIA" };
     coordRectangulos[0] = entradaArte;
-    coordRectangulos[1] =entradaHist;
+    coordRectangulos[1] = entradaHist;
     coordRectangulos[2] = entradaPolit;
     coordRectangulos[3] = entradaCiencia;
     int xWA = 250;
@@ -231,38 +228,39 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
     while (!salir)
 
     {
-        if (++curFrame >= maxFrame)
-        {
-            curFrame = 0;
-        }
+        ALLEGRO_EVENT evento;
+        al_wait_for_event(Mis_eventos, &evento);
 
-        al_draw_bitmap_region(warptile, 40 * curFrame, 0, 40, 75, coordWarp.xRect, coordWarp.yRect, 0);
-        al_flip_display();
-
-        //EL PROBLEMA DE QUE PARPADEE MUCHO LOS WARPS ES QUE EL MAPA SE CIBUJA CADA WHILE, TAPANDOLO POR UN INSTANTE
-        //POSIBLES SOL:
-        //DIBUJAR VERSIONES DEL MAPA QUE DEJEN ESPACIOS SIN FONDO EN LOS CUADROS WARP
-        //PONER LOS WARPS A DIBUJAR EN UN THREAD APARTE, VER COMO FINALIZAR EL THREAD
-        //VER OTRA MANERA DE TAPAR LA POSICION PASADA DEL PERSONAJE
         al_draw_scaled_bitmap(fondo, 0, 0, 1280, 1022, 0, 0, 800, 600, 0);
-
         al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
+        al_draw_bitmap_region(warptile, 40 * curFrame, 0, 40, 75, coordWarp.xRect, coordWarp.yRect, 0);
 
         int i;
         for (i = 0; i < 4; i++)
         {
-            validarMinijuego(obstaculoEntrada,coordRectangulos[i], cordWarps[i], minijuego);
+            validarMinijuego(obstaculoEntrada, coordRectangulos[i], cordWarps[i], minijuego);
         }
 
         salir = crearColisionesWarp(coordWarp, minijuego);
 
         al_flip_display();
 
+        al_get_keyboard_state(&teclado);
 
-        al_wait_for_event(Mis_eventos, &evento);
+        if (evento.type == ALLEGRO_EVENT_TIMER)
+
+        {
+            if (++curFrame >= maxFrame)
+            {
+                curFrame = 0;
+            }
+
+            al_draw_bitmap_region(warptile, 40 * curFrame, 0, 40, 75, coordWarp.xRect, coordWarp.yRect, 0);
+            al_flip_display();
+        }
 
 
-        if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        else if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 
         {
 
@@ -271,71 +269,69 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
         }
 
 
-
-
-        al_get_keyboard_state(&teclado);
-
-
-
-        if (al_key_down(&teclado, ALLEGRO_KEY_UP))
+        else
 
         {
+            if (al_key_down(&teclado, ALLEGRO_KEY_UP))
 
-            y--;
+            {
 
-            cout << "y: " << y*desplaza << endl;
-            cout << "x: " << x*desplaza << endl;
+                y--;
 
-            dir = 4;
+                cout << "y: " << y * desplaza << endl;
+                cout << "x: " << x * desplaza << endl;
 
-            paso++;
+                dir = 4;
 
-        }
+                paso++;
 
-        if (al_key_down(&teclado, ALLEGRO_KEY_DOWN))
+            }
 
-        {
+            if (al_key_down(&teclado, ALLEGRO_KEY_DOWN))
 
-            y++;
+            {
 
-            cout << "y: " << y * desplaza << endl;
-            cout << "x: " << x * desplaza << endl;
+                y++;
 
-            dir = 3;
+                cout << "y: " << y * desplaza << endl;
+                cout << "x: " << x * desplaza << endl;
 
-            paso++;
+                dir = 3;
 
-        }
+                paso++;
 
-        if (al_key_down(&teclado, ALLEGRO_KEY_LEFT))
+            }
 
-        {
+            if (al_key_down(&teclado, ALLEGRO_KEY_LEFT))
 
-            x--;
+            {
 
-            cout << "x: " << x * desplaza << endl;
-            cout << "y: " << y * desplaza << endl;
+                x--;
 
-            dir = 1;
+                cout << "x: " << x * desplaza << endl;
+                cout << "y: " << y * desplaza << endl;
 
-            paso++;
+                dir = 1;
 
-        }
+                paso++;
 
-        if (al_key_down(&teclado, ALLEGRO_KEY_RIGHT))
+            }
 
-        {
+            if (al_key_down(&teclado, ALLEGRO_KEY_RIGHT))
 
-            x++;
+            {
 
-            cout << "x: " << x * desplaza << endl;
-            cout << "y: " << y * desplaza << endl;
+                x++;
+
+                cout << "x: " << x * desplaza << endl;
+                cout << "y: " << y * desplaza << endl;
 
 
-            dir = 2;
+                dir = 2;
 
-            paso++;
+                paso++;
 
+            }
         }
 
 
@@ -355,12 +351,12 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
 
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE)) {
             exit(0);
-        } 
+        }
 
-        crearColisionesEntradas(entradaArte,minijuego);
-        crearColisionesEntradas(entradaCiencia,minijuego);
-        crearColisionesEntradas(entradaHist,minijuego);
-        crearColisionesEntradas(entradaPolit,minijuego);      
+        crearColisionesEntradas(entradaArte, minijuego);
+        crearColisionesEntradas(entradaCiencia, minijuego);
+        crearColisionesEntradas(entradaHist, minijuego);
+        crearColisionesEntradas(entradaPolit, minijuego);
 
 
     }
@@ -394,7 +390,7 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
     al_destroy_bitmap(transition);
     al_destroy_bitmap(warptile);
     al_destroy_event_queue(Mis_eventos);
-    al_destroy_timer(timer);
+    //al_destroy_timer(timer);
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_flip_display();

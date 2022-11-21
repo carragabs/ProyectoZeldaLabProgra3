@@ -17,11 +17,7 @@
 
 using namespace std;
 
-//ALLEGRO_DISPLAY* ventana;
 ALLEGRO_EVENT_QUEUE* event_queue;
-
-int jugar();
-int menu();
 
 class MenuInicial 
 {
@@ -48,20 +44,10 @@ MenuInicial::MenuInicial(ALLEGRO_DISPLAY* ventanaMain)
 
 int MenuInicial::crearMenuInicial()
 {
-
-	/*if (!al_init()) {
-		al_show_native_message_box(NULL, "ERROR CRITICO", "ERROR: 404", "No se pudo cargar correctamente la libreria alelgro", NULL, ALLEGRO_MESSAGEBOX_ERROR);
-		return -1;
-	} */
-
-	//ventana = al_create_display(ancho, alto);
-
 	int ancho_W = GetSystemMetrics(SM_CXSCREEN);
 	int alto_W = GetSystemMetrics(SM_CYSCREEN);
 
 	al_set_window_title(ventana, "Zelda");
-	//al_set_window_position(ventana, ancho_W / 2 - ancho / 2, alto_W / 2 - alto / 2);
-
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());
@@ -76,9 +62,6 @@ int MenuInicial::menu() {
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	ALLEGRO_KEYBOARD_STATE teclado;
 
-	//al_install_audio();
-
-	//al_init_acodec_addon();
 	al_reserve_samples(2);
 	al_reserve_samples(2);
 	ALLEGRO_SAMPLE* song = al_load_sample("Audios/Opciones.mpeg");

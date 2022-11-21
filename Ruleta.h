@@ -144,11 +144,11 @@ int Ruleta::crearRuleta()
 	ALLEGRO_FONT* Triforce = al_load_font("Fonts/Triforce.ttf", 50, 0);
 
 	event_queue = al_create_event_queue();
-	timer = al_create_timer(1.0 / 60);
+	timer = al_create_timer(0.5);
 
-	al_register_event_source(event_queue, al_get_display_event_source(display));
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+	al_register_event_source(event_queue, al_get_display_event_source(display));
 
 	al_start_timer(timer);
 
@@ -229,30 +229,34 @@ int Ruleta::crearRuleta()
 			exit(0);
 
 		}
-
 		curFrame++;
 
 		if (iSX > 3)
 			iSX = 0;
 
+		 if (ev.type == ALLEGRO_EVENT_TIMER)
+		{
+			 if (curFrame < resultadoruleta)
+			 {
+				 al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+				 al_draw_bitmap_region(ruletaSheet, sxRuleta[iSX], 0, 503, 490, 100, 100, 0);
+				 al_flip_display();
+				 //al_rest(0.5);
+				 iSX++;
+			 }
+			else
+			 {
+				// al_rest(0.5);
+				 al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+				 drawRuletaFinal(curFrame, ruletaSheet);
+				 al_draw_text(Triforce, al_map_rgb(0, 0, 0), 100, 40, NULL, "PRESIONE SPACEBAR");
+				 al_flip_display();
+				 break;
+			 }
 
-		if (curFrame < resultadoruleta)
-		{
-			al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-			al_draw_bitmap_region(ruletaSheet, sxRuleta[iSX], 0, 503, 490, 100, 100, 0);
-			al_flip_display();
-			al_rest(0.5);
-			iSX++;
+
 		}
-		else 
-		{
-			al_rest(0.5);
-			al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-			drawRuletaFinal(curFrame, ruletaSheet);
-			al_draw_text(Triforce, al_map_rgb(0, 0, 0), 100, 40, NULL, "PRESIONE SPACEBAR");
-			al_flip_display();
-			break;
-		}
+
 
 	}
 
@@ -297,6 +301,4 @@ int Ruleta::crearRuleta()
 	al_rest(1);
 	return 0;
 }
-
-
 

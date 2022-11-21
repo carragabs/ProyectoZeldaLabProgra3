@@ -230,42 +230,30 @@ int Ruleta::crearRuleta()
 
 		}
 
-		 if (ev.type == ALLEGRO_EVENT_TIMER)
-		{
-			if (++frameCount >= frameDelay)
-			{
-				cout << "CURRENT FRAME: " << curFrame << endl;
+		curFrame++;
 
-				if (curFrame != resultadoruleta)
-					al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (iSX > 3)
+			iSX = 0;
 
-				if (curFrame != resultadoruleta && ++curFrame >= maxFrame)
-				{
-
-					curFrame = 0;
-				}
-				if (curFrame != resultadoruleta && ++iSX > 3)
-					iSX = 0;
-
-				frameCount = 0;
-
-			}
-
-
-		}
 
 		if (curFrame < resultadoruleta)
+		{
+			al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			al_draw_bitmap_region(ruletaSheet, sxRuleta[iSX], 0, 503, 490, 100, 100, 0);
+			al_flip_display();
+			al_rest(0.5);
+			iSX++;
+		}
 		else 
 		{
-			//cout << "RESULTADO: " << resultadorandom << endl;
+			al_rest(0.5);
+			al_play_sample(song, 1.0, 0.5, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			drawRuletaFinal(curFrame, ruletaSheet);
 			al_draw_text(Triforce, al_map_rgb(0, 0, 0), 100, 40, NULL, "PRESIONE SPACEBAR");
 			al_flip_display();
 			break;
 		}
 
-		al_flip_display();
 	}
 
 	done = false;

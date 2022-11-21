@@ -27,7 +27,6 @@ struct Sprite
 class HubN2 {
 public:
     ALLEGRO_DISPLAY* pantalla;
-    //HubN2(string minijuegoP);
     HubN2(ALLEGRO_DISPLAY* pantallaMain);
     string minijuego;
     void crearNivel2(string minijuegoP);
@@ -36,9 +35,6 @@ public:
         coordenadasEntradas warp, string minijuegoAjugar);
     void crearColisionesEntradas(coordenadasEntradas entrada,string minjuegoP);
     bool crearColisionesWarp(coordenadasEntradas entrada, string minjuegoP);
-    //void crearColisionesHist(coordenadasEntradas entrada);
-    //void crearColisionesPolit(coordenadasEntradas entrada);
-    //void crearColisionesCiencia(coordenadasEntradas entrada);
 
     double x, y;
     int desplaza;
@@ -150,29 +146,8 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
      int frameCount = 0;
      int frameDelay = 2;
 
-    // allegro_init();
-
-   // al_init();
-
-   // al_init_image_addon();
-
-
-    //al_install_keyboard();
-
-   // al_init_primitives_addon();
-
-
-    //set_color_depth(32);
-
-    //set_gfx_mode(GFX_AUTODETECT_WINDOWED, 800, 600, 0, 0);
-
-    //ALLEGRO_DISPLAY* pantalla = al_create_display(800, 600);
-
 
     al_set_window_title(pantalla, "HUB Nivel 2");
-
-
-    // BITMAP* prota = load_bmp("personaje.bmp", NULL);
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");

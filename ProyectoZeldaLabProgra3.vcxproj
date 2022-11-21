@@ -146,6 +146,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DisplayPreguntas.h" />
     <ClInclude Include="HubNivel2.h" />
     <ClInclude Include="Jugar.h" />
     <ClInclude Include="MenuInicial.h" />

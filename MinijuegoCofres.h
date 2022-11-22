@@ -9,6 +9,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include <Windows.h>
+#include "SpritesheetRow.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ struct variablesDrawExplosion
 
 class MinijuegoCofres {
 public:
-    //MinijuegoCofres(string respuesta P);
+    //MinijuegoCofres(string respueta P);
     ALLEGRO_DISPLAY* pantalla;
     bool salir = false;
     MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain);
@@ -46,7 +47,7 @@ public:
     coordenadasCofres  cofre3;
     coordenadasCofres  cofre4;
     ALLEGRO_BITMAP* fondo = al_load_bitmap("mapacofres.png");
-    variablesDrawExplosion varsExplosion[17];
+    varsFrame varsExplosion[17];
 private:
 
 };
@@ -118,16 +119,8 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
     else
     {
         al_convert_mask_to_alpha(bitmapIncorrecto, al_map_rgb(255, 192, 255));
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << "rest time " << varsExplosion[i].alrestTime << endl;
-
-            al_draw_scaled_bitmap(varsExplosion[i].bitmap, varsExplosion[i].Sx, varsExplosion[i].Sy,
-                varsExplosion[i].Sw, varsExplosion[i].Sh, varsExplosion[i].Dx,
-                varsExplosion[i].Dy, varsExplosion[i].Dw, varsExplosion[i].Dh, 0);
-            al_flip_display();
-            al_rest(varsExplosion[i].alrestTime);
-        }
+        SpritesheetRow explosionesSheet;
+        explosionesSheet.drawSpritesheetRow(17, pantalla, varsExplosion);
 
     }
 

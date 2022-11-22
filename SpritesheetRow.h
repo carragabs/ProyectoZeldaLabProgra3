@@ -15,13 +15,20 @@ struct varsFrame
 
 class SpritesheetRow
 {
-	int size;
-	SpritesheetRow(int sizeP, ALLEGRO_DISPLAY* displayP)
-	{
-		//varsFrame vars[size];
-		//for (size_t i = 0; i < size; i++)
-		//{
+public:
 
-		//}
+	void drawSpritesheetRow(int sizeP, ALLEGRO_DISPLAY* displayP, varsFrame vars[])
+	{
+		for (size_t i = 0; i < sizeP; i++)
+		{
+			al_draw_scaled_bitmap(vars[i].bitmap, vars[i].Sx, vars[i].Sy,
+				vars[i].Sw, vars[i].Sh, vars[i].Dx,
+				vars[i].Dy, vars[i].Dw, vars[i].Dh, 0);
+			al_flip_display();
+			al_rest(vars[i].alrestTime);
+
+		}
 	}
+	private:
+
 };

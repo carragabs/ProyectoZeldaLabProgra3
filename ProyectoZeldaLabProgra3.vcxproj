@@ -153,6 +153,7 @@
     <ClInclude Include="MinijuegoCofres.h" />
     <ClInclude Include="Ruleta.h" />
     <ClInclude Include="SpritesheetRow.h" />
+    <ClInclude Include="Transicion.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

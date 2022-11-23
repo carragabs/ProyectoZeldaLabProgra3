@@ -44,5 +44,8 @@
     <ClInclude Include="DisplayPreguntas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Transicion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

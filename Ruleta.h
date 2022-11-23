@@ -138,8 +138,8 @@ int Ruleta::crearRuleta()
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer;
 
-	ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
 	ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");
+	ALLEGRO_BITMAP* warpOff = al_load_bitmap("warpOff.png");
 	ALLEGRO_BITMAP* ruletaSheet = al_load_bitmap("ruletasheet.png");
 	ALLEGRO_FONT* Triforce = al_load_font("Fonts/Triforce.ttf", 50, 0);
 
@@ -190,9 +190,7 @@ int Ruleta::crearRuleta()
 	salir = false;
 
 	al_draw_scaled_bitmap(fondo, 0, 0, 1280, 1022, 0, 0, 800, 600, 0);
-
-	al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
-
+	al_draw_scaled_bitmap(warpOff,1,9,15,15,356,288,30,30,0);
 	al_flip_display();
 
 
@@ -290,15 +288,12 @@ int Ruleta::crearRuleta()
 	al_destroy_sample_instance(instance);
 	al_destroy_timer(timer);
 
-	al_destroy_bitmap(prota);
 	al_destroy_bitmap(fondo);
 	al_destroy_bitmap(ruletaSheet);
 	al_destroy_event_queue(event_queue);
 
-	//al_destroy_display(display);
-	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_clear_to_color(al_map_rgb(255,255,255));
 	al_flip_display();
-	al_rest(1);
 	return 0;
 }
 

@@ -10,6 +10,7 @@
 #include <allegro5/allegro_image.h>
 #include <Windows.h>
 #include "SpritesheetRow.h"
+#include "Transicion.h"
 
 using namespace std;
 
@@ -78,7 +79,7 @@ bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres  cofre, char respu
     if (x * desplaza + 32.5 > cofre.xRect && x * desplaza + 32.5 < cofre.xRect + 8
         && (y * desplaza < cofre.yRect + 50) && (y * desplaza + 35 > cofre.yRect))
     {
-        //z cout << "COLLISION TRUE!" << endl;
+        // cout << "COLLISION TRUE!" << endl;
         x = (cofre.xRect - 32.5) / desplaza;
     }
     return false;
@@ -100,8 +101,6 @@ coordenadasCofres validarCofres(coordenadasCofres cofre1, coordenadasCofres cofr
 MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain)
 {
     pantalla = pantallaMain;
-    cout << "respuesta: " << endl;
-    //cin >> respuesta;
     respuesta = 'd';
     crearMinijuego(respuesta);
 }
@@ -112,14 +111,17 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
     if (cofre.respuesta == respuesta)
     {
         al_draw_scaled_bitmap(bitmapCorrecto, 0, 0, 15, 21, cofre.xRect - 1, cofre.yRect - 20, 50, 50, 0);
+        //AQUISONIDO itemget1.wav
+        //AQUISONIDO heartpiece1.wav
         al_flip_display();
-        al_rest(3);
+        al_rest(5);
         salir = true;
     }
     else
     {
         al_convert_mask_to_alpha(bitmapIncorrecto, al_map_rgb(255, 192, 255));
         SpritesheetRow explosionesSheet;
+        //AQUISONIDO bombexplode.wav
         explosionesSheet.drawSpritesheetRow(17, pantalla, varsExplosion);
 
     }
@@ -138,25 +140,8 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
     int frameCount = 0;
     int frameDelay = 2;
 
-    // allegro_init();
-
-   /* al_init();
-
-    al_init_image_addon();
-
-
-    al_install_keyboard();
-
-    al_init_primitives_addon(); */
-
-
-    //ALLEGRO_DISPLAY* pantalla = al_create_display(800, 600);
-
 
     al_set_window_title(pantalla, "HUB Nivel 2");
-
-
-    // BITMAP* prota = load_bmp("personaje.bmp", NULL);
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
     fondo = al_load_bitmap("mapacofres.png");
@@ -164,15 +149,13 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
     ALLEGRO_BITMAP* heart = al_load_bitmap("heart.png");
     ALLEGRO_BITMAP* explosion = al_load_bitmap("alttpExplosion.png");
 
-    // defino lista de eventos
-
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
 
 
     ALLEGRO_EVENT evento;
 
     ALLEGRO_TIMER* timer;
-    // creo lista de eventos
+
 
     Mis_eventos = al_create_event_queue();
     timer = al_create_timer(1.0 / 60);
@@ -218,6 +201,9 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
     coordCofres[2] = cofre3;
     coordCofres[3] = cofre4;
 
+    Transition transCofres;
+    transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y, desplaza);
+
     al_start_timer(timer);
 
     while (!salir)
@@ -229,25 +215,16 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
         {
             coordCofres[i].colisionAbajo = false;
         }
-        // pinta el fondo de un color 
-
-        // clear_to_color(buffer, 0x785a5a);
 
         al_clear_to_color(al_map_rgb(120, 90, 90));
 
-        // masked_blit(prota, buffer, paso*32, dir*32, x, y, 32,32);
         al_draw_scaled_bitmap(fondo, 0, 0, 254, 254, 0, 0, 800, 600, 0);
 
         al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
 
 
-        //al_draw_filled_rectangle(warpArte.xRect, warpArte.yRect, warpArte.xRect + 40, warpArte.yRect + 40, al_map_rgba_f(.6, 0, .6, .6));
-
-
-
         for (i = 0; i < 4; i++)
         {
-            //validarrespuesta(cofre, coordCofres[i], warpArte, respuesta);
             al_draw_scaled_bitmap(cofre, 5, 5, 170, 126, coordCofres[i].xRect, coordCofres[i].yRect, 50, 50, 0);
         }
 
@@ -257,13 +234,6 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
 
         al_wait_for_event(Mis_eventos, &evento);
-
-
-        // se ha cerrado la ventana
-
-
-       // if (evento.type == ALLEGRO_EVENT_TIMER)
-        //{
 
 
         if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -358,8 +328,6 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
         if (paso > 3) paso = 0;
 
 
-        //if(x*desplaza > )
-
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE)) {
 
             salir = true;
@@ -378,10 +346,12 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             if (cofre1.colisionAbajo || cofre2.colisionAbajo ||
                 cofre3.colisionAbajo || cofre4.colisionAbajo)
             {
-                //cout << "ABAJO DE COFRE" << endl;
                 coordenadasCofres cofreElegido = validarCofres(cofre1, cofre2, cofre3, cofre4);
+                
+                //AQUISONIDO chestopen.wav
                 al_draw_scaled_bitmap(cofre, 187, 5, 170, 126, cofreElegido.xRect, cofreElegido.yRect, 50, 50, 0);
                 al_flip_display();
+                al_rest(2.5);
 
                 varsExplosion[0] = { explosion,5, 36, 13, 13, cofreElegido.xRect + 12.5, //FRAME 1 EXPLO
                      cofreElegido.yRect + 12.5, 22, 22 , 0.1 };
@@ -418,7 +388,6 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
                 varsExplosion[16] = { explosion, 253, 24, 42, 37, cofreElegido.xRect - 10 + 0.0, //FRAME 8 EXPLO
                     cofreElegido.yRect - 10 + 0.0, 70, 70,0.1 };
 
-                al_rest(1);
                 drawResultadoCofre(cofre, cofreElegido, heart, explosion);
 
             }
@@ -426,6 +395,10 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
 
     }
+
+    transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);
+    al_clear_to_color(al_map_rgb(255, 255, 255));
+    al_flip_display();
 
     al_destroy_bitmap(prota);
     al_destroy_bitmap(cofre);
@@ -435,9 +408,6 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
     al_destroy_event_queue(Mis_eventos);
     al_destroy_timer(timer);
 
-    //al_destroy_display(pantalla);
-    al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_flip_display();
     al_rest(1);
 
     //return 0;

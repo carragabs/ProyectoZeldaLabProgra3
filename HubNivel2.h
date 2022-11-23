@@ -3,7 +3,7 @@
 #include <iostream>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
-//#include <thread>
+#include "Transicion.h"
 
 using namespace std;
 
@@ -150,12 +150,11 @@ void HubN2::crearNivel2(string minijuegoP)
     al_set_window_title(pantalla, "HUB Nivel 2");
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
+    ALLEGRO_BITMAP* warpOff = al_load_bitmap("warpOff.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");
     ALLEGRO_BITMAP* obstaculoEntrada = al_load_bitmap("boulderBig.png");
     ALLEGRO_BITMAP* transition = al_load_bitmap("watertrans.png");
     ALLEGRO_BITMAP* warptile = al_load_bitmap("warpsheetsmall.png");
-
-    // defino lista de eventos
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
     //ALLEGRO_EVENT evento;
@@ -179,10 +178,10 @@ void HubN2::crearNivel2(string minijuegoP)
     bool salir;
 
     // inicializar vbles
+    
+    x = 356 / 4;
 
-    x = 350 / 4;
-
-    y = 280 / 4;
+    y = 288 / 4;
 
 
     desplaza = 4;
@@ -223,6 +222,9 @@ void HubN2::crearNivel2(string minijuegoP)
     cordWarps[2] = warpPolit;
     cordWarps[3] = warpCiencia;
 
+    Transition transHub;
+    transHub.drawTransitionReversa(pantalla, fondo, 1280, 1022, prota, paso, dir, x, y, desplaza);
+
     al_start_timer(timer);
 
     while (!salir)
@@ -232,6 +234,7 @@ void HubN2::crearNivel2(string minijuegoP)
         al_wait_for_event(Mis_eventos, &evento);
 
         al_draw_scaled_bitmap(fondo, 0, 0, 1280, 1022, 0, 0, 800, 600, 0);
+        al_draw_scaled_bitmap(warpOff, 1, 9, 15, 15, 356, 288, 30, 30, 0);
         al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
         al_draw_bitmap_region(warptile, 40 * curFrame, 0, 40, 75, coordWarp.xRect, coordWarp.yRect, 0);
 
@@ -361,28 +364,8 @@ void HubN2::crearNivel2(string minijuegoP)
 
     }
 
-    /* TRANSITION EXIT
-        int i, j = 0;
-    int k = 0;
-    float startx = 88;
-    float starty = 60;
-    float framew = 179;
-    float frameh = 105;
-    float spacew = 8;
-    float spaceh = 19;
-
-    for (i = 0; i < 12; i++)
-    {
-       // al_draw_scaled_bitmap(transition, 88+(i*spacew), 183 + j*spaceh, 179, 105, 0, 0, 800, 600, 0);
-        al_draw_bitmap_region(transition, 88 + (k * spacew), 183 + j * spaceh, 179, 105,0,0,0);
-        if (i == 5)
-        {
-            j = 1;
-            k = 0;
-        }
-        else
-            k++;
-    } */
+    transHub.drawTransition(pantalla, fondo, 1280, 1022,prota, paso, dir, x, y, desplaza);
+    transHub.destroyTrans();
 
     al_destroy_bitmap(prota);
     al_destroy_bitmap(fondo);
@@ -390,9 +373,9 @@ void HubN2::crearNivel2(string minijuegoP)
     al_destroy_bitmap(transition);
     al_destroy_bitmap(warptile);
     al_destroy_event_queue(Mis_eventos);
-    //al_destroy_timer(timer);
+    al_destroy_timer(timer);
 
-    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_clear_to_color(al_map_rgb(255, 255, 255));
     al_flip_display();
     al_rest(1);
 

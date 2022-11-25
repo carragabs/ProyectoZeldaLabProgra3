@@ -42,6 +42,7 @@ public:
     int desplaza;
     int paso;
     int dir;
+    int rot;
     coordenadasCofres  coordCofres[4];
     coordenadasCofres  cofre1;
     coordenadasCofres  cofre2;
@@ -57,14 +58,14 @@ private:
 bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres  cofre, char respuestaP)
 {
     if (y * desplaza < cofre.yRect + 50 && y * desplaza >(cofre.yRect + 50) - 8
-        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32.5 > cofre.xRect))
+        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32 > cofre.xRect))
     {
         //cout << "COLLISION TRUE!" << endl;
         y = (cofre.yRect + 50) / desplaza;
         return true;
     }
     if (y * desplaza + 35 > cofre.yRect && (y * desplaza + 35 < cofre.yRect + 8)
-        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32.5 > cofre.xRect))
+        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32 > cofre.xRect))
     {
         // cout << "COLLISION TRUE!" << endl;
         y = (cofre.yRect - (35)) / desplaza;
@@ -76,11 +77,11 @@ bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres  cofre, char respu
         // cout << "COLLISION TRUE!" << endl;
         x = (cofre.xRect + 50) / desplaza;
     }
-    if (x * desplaza + 32.5 > cofre.xRect && x * desplaza + 32.5 < cofre.xRect + 8
+    if (x * desplaza + 32 > cofre.xRect && x * desplaza + 32 < cofre.xRect + 8
         && (y * desplaza < cofre.yRect + 50) && (y * desplaza + 35 > cofre.yRect))
     {
         // cout << "COLLISION TRUE!" << endl;
-        x = (cofre.xRect - 32.5) / desplaza;
+        x = (cofre.xRect - 32) / desplaza;
     }
     return false;
 }
@@ -143,7 +144,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
     al_set_window_title(pantalla, "HUB Nivel 2");
 
-    ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
+    ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
     fondo = al_load_bitmap("mapacofres.png");
     ALLEGRO_BITMAP* cofre = al_load_bitmap("chest.png");
     ALLEGRO_BITMAP* heart = al_load_bitmap("heart.png");
@@ -158,7 +159,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
 
     Mis_eventos = al_create_event_queue();
-    timer = al_create_timer(1.0 / 60);
+    timer = al_create_timer(1.0 / 30);
 
 
     // asigno eventos a la lista de eventos
@@ -184,7 +185,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
     desplaza = 4;
 
-
+    rot = 0;
     paso = 0;
 
     dir = 0;
@@ -220,7 +221,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
         al_draw_scaled_bitmap(fondo, 0, 0, 254, 254, 0, 0, 800, 600, 0);
 
-        al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
+        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza, y * desplaza, rot);
 
 
         for (i = 0; i < 4; i++)
@@ -258,8 +259,8 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             cout << "y: " << y * desplaza << endl;
             cout << "x: " << x * desplaza << endl;
 
-            dir = 4;
-
+            dir = 2;
+            rot = 0;
             paso++;
 
         }
@@ -273,8 +274,8 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             cout << "y: " << y * desplaza << endl;
             cout << "x: " << x * desplaza << endl;
 
-            dir = 3;
-
+            dir = 0;
+            rot = 0;
             paso++;
 
         }
@@ -289,7 +290,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             cout << "y: " << y * desplaza << endl;
 
             dir = 1;
-
+            rot = 0;
             paso++;
 
         }
@@ -304,8 +305,8 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             cout << "y: " << y * desplaza << endl;
 
 
-            dir = 2;
-
+            dir = 1;
+            rot = 1;
             paso++;
 
         }
@@ -318,14 +319,14 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
         if (x < 0) x = 0;
 
-        if (x * desplaza > 800 - 32.5) x = 191.87;
+        if (x * desplaza > 800 - 32) x = 192;
 
         if (y < 0) y = 0;
 
         if (y * desplaza > 600 - 35) y = 141.25;
 
 
-        if (paso > 3) paso = 0;
+        if (paso > 9) paso = 0;
 
 
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE)) {

@@ -2,8 +2,7 @@
 //AGREGAR PREGUNTAS Y VER COMO SALDRAN
 //LABEL LOS COFRES
 // BARRA DE VIDA
-//VER SI TRAS LA EXPLOSION DESAPARECE EL COFRE
-//VER SI EXPLOTA UNO O VARIOS COFRES
+
 #include <allegro5/allegro.h>
 #include <iostream>
 #include <allegro5/allegro_primitives.h>
@@ -136,19 +135,14 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 {
     respuesta = respuestaP;
 
-    const int maxFrame = 7;
-    int curFrame = 0;
-    int frameCount = 0;
-    int frameDelay = 2;
-
-
-    al_set_window_title(pantalla, "HUB Nivel 2");
+    al_set_window_title(pantalla, " POLITICA: Minijuego Cofres");
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
     fondo = al_load_bitmap("mapacofres.png");
     ALLEGRO_BITMAP* cofre = al_load_bitmap("chest.png");
     ALLEGRO_BITMAP* heart = al_load_bitmap("heart.png");
     ALLEGRO_BITMAP* explosion = al_load_bitmap("alttpExplosion.png");
+    ALLEGRO_FONT* triforceFont = al_load_font("Fonts/Triforce.ttf",40,0);
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
 
@@ -197,6 +191,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
     cofre2 = { 320,280 , 'b' , false };
     cofre3 = { 200,280 ,'a' , false };
     cofre4 = { 550,280,'d' , false };
+
     coordCofres[0] = cofre1;
     coordCofres[1] = cofre2;
     coordCofres[2] = cofre3;
@@ -228,6 +223,10 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
         {
             al_draw_scaled_bitmap(cofre, 5, 5, 170, 126, coordCofres[i].xRect, coordCofres[i].yRect, 50, 50, 0);
         }
+        al_draw_text(triforceFont,al_map_rgb(255,255,255),210,240,0,"A");
+        al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 330, 240, 0, "B");
+        al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 450, 240, 0, "C");
+        al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 560, 240, 0, "D");
 
         // mostramos la pantalla
 

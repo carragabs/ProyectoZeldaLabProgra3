@@ -39,7 +39,9 @@ public:
     double x, y;
     int desplaza;
     int paso;
+    int rot;
     int dir;
+
     coordenadasEntradas coordRectangulos[4];
     coordenadasEntradas entradaArte;
     coordenadasEntradas entradaHist;
@@ -71,13 +73,13 @@ void HubN2::crearColisionesEntradas(coordenadasEntradas entrada, string minijueg
     if (entrada.minijuego != minijuegoP)
     {
         if (y * desplaza < entrada.yRect + 40 && y * desplaza >(entrada.yRect + 40) - 8
-            && (x * desplaza < entrada.xRect + 40) && (x * desplaza + 32.5 > entrada.xRect))
+            && (x * desplaza < entrada.xRect + 40) && (x * desplaza + 32 > entrada.xRect))
         {
             cout << "COLLISION TRUE!" << endl;
             y = (entrada.yRect + 40) / desplaza;
         }
         if (y * desplaza + 35 > entrada.yRect && (y * desplaza + 35 < entrada.yRect + 8)
-            && (x * desplaza < entrada.xRect + 40) && (x * desplaza + 32.5 > entrada.xRect))
+            && (x * desplaza < entrada.xRect + 40) && (x * desplaza + 32 > entrada.xRect))
         {
             cout << "COLLISION TRUE!" << endl;
             y = (entrada.yRect - (35)) / desplaza;
@@ -89,11 +91,11 @@ void HubN2::crearColisionesEntradas(coordenadasEntradas entrada, string minijueg
             cout << "COLLISION TRUE!" << endl;
             x = (entrada.xRect + 40) / desplaza;
         }
-        if (x * desplaza + 32.5 > entrada.xRect && x * desplaza + 32.5 < entrada.xRect + 8
+        if (x * desplaza + 32 > entrada.xRect && x * desplaza + 32 < entrada.xRect + 8
             && (y * desplaza < entrada.yRect + 40) && (y * desplaza + 35 > entrada.yRect))
         {
             cout << "COLLISION TRUE!" << endl;
-            x = (entrada.xRect - 32.5) / desplaza;
+            x = (entrada.xRect - 32) / desplaza;
         }
     }
 }
@@ -102,13 +104,13 @@ bool HubN2::crearColisionesWarp(coordenadasEntradas warp, string minijuegoP)
 {
 
     if (y * desplaza < warp.yRect + 40 && y * desplaza >(warp.yRect + 40) - 8
-        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
+        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32 > warp.xRect))
     {
         cout << "COLLISION TRUE!" << endl;
         return true;
     }
     if (y * desplaza + 35 > warp.yRect && (y * desplaza + 35 < warp.yRect + 8)
-        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32.5 > warp.xRect))
+        && (x * desplaza < warp.xRect + 40) && (x * desplaza + 32 > warp.xRect))
     {
         cout << "COLLISION TRUE!" << endl;
         return true;
@@ -120,7 +122,7 @@ bool HubN2::crearColisionesWarp(coordenadasEntradas warp, string minijuegoP)
         cout << "COLLISION TRUE WARP!" << endl;
         return true;
     }
-    if (x * desplaza + 32.5 > warp.xRect && x * desplaza + 32.5 < warp.xRect + 8
+    if (x * desplaza + 32 > warp.xRect && x * desplaza + 32 < warp.xRect + 8
         && (y * desplaza < warp.yRect + 40) && (y * desplaza + 35 > warp.yRect))
     {
         cout << "COLLISION TRUE!" << endl;
@@ -149,7 +151,7 @@ void HubN2::crearNivel2(string minijuegoP)
 
     al_set_window_title(pantalla, "HUB Nivel 2");
 
-    ALLEGRO_BITMAP* prota = al_load_bitmap("Alm1.png");
+    ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
     ALLEGRO_BITMAP* warpOff = al_load_bitmap("warpOff.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");
     ALLEGRO_BITMAP* obstaculoEntrada = al_load_bitmap("boulderBig.png");
@@ -184,6 +186,7 @@ void HubN2::crearNivel2(string minijuegoP)
 
 
     desplaza = 4;
+    rot = 0;
 
 
     paso = 0;
@@ -234,7 +237,7 @@ void HubN2::crearNivel2(string minijuegoP)
 
         al_draw_scaled_bitmap(fondo, 0, 0, 1280, 1022, 0, 0, 800, 600, 0);
         al_draw_scaled_bitmap(warpOff, 1, 9, 15, 15, 356, 288, 30, 30, 0);
-        al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
+        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza, y * desplaza, rot);
         al_draw_bitmap_region(warptile, 40 * curFrame, 0, 40, 75, coordWarp.xRect, coordWarp.yRect, 0);
 
         int i;
@@ -283,8 +286,8 @@ void HubN2::crearNivel2(string minijuegoP)
                 cout << "y: " << y * desplaza << endl;
                 cout << "x: " << x * desplaza << endl;
 
-                dir = 4;
-
+                dir = 2;
+                rot = 0;
                 paso++;
 
             }
@@ -298,8 +301,8 @@ void HubN2::crearNivel2(string minijuegoP)
                 cout << "y: " << y * desplaza << endl;
                 cout << "x: " << x * desplaza << endl;
 
-                dir = 3;
-
+                dir =0;
+                rot = 0;
                 paso++;
 
             }
@@ -314,7 +317,7 @@ void HubN2::crearNivel2(string minijuegoP)
                 cout << "y: " << y * desplaza << endl;
 
                 dir = 1;
-
+                rot = 0;
                 paso++;
 
             }
@@ -329,8 +332,8 @@ void HubN2::crearNivel2(string minijuegoP)
                 cout << "y: " << y * desplaza << endl;
 
 
-                dir = 2;
-
+                dir = 1;
+                rot = 1;
                 paso++;
 
             }
@@ -342,14 +345,14 @@ void HubN2::crearNivel2(string minijuegoP)
 
         if (x < 0) x = 0;
 
-        if (x * desplaza > 800 - 32.5) x = 191.87;
+        if (x * desplaza > 800 - 32) x = 192;
 
         if (y < 0) y = 0;
 
         if (y * desplaza > 600 - 35) y = 141.25;
 
 
-        if (paso > 3) paso = 0;
+        if (paso > 9) paso = 0;
 
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE)) {
             exit(0);

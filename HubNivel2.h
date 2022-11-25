@@ -157,7 +157,6 @@ void HubN2::crearNivel2(string minijuegoP)
     ALLEGRO_BITMAP* warptile = al_load_bitmap("warpsheetsmall.png");
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
-    //ALLEGRO_EVENT evento;
     ALLEGRO_TIMER* timer;
     // creo lista de eventos
 

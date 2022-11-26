@@ -47,5 +47,8 @@
     <ClInclude Include="headersProy\Jugar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headersProy\eleccionDeBando.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

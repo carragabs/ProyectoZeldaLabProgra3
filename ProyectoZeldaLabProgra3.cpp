@@ -7,6 +7,7 @@
 #include "headersProy/MinijuegoCofres.h"
 #include "headersProy/MenuInicial.h"
 #include "headersProy/Jugar.h"
+#include "headersProy/eleccionDeBando.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
@@ -93,6 +94,9 @@ int main()
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
 	crearSigMinijuego(sigMini, ventana);
+
+	eleccionDeBando miEDB(ventana);
+	miEDB.crearEleccionBando();
 
 	return 0;
 

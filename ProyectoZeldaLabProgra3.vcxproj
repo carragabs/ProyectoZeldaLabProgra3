@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headersProy\DisplayPreguntas.h" />
+    <ClInclude Include="headersProy\eleccionDeBando.h" />
     <ClInclude Include="headersProy\HubNivel2.h" />
     <ClInclude Include="headersProy\Jugar.h" />
     <ClInclude Include="headersProy\MenuInicial.h" />

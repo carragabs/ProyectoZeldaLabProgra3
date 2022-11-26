@@ -141,6 +141,7 @@ HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
 void HubN2::crearNivel2(string minijuegoP)
 
 {
+    al_set_window_title(pantalla, "Nivel 2 - Hub");
     minijuego = minijuegoP;
 
     const int maxFrame = 7;
@@ -148,15 +149,11 @@ void HubN2::crearNivel2(string minijuegoP)
     int frameCount = 0;
     int frameDelay = 2;
 
-
-    al_set_window_title(pantalla, "HUB Nivel 2");
-
-    ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
-    ALLEGRO_BITMAP* warpOff = al_load_bitmap("warpOff.png");
-    ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");
-    ALLEGRO_BITMAP* obstaculoEntrada = al_load_bitmap("boulderBig.png");
-    ALLEGRO_BITMAP* transition = al_load_bitmap("watertrans.png");
-    ALLEGRO_BITMAP* warptile = al_load_bitmap("warpsheetsmall.png");
+    ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
+    ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
+    ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/PrototipoMapa1.jpeg");
+    ALLEGRO_BITMAP* obstaculoEntrada = al_load_bitmap("Imagenes/boulderBig.png");
+    ALLEGRO_BITMAP* warptile = al_load_bitmap("Imagenes/warpsheetsmall.png");
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
     ALLEGRO_TIMER* timer;
@@ -372,7 +369,6 @@ void HubN2::crearNivel2(string minijuegoP)
     al_destroy_bitmap(prota);
     al_destroy_bitmap(fondo);
     al_destroy_bitmap(obstaculoEntrada);
-    al_destroy_bitmap(transition);
     al_destroy_bitmap(warptile);
     al_destroy_event_queue(Mis_eventos);
     al_destroy_timer(timer);

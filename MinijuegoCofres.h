@@ -1,6 +1,5 @@
 #pragma once
 //AGREGAR PREGUNTAS Y VER COMO SALDRAN
-//LABEL LOS COFRES
 // BARRA DE VIDA
 
 #include <allegro5/allegro.h>
@@ -47,7 +46,7 @@ public:
     coordenadasCofres  cofre2;
     coordenadasCofres  cofre3;
     coordenadasCofres  cofre4;
-    ALLEGRO_BITMAP* fondo = al_load_bitmap("mapacofres.png");
+    ALLEGRO_BITMAP* fondo;
     varsFrame varsExplosion[17];
 private:
 
@@ -135,13 +134,13 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 {
     respuesta = respuestaP;
 
-    al_set_window_title(pantalla, " POLITICA: Minijuego Cofres");
+    al_set_window_title(pantalla, "Nivel 2 - POLITICA:Minijuego Cofres");
 
-    ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
-    fondo = al_load_bitmap("mapacofres.png");
-    ALLEGRO_BITMAP* cofre = al_load_bitmap("chest.png");
-    ALLEGRO_BITMAP* heart = al_load_bitmap("heart.png");
-    ALLEGRO_BITMAP* explosion = al_load_bitmap("alttpExplosion.png");
+    ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
+    fondo = al_load_bitmap("Imagenes/mapacofres.png");
+    ALLEGRO_BITMAP* cofre = al_load_bitmap("Imagenes/chest.png");
+    ALLEGRO_BITMAP* heart = al_load_bitmap("Imagenes/heart.png");
+    ALLEGRO_BITMAP* explosion = al_load_bitmap("Imagenes/alttpExplosion.png");
     ALLEGRO_FONT* triforceFont = al_load_font("Fonts/Triforce.ttf",40,0);
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;

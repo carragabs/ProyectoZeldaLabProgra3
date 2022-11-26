@@ -10,7 +10,7 @@ public:
     ALLEGRO_BITMAP* transition;
     Transition()
     {
-        transition = al_load_bitmap("watertrans.png");
+        transition = al_load_bitmap("Imagenes/watertrans.png");
     };
 
 	void drawTransition(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,

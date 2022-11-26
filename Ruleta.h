@@ -85,6 +85,7 @@ void Ruleta::drawRuletaFinal(int FrameFinal , ALLEGRO_BITMAP* ruletaP)
 
 int Ruleta::crearRuleta()
 {
+	al_set_window_title(display, "Nivel 2 - Ruleta");
 	int width = 800;
 	int height = 600;
 	bool done = false;
@@ -138,9 +139,9 @@ int Ruleta::crearRuleta()
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer;
 
-	ALLEGRO_BITMAP* fondo = al_load_bitmap("PrototipoMapa1.jpeg");
-	ALLEGRO_BITMAP* warpOff = al_load_bitmap("warpOff.png");
-	ALLEGRO_BITMAP* ruletaSheet = al_load_bitmap("ruletasheet.png");
+	ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/PrototipoMapa1.jpeg");
+	ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
+	ALLEGRO_BITMAP* ruletaSheet = al_load_bitmap("Imagenes/ruletasheet.png");
 	ALLEGRO_FONT* Triforce = al_load_font("Fonts/Triforce.ttf", 50, 0);
 
 	event_queue = al_create_event_queue();
@@ -156,7 +157,7 @@ int Ruleta::crearRuleta()
 	//al_init_acodec_addon();
 	al_reserve_samples(2);
 	al_reserve_samples(2);
-	ALLEGRO_SAMPLE* song = al_load_sample("Opciones.mpeg");
+	ALLEGRO_SAMPLE* song = al_load_sample("Audios/Opciones.mpeg");
 	ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
 	al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 	al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
@@ -227,10 +228,10 @@ int Ruleta::crearRuleta()
 			exit(0);
 
 		}
+
 		curFrame++;
 
-		if (iSX > 3)
-			iSX = 0;
+		if (iSX > 3) iSX = 0;
 
 		 if (ev.type == ALLEGRO_EVENT_TIMER)
 		{

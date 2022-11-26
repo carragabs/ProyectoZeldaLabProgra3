@@ -47,7 +47,7 @@ int MenuInicial::crearMenuInicial()
 	int ancho_W = GetSystemMetrics(SM_CXSCREEN);
 	int alto_W = GetSystemMetrics(SM_CYSCREEN);
 
-	al_set_window_title(ventana, "Zelda");
+	al_set_window_title(ventana, "Nivel 1 - Menu Inicial");
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());

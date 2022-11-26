@@ -23,28 +23,28 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HubNivel2.h">
+    <ClInclude Include="headersProy\MenuInicial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jugar.h">
+    <ClInclude Include="headersProy\MinijuegoCofres.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuInicial.h">
+    <ClInclude Include="headersProy\Ruleta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinijuegoCofres.h">
+    <ClInclude Include="headersProy\SpritesheetRow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ruleta.h">
+    <ClInclude Include="headersProy\Transicion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpritesheetRow.h">
+    <ClInclude Include="headersProy\DisplayPreguntas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DisplayPreguntas.h">
+    <ClInclude Include="headersProy\HubNivel2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transicion.h">
+    <ClInclude Include="headersProy\Jugar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

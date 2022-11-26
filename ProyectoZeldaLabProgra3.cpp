@@ -2,11 +2,11 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include "HubNivel2.h"
-#include "Ruleta.h"
-#include "MinijuegoCofres.h"
-#include "MenuInicial.h"
-#include "Jugar.h"
+#include "headersProy/HubNivel2.h"
+#include "headersProy/Ruleta.h"
+#include "headersProy/MinijuegoCofres.h"
+#include "headersProy/MenuInicial.h"
+#include "headersProy/Jugar.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {

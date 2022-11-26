@@ -1,5 +1,4 @@
 #pragma once
-//VER COMO OPTIMIZAR LA RUEDA PARA QUE NO SE TRABE AL INICIO
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include<iostream>

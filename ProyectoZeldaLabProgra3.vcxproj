@@ -146,14 +146,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DisplayPreguntas.h" />
-    <ClInclude Include="HubNivel2.h" />
-    <ClInclude Include="Jugar.h" />
-    <ClInclude Include="MenuInicial.h" />
-    <ClInclude Include="MinijuegoCofres.h" />
-    <ClInclude Include="Ruleta.h" />
-    <ClInclude Include="SpritesheetRow.h" />
-    <ClInclude Include="Transicion.h" />
+    <ClInclude Include="headersProy\DisplayPreguntas.h" />
+    <ClInclude Include="headersProy\HubNivel2.h" />
+    <ClInclude Include="headersProy\Jugar.h" />
+    <ClInclude Include="headersProy\MenuInicial.h" />
+    <ClInclude Include="headersProy\MinijuegoCofres.h" />
+    <ClInclude Include="headersProy\Ruleta.h" />
+    <ClInclude Include="headersProy\SpritesheetRow.h" />
+    <ClInclude Include="headersProy\Transicion.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

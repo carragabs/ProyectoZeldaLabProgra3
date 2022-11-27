@@ -9,12 +9,21 @@
 #include <Windows.h>
 #include "SpritesheetRow.h"
 #include "Transicion.h"
+#include <vector>
+#include <string>
 
 using namespace std;
 
 struct coordenadasCofres {
     int xRect; int yRect;
     char respuesta; bool colisionAbajo;
+};
+
+struct rondaPreguntas
+{
+    string pregunta;
+    string opciones;
+    char respuesta;
 };
 
 struct variablesDrawExplosion
@@ -30,7 +39,7 @@ public:
     bool salir = false;
     MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain);
     char respuesta;
-    void crearMinijuego(char respuestaP);
+    void crearMinijuego();
 
     bool crearColisionesCofres(coordenadasCofres cofre, char respuestaP);
     void drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCofres cofre,
@@ -48,6 +57,11 @@ public:
     coordenadasCofres  cofre4;
     ALLEGRO_BITMAP* fondo;
     varsFrame varsExplosion[17];
+    vector<rondaPreguntas> rondas;
+    ALLEGRO_FONT* textboxFont = al_load_font("Fonts/ReturnofGanon.ttf", 22, 0);
+    void setPreguntas();
+    void drawPreguntas(int rondaActual);
+    int vidasCount = 0;
 private:
 
 };
@@ -100,8 +114,85 @@ coordenadasCofres validarCofres(coordenadasCofres cofre1, coordenadasCofres cofr
 MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain)
 {
     pantalla = pantallaMain;
-    respuesta = 'd';
-    crearMinijuego(respuesta);
+    respuesta = ' ';
+    setPreguntas();
+    crearMinijuego();
+}
+
+void MinijuegoCofres::setPreguntas()
+{
+    string pregunta, opciones;
+    char respuesta;
+    pregunta = "1. Durante el renacimiento, el modelo de gobierno es uno de los siguientes:";
+    opciones = "A) Monarquia absoluta. B) Tirania republicana. ";
+    opciones += "C) Democracia participativa. D) Liberalismo politico";
+    respuesta = 'A';
+    rondas.push_back( {pregunta,opciones,respuesta } );
+
+    pregunta = "2. De los siguientes acontecimientos, selecciones el que inicia ";
+    pregunta += "el periodo moderno: ";
+    opciones = "A) Toma de Constantinopla. B) Tratado de paz de westfalia. ";
+    opciones += "C) Toma de la Bastilla. La ruta de la seda.";
+    respuesta = 'B';
+    rondas.push_back({ pregunta,opciones,respuesta });
+
+    pregunta = "3. Durante el siglo XV, la sociedad se ";
+    pregunta += "estratifica en tres estamentos definidos: ";
+    opciones = "A) Clase media, baja y alta. B) nobleza, clero y estado llano. ";
+    opciones += "C) Artesanos, guardianes y gobernantes";
+    respuesta = 'B';
+    rondas.push_back({ pregunta,opciones,respuesta });
+
+    pregunta = "4. Aparece el realismo politico, que se basaba en un orden establecido, ";
+    pregunta += "explicacion de un sistema y recomendaciones de como gobernar: ";
+    opciones = "A) Tomas Moro. B) Jean Bodin. ";
+    opciones += "C) Nicolas Maquiavelo. D) Erasmo de Rotterdam.";
+    respuesta = 'C';
+    rondas.push_back({ pregunta,opciones,respuesta });
+
+    pregunta = "5. Terminada la edad media, en el contexto de la politica resulta que:";
+    opciones = "A) La Iglesia resalta su poder. B) La Iglesia pierde el papel rector en la politica ";
+    opciones += "C) La Iglesia evangelica se posiciona en la politica. D) La politica desaparece.";
+    respuesta = 'B';
+    rondas.push_back({ pregunta,opciones,respuesta });
+}
+
+void MinijuegoCofres::drawPreguntas(int rondaActual)
+{
+    switch (rondaActual)
+    {
+    case(4):
+        al_draw_filled_rectangle(15, 3, 780, 85, al_map_rgba(0, 0, 0, 150));
+
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 5, 0,
+            rondas[rondaActual].pregunta.c_str());
+
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 35, 0,
+            rondas[rondaActual].opciones.substr(0, 84).c_str());
+
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 55, 0,
+            rondas[rondaActual].opciones.substr(84, 79).c_str());
+        break;
+    case(3):
+        al_draw_filled_rectangle(15, 3, 780, 85, al_map_rgba(0, 0, 0, 150));
+
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 5, 0,
+            rondas[rondaActual].pregunta.substr(0,71).c_str());
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 25, 0,
+            rondas[rondaActual].pregunta.substr(72, 62).c_str());
+
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 55, 0,
+            rondas[rondaActual].opciones.c_str());
+        break;
+    default:
+        al_draw_filled_rectangle(15, 3, 780, 65, al_map_rgba(0, 0, 0, 150));
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 5, 0,
+            rondas[rondaActual].pregunta.c_str());
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 35, 0,
+            rondas[rondaActual].opciones.c_str());
+        break;
+    }
+
 }
 
 void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCofres cofre,
@@ -109,12 +200,12 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
 {
     if (cofre.respuesta == respuesta)
     {
+        vidasCount++; 
         al_draw_scaled_bitmap(bitmapCorrecto, 0, 0, 15, 21, cofre.xRect - 1, cofre.yRect - 20, 50, 50, 0);
         //AQUISONIDO itemget1.wav
         //AQUISONIDO heartpiece1.wav
         al_flip_display();
         al_rest(5);
-        salir = true;
     }
     else
     {
@@ -127,13 +218,10 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
 
 }
 
-//ANTES DE CREAR HACER EL PROCESO DE MOSTRAR LA PREGUNTA
 
-void MinijuegoCofres::crearMinijuego(char respuestaP)
+void MinijuegoCofres::crearMinijuego()
 
-{
-    respuesta = respuestaP;
-
+{   
     al_set_window_title(pantalla, "Nivel 2 - POLITICA:Minijuego Cofres");
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
@@ -166,11 +254,6 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
     ALLEGRO_KEYBOARD_STATE teclado;
 
-
-
-
-    // inicializar vbles
-
     x = 350 / 4;
 
     y = 380 / 4;
@@ -186,19 +269,22 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
     salir = false;
 
-    cofre1 = { 440,280 , 'c' , false };
-    cofre2 = { 320,280 , 'b' , false };
-    cofre3 = { 200,280 ,'a' , false };
-    cofre4 = { 550,280,'d' , false };
+    cofre1 = { 440,280 , 'C' , false };
+    cofre2 = { 320,280 , 'B' , false };
+    cofre3 = { 200,280 ,'A' , false };
+    cofre4 = { 550,280,'D' , false };
 
     coordCofres[0] = cofre1;
     coordCofres[1] = cofre2;
     coordCofres[2] = cofre3;
     coordCofres[3] = cofre4;
 
-    Transition transCofres;
-    transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y, desplaza);
+   Transition transCofres;
+   transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y, desplaza);
 
+    int rondaCount = 0;
+    respuesta = rondas[rondaCount].respuesta;
+    string vidas;
     al_start_timer(timer);
 
     while (!salir)
@@ -211,23 +297,39 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
             coordCofres[i].colisionAbajo = false;
         }
 
+        vidas = "VIDAS: " + to_string(vidasCount);
+
         al_clear_to_color(al_map_rgb(120, 90, 90));
 
         al_draw_scaled_bitmap(fondo, 0, 0, 254, 254, 0, 0, 800, 600, 0);
 
-        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza, y * desplaza, rot);
-
+        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza,
+            y * desplaza, rot);
 
         for (i = 0; i < 4; i++)
         {
             al_draw_scaled_bitmap(cofre, 5, 5, 170, 126, coordCofres[i].xRect, coordCofres[i].yRect, 50, 50, 0);
         }
-        al_draw_text(triforceFont,al_map_rgb(255,255,255),210,240,0,"A");
+
+        al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 210, 240, 0, "A");
         al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 330, 240, 0, "B");
         al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 450, 240, 0, "C");
         al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 560, 240, 0, "D");
 
-        // mostramos la pantalla
+        al_draw_filled_rectangle(20, 85, 80, 110, al_map_rgba(0, 0, 0, 150));
+        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 85, 0, vidas.c_str());
+
+        if (rondaCount > 4)
+        {
+            al_flip_display();
+            al_rest(2);
+            break;
+        }
+
+        respuesta = rondas[rondaCount].respuesta;
+        drawPreguntas(rondaCount);
+
+
 
         al_flip_display();
 
@@ -340,8 +442,7 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
 
         if (al_key_down(&teclado, ALLEGRO_KEY_SPACE))
         {
-            int posX = x * desplaza;
-            int posY = y * desplaza;
+
             if (cofre1.colisionAbajo || cofre2.colisionAbajo ||
                 cofre3.colisionAbajo || cofre4.colisionAbajo)
             {
@@ -388,14 +489,14 @@ void MinijuegoCofres::crearMinijuego(char respuestaP)
                     cofreElegido.yRect - 10 + 0.0, 70, 70,0.1 };
 
                 drawResultadoCofre(cofre, cofreElegido, heart, explosion);
+                rondaCount++;
 
             }
         }
 
-
     }
 
-    transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);
+   transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);
     al_clear_to_color(al_map_rgb(255, 255, 255));
     al_flip_display();
 

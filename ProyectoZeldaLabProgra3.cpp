@@ -52,7 +52,7 @@ int main()
 	if (!ventana)
 		return -1;
 
-	/*int resultadoReturn;
+	int resultadoReturn;
 
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
@@ -93,7 +93,7 @@ int main()
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana); */
+	crearSigMinijuego(sigMini, ventana);
 
 	eleccionDeBando miEDB(ventana);
 	miEDB.crearEleccionBando();

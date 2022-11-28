@@ -6,6 +6,8 @@
 #include <iostream>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <Windows.h>
 #include "SpritesheetRow.h"
 #include "Transicion.h"

@@ -55,7 +55,7 @@ int main()
 	int resultadoReturn;
 
 	//NIVEL 1
-	/*MenuInicial miMenuI(ventana);
+	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
 
 	Jugar miJugar(ventana);
@@ -97,7 +97,7 @@ int main()
 	 
 
 	eleccionDeBando miEDB(ventana);
-	miEDB.crearEleccionBando(); */
+	miEDB.crearEleccionBando();
 
 	HubN2 miHUbN2(ventana);
 	miHUbN2.crearNivel2("POLITICA");

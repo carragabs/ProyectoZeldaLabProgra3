@@ -34,32 +34,32 @@ private:
 bool eleccionDeBando::crearColisionesLider(coordenadas  objeto,double objetoW, double objetoH,
 	double protaW, double protaH)
 {
-	if (y * desplaza < objeto.yRect + objetoH && y * desplaza >(objeto.yRect + objetoH) - 8
-		&& (x * desplaza < objeto.xRect + objetoW) && (x * desplaza + protaW > objeto.xRect) )
+	if (y  < objeto.yRect + objetoH && y  >(objeto.yRect + objetoH) - 8
+		&& (x  < objeto.xRect + objetoW) && (x  + protaW > objeto.xRect) )
 	{
 		//Si y esta en la pos abajo del tesoro O si se da la colision ABAJO
 		//cout << "COLLISION TRUE!" << endl;
-		y = (objeto.yRect + objetoH) / desplaza;
+		y = (objeto.yRect + objetoH) ;
 		return true;
 	}
-	if (y * desplaza + protaH > objeto.yRect && (y * desplaza + protaH < objeto.yRect + 8)
-		&& (x * desplaza < objeto.xRect + objetoW) && (x * desplaza + protaW > objeto.xRect))
+	if (y  + protaH > objeto.yRect && (y  + protaH < objeto.yRect + 8)
+		&& (x  < objeto.xRect + objetoW) && (x  + protaW > objeto.xRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		y = (objeto.yRect - (protaH)) / desplaza;
+		y = (objeto.yRect - (protaH)) ;
 	}
 
-	if (x * desplaza < objeto.xRect + objetoW && x * desplaza >(objeto.xRect + objetoW) - 8
-		&& (y * desplaza < objeto.yRect + objetoH) && (y * desplaza + protaH > objeto.yRect))
+	if (x  < objeto.xRect + objetoW && x  >(objeto.xRect + objetoW) - 8
+		&& (y  < objeto.yRect + objetoH) && (y  + protaH > objeto.yRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		x = (objeto.xRect + objetoW) / desplaza;
+		x = (objeto.xRect + objetoW) ;
 	}
-	if (x * desplaza + protaW > objeto.xRect && x * desplaza + protaW < objeto.xRect + 8
-		&& (y * desplaza < objeto.yRect + objetoH) && (y * desplaza + protaH > objeto.yRect))
+	if (x  + protaW > objeto.xRect && x  + protaW < objeto.xRect + 8
+		&& (y  < objeto.yRect + objetoH) && (y  + protaH > objeto.yRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		x = (objeto.xRect - protaW) / desplaza;
+		x = (objeto.xRect - protaW) ;
 	}
 	return false;
 }
@@ -67,30 +67,30 @@ bool eleccionDeBando::crearColisionesLider(coordenadas  objeto,double objetoW, d
 void eleccionDeBando::crearColisionesSoldados(coordenadas objeto, double objetoW, double objetoH,
 	double protaW, double protaH)
 {
-	if (y * desplaza < objeto.yRect + objetoH && y * desplaza >(objeto.yRect + objetoH) - 8
-		&& (x * desplaza < objeto.xRect + objetoW) && (x * desplaza + protaW > objeto.xRect))
+	if (y  < objeto.yRect + objetoH && y  >(objeto.yRect + objetoH) - 8
+		&& (x  < objeto.xRect + objetoW) && (x  + protaW > objeto.xRect))
 	{
 		//cout << "COLLISION TRUE!" << endl;
-		y = (objeto.yRect + objetoH) / desplaza;
+		y = (objeto.yRect + objetoH) ;
 	}
-	if (y * desplaza + protaH > objeto.yRect && (y * desplaza + protaH < objeto.yRect + 8)
-		&& (x * desplaza < objeto.xRect + objetoW) && (x * desplaza + protaW > objeto.xRect))
+	if (y  + protaH > objeto.yRect && (y  + protaH < objeto.yRect + 8)
+		&& (x  < objeto.xRect + objetoW) && (x  + protaW > objeto.xRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		y = (objeto.yRect - (protaH)) / desplaza;
+		y = (objeto.yRect - (protaH)) ;
 	}
 
-	if (x * desplaza < objeto.xRect + objetoW && x * desplaza >(objeto.xRect + objetoW) - 8
-		&& (y * desplaza < objeto.yRect + objetoH) && (y * desplaza + protaH > objeto.yRect))
+	if (x  < objeto.xRect + objetoW && x  >(objeto.xRect + objetoW) - 8
+		&& (y  < objeto.yRect + objetoH) && (y  + protaH > objeto.yRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		x = (objeto.xRect + objetoW) / desplaza;
+		x = (objeto.xRect + objetoW) ;
 	}
-	if (x * desplaza + protaW > objeto.xRect && x * desplaza + protaW < objeto.xRect + 8
-		&& (y * desplaza < objeto.yRect + objetoH) && (y * desplaza + protaH > objeto.yRect))
+	if (x  + protaW > objeto.xRect && x  + protaW < objeto.xRect + 8
+		&& (y  < objeto.yRect + objetoH) && (y  + protaH > objeto.yRect))
 	{
 		// cout << "COLLISION TRUE!" << endl;
-		x = (objeto.xRect - protaW) / desplaza;
+		x = (objeto.xRect - protaW) ;
 	}
 	
 }
@@ -152,9 +152,9 @@ void eleccionDeBando::crearEleccionBando()
 	// inicializar vbles
 
 	desplaza = 4;
-	x = 380 / 4;
+	x = 380;
 
-	y = 360 / 4;
+	y = 360;
 
 
 	paso = 0;
@@ -166,7 +166,9 @@ void eleccionDeBando::crearEleccionBando()
 	coordenadas coordElegido;
 
 	Transition transBando;
-	transBando.drawTransitionReversa(pantalla, fondo, 962, 962, prota, paso, dir, x, y, desplaza);
+	transBando.drawTransitionReversa(pantalla, fondo, 962, 962, prota, paso, dir, x, y);
+	transBando.destroyTrans();
+
 	al_start_timer(timer);
 
 	while (!salir)
@@ -176,7 +178,7 @@ void eleccionDeBando::crearEleccionBando()
 		al_clear_to_color(al_map_rgb(120, 90, 90));
 		al_draw_scaled_bitmap(fondo, 0, 0, 962, 962, 0, 0, 800, 600, 0);
 		al_draw_scaled_bitmap(warpOff, 1, 9, 15, 15, 380, 360, 30, 30, 0);
-		al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x * desplaza, y * desplaza, 0);
+		al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x , y , 0);
 		al_draw_scaled_bitmap(manBlue, 0,0,17,21,206,82,25,25,0);
 		al_draw_scaled_bitmap(knightBlue, 0,0,64,70, coordBlueKL.xRect, coordBlueKL.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(knightBlue, 0, 0, 64, 70, coordBlueKR.xRect, coordBlueKR.yRect, 30, 30, 0);
@@ -194,10 +196,10 @@ void eleccionDeBando::crearEleccionBando()
 
 		{
 
-			y--;
+			y-=desplaza;
 
-			cout << "y: " << y * desplaza << endl;
-			cout << "x: " << x * desplaza << endl;
+			cout << "y: " << y << endl;
+			cout << "x: " << x << endl;
 
 			dir = 4;
 
@@ -209,10 +211,10 @@ void eleccionDeBando::crearEleccionBando()
 
 		{
 
-			y++;
+			y+= desplaza;
 
-			cout << "y: " << y * desplaza << endl;
-			cout << "x: " << x * desplaza << endl;
+			cout << "y: " << y << endl;
+			cout << "x: " << x << endl;
 
 			dir = 3;
 
@@ -224,10 +226,10 @@ void eleccionDeBando::crearEleccionBando()
 
 		{
 
-			x--;
+			x-= desplaza;
 
-			cout << "x: " << x * desplaza << endl;
-			cout << "y: " << y * desplaza << endl;
+			cout << "x: " << x << endl;
+			cout << "y: " << y << endl;
 
 			dir = 1;
 
@@ -239,10 +241,10 @@ void eleccionDeBando::crearEleccionBando()
 
 		{
 
-			x++;
+			x+= desplaza;
 
-			cout << "x: " << x * desplaza << endl;
-			cout << "y: " << y * desplaza << endl;
+			cout << "x: " << x << endl;
+			cout << "y: " << y << endl;
 
 
 			dir = 2;
@@ -280,7 +282,7 @@ void eleccionDeBando::crearEleccionBando()
 					coordElegido = coordBlue;
 					ALLEGRO_BITMAP* linkBlue = al_load_bitmap("Imagenes/linkblue.png");
 					al_draw_text(textboxFont, al_map_rgb(0,0,255), 250, 272, NULL, "Bienvenido a los EMPIRITAS !");
-					al_draw_scaled_bitmap(linkBlue, 92, 2282, 28, 31, x*desplaza , y*desplaza , 32.5, 35, 0);
+					al_draw_scaled_bitmap(linkBlue, 92, 2282, 28, 31, x , y , 32.5, 35, 0);
 					al_flip_display();
 					al_rest(5);
 					break;
@@ -290,7 +292,7 @@ void eleccionDeBando::crearEleccionBando()
 				coordRed = coordRed;
 				ALLEGRO_BITMAP* linkRed = al_load_bitmap("Imagenes/linkred.png");
 				al_draw_text(textboxFont, al_map_rgb(255, 0, 0), 250, 272, NULL, "Bienvenido a los RACIONALISTAS !");
-				al_draw_scaled_bitmap(linkRed, 92, 2282, 28, 31, x * desplaza, y * desplaza, 32.5, 35, 0);
+				al_draw_scaled_bitmap(linkRed, 92, 2282, 28, 31, x , y , 32.5, 35, 0);
 				al_flip_display();
 				al_rest(5);
 				break;

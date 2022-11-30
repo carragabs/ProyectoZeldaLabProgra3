@@ -55,7 +55,7 @@ int main()
 	int resultadoReturn;
 
 	//NIVEL 1
-	MenuInicial miMenuI(ventana);
+	/*MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
 
 	Jugar miJugar(ventana);
@@ -94,9 +94,13 @@ int main()
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
 	crearSigMinijuego(sigMini, ventana);
+	 
 
 	eleccionDeBando miEDB(ventana);
-	miEDB.crearEleccionBando();
+	miEDB.crearEleccionBando(); */
+
+	HubN2 miHUbN2(ventana);
+	miHUbN2.crearNivel2("POLITICA");
 
 	return 0;
 

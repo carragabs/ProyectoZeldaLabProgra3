@@ -43,11 +43,12 @@ public:
     char respuesta;
     void crearMinijuego();
 
-    bool crearColisionesCofres(coordenadasCofres cofre, char respuestaP);
+    bool crearColisionesCofres(coordenadasCofres cofre, double cofreW, double cofreH);
     void drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCofres cofre,
         ALLEGRO_BITMAP* bitmapCorrecto, ALLEGRO_BITMAP* bitmapIncorrecto);
 
     double x, y;
+    double protaW , protaH;
     int desplaza;
     int paso;
     int dir;
@@ -68,34 +69,35 @@ private:
 
 };
 
-
-bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres  cofre, char respuestaP)
+bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres cofre, double cofreW, double cofreH)
 {
-    if (y * desplaza < cofre.yRect + 50 && y * desplaza >(cofre.yRect + 50) - 8
-        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32 > cofre.xRect))
+    if (y < cofre.yRect + cofreH && y > (cofre.yRect + cofreH) - 8
+        && (x < cofre.xRect + cofreW) && (x + protaW > cofre.xRect))
     {
         //cout << "COLLISION TRUE!" << endl;
-        y = (cofre.yRect + 50) / desplaza;
+        y = (cofre.yRect + cofreH);
+        //y += desplaza;
         return true;
     }
-    if (y * desplaza + 35 > cofre.yRect && (y * desplaza + 35 < cofre.yRect + 8)
-        && (x * desplaza < cofre.xRect + 50) && (x * desplaza + 32 > cofre.xRect))
+    if (y + protaH > cofre.yRect && (y + protaH < cofre.yRect + 8)
+        && (x < cofre.xRect + cofreW) && (x + protaW > cofre.xRect))
     {
         // cout << "COLLISION TRUE!" << endl;
-        y = (cofre.yRect - (35)) / desplaza;
+        y = (cofre.yRect - (protaH));
+        //y -= desplaza;
     }
 
-    if (x * desplaza < cofre.xRect + 50 && x * desplaza >(cofre.xRect + 50) - 8
-        && (y * desplaza < cofre.yRect + 50) && (y * desplaza + 35 > cofre.yRect))
+    if (x < cofre.xRect + cofreW && x >(cofre.xRect + cofreW) - 8
+        && (y < cofre.yRect + cofreH) && (y + protaH > cofre.yRect))
     {
         // cout << "COLLISION TRUE!" << endl;
-        x = (cofre.xRect + 50) / desplaza;
+        x = (cofre.xRect + cofreW);
     }
-    if (x * desplaza + 32 > cofre.xRect && x * desplaza + 32 < cofre.xRect + 8
-        && (y * desplaza < cofre.yRect + 50) && (y * desplaza + 35 > cofre.yRect))
+    if (x + protaW > cofre.xRect && x + protaW < cofre.xRect + 8
+        && (y < cofre.yRect + cofreH) && (y + protaH > cofre.yRect))
     {
         // cout << "COLLISION TRUE!" << endl;
-        x = (cofre.xRect - 32) / desplaza;
+        x = (cofre.xRect - protaW);
     }
     return false;
 }
@@ -256,10 +258,12 @@ void MinijuegoCofres::crearMinijuego()
 
     ALLEGRO_KEYBOARD_STATE teclado;
 
-    x = 350 / 4;
+    x = 350;
 
-    y = 380 / 4;
+    y = 380;
 
+    protaW = 32;
+    protaH = 35;
 
     desplaza = 4;
 
@@ -281,8 +285,11 @@ void MinijuegoCofres::crearMinijuego()
     coordCofres[2] = cofre3;
     coordCofres[3] = cofre4;
 
+    double cofreW = 50;
+    double cofreH = 50;
+
    Transition transCofres;
-   transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y, desplaza);
+   transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y);
 
     int rondaCount = 0;
     respuesta = rondas[rondaCount].respuesta;
@@ -305,8 +312,8 @@ void MinijuegoCofres::crearMinijuego()
 
         al_draw_scaled_bitmap(fondo, 0, 0, 254, 254, 0, 0, 800, 600, 0);
 
-        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza,
-            y * desplaza, rot);
+        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x,
+            y , rot);
 
         for (i = 0; i < 4; i++)
         {
@@ -356,10 +363,10 @@ void MinijuegoCofres::crearMinijuego()
 
         {
 
-            y--;
+            y -= desplaza;
 
-            cout << "y: " << y * desplaza << endl;
-            cout << "x: " << x * desplaza << endl;
+            cout << "y: " << y << endl;
+            cout << "x: " << x << endl << endl;
 
             dir = 2;
             rot = 0;
@@ -371,10 +378,10 @@ void MinijuegoCofres::crearMinijuego()
 
         {
 
-            y++;
+            y += desplaza;
 
-            cout << "y: " << y * desplaza << endl;
-            cout << "x: " << x * desplaza << endl;
+            cout << "y: " << y << endl;
+            cout << "x: " << x << endl << endl;
 
             dir = 0;
             rot = 0;
@@ -386,10 +393,10 @@ void MinijuegoCofres::crearMinijuego()
 
         {
 
-            x--;
+            x -= desplaza;
 
-            cout << "x: " << x * desplaza << endl;
-            cout << "y: " << y * desplaza << endl;
+            cout << "x: " << x << endl;
+            cout << "y: " << y << endl << endl;
 
             dir = 1;
             rot = 0;
@@ -401,10 +408,10 @@ void MinijuegoCofres::crearMinijuego()
 
         {
 
-            x++;
+            x += desplaza;
 
-            cout << "x: " << x * desplaza << endl;
-            cout << "y: " << y * desplaza << endl;
+            cout << "x: " << x << endl;
+            cout << "y: " << y << endl << endl;
 
 
             dir = 1;
@@ -418,14 +425,13 @@ void MinijuegoCofres::crearMinijuego()
 
         // limitadores
 
-
         if (x < 0) x = 0;
 
-        if (x * desplaza > 800 - 32) x = 192;
+        if (x > 800 - 32) x = 800-32;
 
         if (y < 0) y = 0;
 
-        if (y * desplaza > 600 - 35) y = 141.25;
+        if (y > 600 - 35) y = 600-35;
 
 
         if (paso > 9) paso = 0;
@@ -437,10 +443,10 @@ void MinijuegoCofres::crearMinijuego()
 
         }
 
-        cofre1.colisionAbajo = crearColisionesCofres(cofre1, respuesta);
-        cofre2.colisionAbajo = crearColisionesCofres(cofre2, respuesta);
-        cofre3.colisionAbajo = crearColisionesCofres(cofre3, respuesta);
-        cofre4.colisionAbajo = crearColisionesCofres(cofre4, respuesta);
+        cofre1.colisionAbajo = crearColisionesCofres(cofre1, cofreW, cofreH);
+        cofre2.colisionAbajo = crearColisionesCofres(cofre2, cofreW, cofreH);
+        cofre3.colisionAbajo = crearColisionesCofres(cofre3, cofreW, cofreH);
+        cofre4.colisionAbajo = crearColisionesCofres(cofre4, cofreW, cofreH);
 
         if (al_key_down(&teclado, ALLEGRO_KEY_SPACE))
         {
@@ -498,7 +504,9 @@ void MinijuegoCofres::crearMinijuego()
 
     }
 
-   transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);
+   transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
+   transCofres.destroyTrans();
+
     al_clear_to_color(al_map_rgb(255, 255, 255));
     al_flip_display();
 

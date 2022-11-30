@@ -99,7 +99,10 @@ int Ruleta::crearRuleta()
 	bool resultadoEnarray;
 
 	int i;
-	//Loop hasta que el resultado que salga no este en el array(para no repetir minijuego)
+	//Loop hasta que el resultado que salga
+	//no este en el array(para no repetir minijuego)
+
+
 	while(!resultadovalido)
 	{
 		resultadoEnarray = false;
@@ -162,30 +165,6 @@ int Ruleta::crearRuleta()
 	al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
 
 	bool salir;
-
-	double x, y;
-
-	int desplaza;
-
-	int paso;
-
-	int dir;
-
-
-	// inicializar vbles
-
-	x = 350 / 4;
-
-	y = 280 / 4;
-
-
-	desplaza = 4;
-
-
-	paso = 0;
-
-	dir = 0;
-
 
 	salir = false;
 
@@ -294,6 +273,7 @@ int Ruleta::crearRuleta()
 
 	al_clear_to_color(al_map_rgb(255,255,255));
 	al_flip_display();
+
 	return 0;
 }
 

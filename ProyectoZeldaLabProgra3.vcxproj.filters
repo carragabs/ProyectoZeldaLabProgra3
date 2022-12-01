@@ -50,5 +50,8 @@
     <ClInclude Include="headersProy\eleccionDeBando.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headersProy\animN3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

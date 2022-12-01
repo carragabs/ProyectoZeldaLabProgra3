@@ -102,25 +102,25 @@ void eleccionDeBando::crearEleccionBando()
 	ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/Alm1.png");
 	ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
 	ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/castleOutside.jpg");
-	ALLEGRO_BITMAP* manBlue = al_load_bitmap("Imagenes/oldManBlue.png");
+	ALLEGRO_BITMAP* manWhite = al_load_bitmap("Imagenes/oldManWhite.png");
 	ALLEGRO_BITMAP* manRed = al_load_bitmap("Imagenes/oldManRed.png");
-	ALLEGRO_BITMAP* knightBlue = al_load_bitmap("Imagenes/knightBlue.png");
+	ALLEGRO_BITMAP* knightWhite = al_load_bitmap("Imagenes/knightWhite.png");
 	ALLEGRO_BITMAP* knightRed = al_load_bitmap("Imagenes/knightRed.png");
 
 	double protaW = 32.5;
 	double protaH = 35;
 
-	coordenadas coordBlue = { 206, 82 , false };
-	double blueW = 25;
-	double blueH = 25;
+	coordenadas coordWhite = { 206, 82 , false };
+	double WhiteW = 25;
+	double WhiteH = 25;
 	coordenadas coordRed = { 553, 80 , false };
 	double redW = 25;
 	double redH = 25;
 
-	coordenadas coordBlueKL = {150,70,NULL};
-	coordenadas coordBlueKR= { 257,70,NULL };
-	double blueK_W = 30;
-	double blueK_H = 30;
+	coordenadas coordWhiteKL = {150,70,NULL};
+	coordenadas coordWhiteKR= { 257,70,NULL };
+	double WhiteK_W = 30;
+	double WhiteK_H = 30;
 
 	coordenadas coordRedKL = { 503,70,NULL };
 	coordenadas coordRedKR = { 611,70,NULL };
@@ -173,15 +173,15 @@ void eleccionDeBando::crearEleccionBando()
 
 	while (!salir)
 	{
-		coordBlue.colisionAbajo = false;
+		coordWhite.colisionAbajo = false;
 		coordRed.colisionAbajo = false;
 		al_clear_to_color(al_map_rgb(120, 90, 90));
 		al_draw_scaled_bitmap(fondo, 0, 0, 962, 962, 0, 0, 800, 600, 0);
 		al_draw_scaled_bitmap(warpOff, 1, 9, 15, 15, 380, 360, 30, 30, 0);
 		al_draw_bitmap_region(prota, paso * 32.5, dir * 35, 32.5, 35, x , y , 0);
-		al_draw_scaled_bitmap(manBlue, 0,0,17,21,206,82,25,25,0);
-		al_draw_scaled_bitmap(knightBlue, 0,0,64,70, coordBlueKL.xRect, coordBlueKL.yRect, 30, 30, 0);
-		al_draw_scaled_bitmap(knightBlue, 0, 0, 64, 70, coordBlueKR.xRect, coordBlueKR.yRect, 30, 30, 0);
+		al_draw_scaled_bitmap(manWhite, 0,0,17,21,206,82,25,25,0);
+		al_draw_scaled_bitmap(knightWhite, 0,0,64,70, coordWhiteKL.xRect, coordWhiteKL.yRect, 30, 30, 0);
+		al_draw_scaled_bitmap(knightWhite, 0, 0, 64, 70, coordWhiteKR.xRect, coordWhiteKR.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKL.xRect, coordRedKL.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKR.xRect, coordRedKR.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(manRed,0,0,1280,1733,553,80,25,25,0);
@@ -254,44 +254,44 @@ void eleccionDeBando::crearEleccionBando()
 		}
 		if (paso > 3) paso = 0;
 
-		coordBlue.colisionAbajo = crearColisionesLider(coordBlue,blueW,blueH,protaW,protaH);
+		coordWhite.colisionAbajo = crearColisionesLider(coordWhite,WhiteW,WhiteH,protaW,protaH);
 		coordRed.colisionAbajo = crearColisionesLider(coordRed, redW, redH, protaW, protaH);
-		crearColisionesSoldados(coordBlueKL,blueK_W,blueK_H,protaW,protaH);
-		crearColisionesSoldados(coordBlueKR, blueK_W, blueK_H, protaW, protaH);
+		crearColisionesSoldados(coordWhiteKL,WhiteK_W,WhiteK_H,protaW,protaH);
+		crearColisionesSoldados(coordWhiteKR, WhiteK_W, WhiteK_H, protaW, protaH);
 		crearColisionesSoldados(coordRedKL, redK_W, redK_H, protaW, protaH);
 		crearColisionesSoldados(coordRedKR, redK_W, redK_H, protaW, protaH);
 
 		if (al_key_down(&teclado, ALLEGRO_KEY_SPACE))
 		{
-			if (coordBlue.colisionAbajo || coordRed.colisionAbajo)
+			if (coordWhite.colisionAbajo || coordRed.colisionAbajo)
 			{
 				al_draw_scaled_bitmap(fondo, 0, 0, 962, 962, 0, 0, 800, 600, 0);
 				al_draw_scaled_bitmap(warpOff, 1, 9, 15, 15, 380, 360, 30, 30, 0);
-				al_draw_scaled_bitmap(manBlue, 0, 0, 17, 21, 206, 82, 25, 25, 0);
+				al_draw_scaled_bitmap(manWhite, 0, 0, 17, 21, 206, 82, 25, 25, 0);
 				al_draw_scaled_bitmap(manRed, 0, 0, 1280, 1733, 553, 80, 25, 25, 0);
-				al_draw_scaled_bitmap(knightBlue, 0, 0, 64, 70, coordBlueKL.xRect, coordBlueKL.yRect, 30, 30, 0);
-				al_draw_scaled_bitmap(knightBlue, 0, 0, 64, 70, coordBlueKR.xRect, coordBlueKR.yRect, 30, 30, 0);
+				al_draw_scaled_bitmap(knightWhite, 0, 0, 64, 70, coordWhiteKL.xRect, coordWhiteKL.yRect, 30, 30, 0);
+				al_draw_scaled_bitmap(knightWhite, 0, 0, 64, 70, coordWhiteKR.xRect, coordWhiteKR.yRect, 30, 30, 0);
 				al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKL.xRect, coordRedKL.yRect, 30, 30, 0);
 				al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKR.xRect, coordRedKR.yRect, 30, 30, 0);
 				ALLEGRO_FONT* textboxFont = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
 
 
-				if (coordBlue.colisionAbajo)
+				if (coordWhite.colisionAbajo)
 				{
-					al_draw_filled_rectangle(248, 270, 630, 320, al_map_rgba(0, 0, 0, 200));
-					coordElegido = coordBlue;
-					ALLEGRO_BITMAP* linkBlue = al_load_bitmap("Imagenes/linkblue.png");
-					al_draw_text(textboxFont, al_map_rgb(0,0,255), 250, 272, NULL, "Bienvenido a los EMPIRITAS !");
-					al_draw_scaled_bitmap(linkBlue, 92, 2282, 28, 31, x , y , 32.5, 35, 0);
+					al_draw_filled_rectangle(248, 270, 680, 320, al_map_rgba(0, 0, 0, 200));
+					coordElegido = coordWhite;
+					ALLEGRO_BITMAP* linkWhite = al_load_bitmap("Imagenes/linkwhite.png");
+					al_draw_text(textboxFont, al_map_rgb(255,255,255), 250, 272, NULL, "Bienvenido a los RACIONALISTAS !");
+					al_draw_scaled_bitmap(linkWhite, 92, 2282, 28, 31, x , y , 32.5, 35, 0);
 					al_flip_display();
 					al_rest(5);
 					break;
 					
 				}
-				al_draw_filled_rectangle(248, 270, 680, 320, al_map_rgba(0, 0, 0, 200));
+				al_draw_filled_rectangle(248, 270, 630, 320, al_map_rgba(0, 0, 0, 200));
 				coordRed = coordRed;
 				ALLEGRO_BITMAP* linkRed = al_load_bitmap("Imagenes/linkred.png");
-				al_draw_text(textboxFont, al_map_rgb(255, 0, 0), 250, 272, NULL, "Bienvenido a los RACIONALISTAS !");
+				al_draw_text(textboxFont, al_map_rgb(255, 0, 0), 250, 272, NULL, "Bienvenido a los EMPIRISTAS !");
 				al_draw_scaled_bitmap(linkRed, 92, 2282, 28, 31, x , y , 32.5, 35, 0);
 				al_flip_display();
 				al_rest(5);

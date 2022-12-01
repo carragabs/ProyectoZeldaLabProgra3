@@ -146,6 +146,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headersProy\animN3.h" />
     <ClInclude Include="headersProy\DisplayPreguntas.h" />
     <ClInclude Include="headersProy\eleccionDeBando.h" />
     <ClInclude Include="headersProy\HubNivel2.h" />

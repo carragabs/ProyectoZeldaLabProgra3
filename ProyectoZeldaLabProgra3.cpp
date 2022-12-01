@@ -8,6 +8,7 @@
 #include "headersProy/MenuInicial.h"
 #include "headersProy/Jugar.h"
 #include "headersProy/eleccionDeBando.h"
+#include "headersProy/animN3.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
@@ -53,7 +54,7 @@ int main()
 		return -1;
 
 	int resultadoReturn;
-
+	/*
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
@@ -99,8 +100,11 @@ int main()
 	eleccionDeBando miEDB(ventana);
 	miEDB.crearEleccionBando();
 
-	HubN2 miHUbN2(ventana);
-	miHUbN2.crearNivel2("POLITICA");
+	*/
+	
+	animacionN3 mianimN3(ventana);
+	mianimN3.crearAnimaciones();	
+
 
 	return 0;
 

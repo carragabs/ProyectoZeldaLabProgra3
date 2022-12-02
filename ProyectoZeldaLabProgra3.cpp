@@ -36,6 +36,7 @@ int main()
 	int alto = 600;
 
 	ALLEGRO_DISPLAY* ventana = NULL;
+
 	if (!al_init())
 		return -1;
 
@@ -54,7 +55,7 @@ int main()
 		return -1;
 
 	int resultadoReturn;
-	/*
+	
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
@@ -94,13 +95,10 @@ int main()
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);
-	 
+	crearSigMinijuego(sigMini, ventana);	 
 
 	eleccionDeBando miEDB(ventana);
-	miEDB.crearEleccionBando();
-
-	*/
+	miEDB.crearEleccionBando();	
 	
 	animacionN3 mianimN3(ventana);
 	mianimN3.crearAnimaciones();	

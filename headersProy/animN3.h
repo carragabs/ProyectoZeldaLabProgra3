@@ -261,7 +261,7 @@ void animacionN3::drawAtkEnmyEmpate(int Dx, int Dy)
 	al_draw_scaled_bitmap(link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);
 	miSR.drawSpritesheetRowFlag(18, display, varsenmyAtk);
 
-	al_draw_scaled_bitmap(enemigo, 13, 271, 27, 35, 600, 320, 150, 180, 1);
+	al_draw_scaled_bitmap(enemigo, 13, 271, 27, 35, 50+70, 360, 150, 180, 1);
 	al_flip_display();
 	return;
 }
@@ -383,7 +383,7 @@ void animacionN3::drawEmpate()
 	drawWalkEnmy();
 	al_draw_scaled_bitmap(link,206,1679,29,26, 50, 360, 150, 140, 1);
 	al_flip_display();
-	drawAtkEnmyEmpate(50 + 30, 360);
+	drawAtkEnmyEmpate(50 + 70, 360);
 
 }
 
@@ -397,8 +397,8 @@ void animacionN3::crearAnimaciones()
 		x = 50; y = 360;
 
 		batMapa = al_load_bitmap("Imagenes/Batallabase.png");
-		link = al_load_bitmap("Imagenes/linkwhite.png");
-		enemigo = al_load_bitmap("Imagenes/4SenemiesRed.png");
+		link = al_load_bitmap("Imagenes/linkred.png");
+		enemigo = al_load_bitmap("Imagenes/4Senemies.png");
 
 		al_draw_bitmap(batMapa, 0, 0, 0);
 		al_draw_scaled_bitmap(link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);
@@ -408,7 +408,7 @@ void animacionN3::crearAnimaciones()
 		system("pause");
 
 		//Animaciones
-		 
+
 		//LINK
 		//ATK LINK
 		drawWalkLink();
@@ -441,9 +441,11 @@ void animacionN3::crearAnimaciones()
 		drawDeathLink();
 
 		al_rest(1);
-
+		
 		//EMPATE
 		drawEmpate();
+		al_rest(0.5);
+		drawWalkEnmyRev();
 		al_rest(1);
 		salir = true;
 	}

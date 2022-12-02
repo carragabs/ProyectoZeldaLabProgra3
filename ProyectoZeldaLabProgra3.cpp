@@ -8,7 +8,7 @@
 #include "headersProy/MenuInicial.h"
 #include "headersProy/Jugar.h"
 #include "headersProy/eleccionDeBando.h"
-#include "headersProy/animN3.h"
+#include "headersProy/MinijuegoHistoria.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
@@ -17,7 +17,7 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		cout << "SE CREA MINIJUEGO ARTE" << endl;
 
 	else if (minijuegoP == 'H')
-		cout << "SE CREA MINIJUEGO HISTORIA" << endl;
+		MinijuegoHistoria miniHistoria(pantallaMain);
 
 	else if (minijuegoP == 'P')
 		MinijuegoCofres miMiniCofres(pantallaMain);
@@ -36,7 +36,6 @@ int main()
 	int alto = 600;
 
 	ALLEGRO_DISPLAY* ventana = NULL;
-
 	if (!al_init())
 		return -1;
 
@@ -55,7 +54,7 @@ int main()
 		return -1;
 
 	int resultadoReturn;
-	
+
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
@@ -95,16 +94,17 @@ int main()
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);	 
+	crearSigMinijuego(sigMini, ventana);
+
 
 	eleccionDeBando miEDB(ventana);
-	miEDB.crearEleccionBando();	
-	
-	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones();	
+	miEDB.crearEleccionBando();
 
+	
+	miHUbN2.crearNivel2("POLITICA");
 
 	return 0;
+
 
 }
 

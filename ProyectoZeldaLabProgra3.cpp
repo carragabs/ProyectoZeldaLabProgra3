@@ -18,7 +18,8 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		cout << "SE CREA MINIJUEGO ARTE" << endl;
 
 	else if (minijuegoP == 'H')
-		MinijuegoHistoria miniHistoria(pantallaMain);
+		//MinijuegoHistoria miniHistoria(pantallaMain);
+		cout << "SE CREA MINIJUEGO HISTORIA" << endl;
 
 	else if (minijuegoP == 'P')
 		MinijuegoCofres miMiniCofres(pantallaMain);

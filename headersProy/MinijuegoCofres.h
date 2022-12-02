@@ -1,5 +1,4 @@
 #pragma once
-//AGREGAR PREGUNTAS Y VER COMO SALDRAN
 // BARRA DE VIDA
 
 #include <allegro5/allegro.h>

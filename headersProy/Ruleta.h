@@ -155,7 +155,6 @@ int Ruleta::crearRuleta()
 
 	al_start_timer(timer);
 
-
 	//al_init_acodec_addon();
 	al_reserve_samples(2);
 	al_reserve_samples(2);
@@ -171,7 +170,6 @@ int Ruleta::crearRuleta()
 	al_draw_scaled_bitmap(fondo, 0, 0, 1280, 1022, 0, 0, 800, 600, 0);
 	al_draw_scaled_bitmap(warpOff,1,9,15,15,356,288,30,30,0);
 	al_flip_display();
-
 
 	string resultadotemp = "";
 	int iSX = 0;

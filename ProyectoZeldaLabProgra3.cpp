@@ -9,6 +9,7 @@
 #include "headersProy/Jugar.h"
 #include "headersProy/eleccionDeBando.h"
 #include "headersProy/MinijuegoHistoria.h"
+#include "headersProy/animN3.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
@@ -66,7 +67,6 @@ int main()
 
 
 	//NIVEL 2
-	//VER SI SE JUEGAN TODOS LOS MINIS O SOLO EL QUE TOQUE EN LA RULETA
 	string resultadominijuego;
 	char sigMini;
 
@@ -98,10 +98,10 @@ int main()
 
 
 	eleccionDeBando miEDB(ventana);
-	miEDB.crearEleccionBando();
-
+	miEDB.crearEleccionBando();	
 	
-	miHUbN2.crearNivel2("POLITICA");
+	animacionN3 mianimN3(ventana);
+	mianimN3.crearAnimaciones();	
 
 	return 0;
 

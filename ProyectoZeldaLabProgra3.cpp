@@ -5,6 +5,7 @@
 #include "headersProy/HubNivel2.h"
 #include "headersProy/Ruleta.h"
 #include "headersProy/MinijuegoCofres.h"
+#include "headersProy/Laberinto.h"
 #include "headersProy/MenuInicial.h"
 #include "headersProy/Jugar.h"
 #include "headersProy/eleccionDeBando.h"
@@ -25,7 +26,9 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		MinijuegoCofres miMiniCofres(pantallaMain);
 
 	else if (minijuegoP == 'C')
-		cout << "SE CREA MINIJUEGO CIENCIA" << endl;
+		Mapa juego;
+	        juego.laberinto(pantallaMain);
+		//cout << "SE CREA MINIJUEGO CIENCIA" << endl;
 
 }
 

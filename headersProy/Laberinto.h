@@ -28,7 +28,7 @@ void mapa::Preguntas() {
     P[0].extra = "del heliocentrismo (teoria que afirma que el sol es el centro del universo):";
     P[0].respuesta1 = "1) Tomas Moro (arriba)";
     P[0].respuesta2 = "2)Galileo (izquierda)";
-    P[0].respuesta3 = "3)Platón (derecha)";
+    P[0].respuesta3 = "3)PlatÃ³n (derecha)";
     P[0].correcta = 2;
 
     P[1].pregunta = "El metodo cientifico se introduce por el interes de tres filosofos. Entre los siguientes uno de los";
@@ -77,7 +77,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
     al_register_event_source(queue, al_get_timer_event_source(segundo));
     al_start_timer(segundo);
-    int sec = 0; ALLEGRO_FONT* font = al_load_font("VPPixel-Simplified.otf", 18, 0);
+    int sec = 0; ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
     if (answer == respuesta) {
         al_clear_to_color(al_map_rgb(0, 0, 0));
         while (sec < 2) {
@@ -87,7 +87,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                     sec++;
 
                     if (aleatorio != 5) {
-                        ALLEGRO_BITMAP* fondo = al_load_bitmap("Heart.png");
+                        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/Heart.png");
                         al_draw_scaled_bitmap(fondo, 0, 0, 234, 208, 0, 0, 800, 500, 0);
                         al_draw_text(font, al_map_rgb(255, 255, 255), 8, 550, NULL, "Respuesta Correcta");
                         corazones++;
@@ -104,7 +104,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
 
             /* Transition transCofres;
-             ALLEGRO_BITMAP* fondo = al_load_bitmap("mapa 2d.png");
+             ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/mapa 2d.png");
              transCofres.drawTransitionReversa(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);*/
 
 
@@ -123,7 +123,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                 if (evento.timer.source == segundo) {
                     sec++;
 
-                    ALLEGRO_BITMAP* fondo = al_load_bitmap("Out.png");
+                    ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/Out.png");
                     al_draw_scaled_bitmap(fondo, 0, 0, 874, 602, 0, 0, 800, 500, 0);
                     al_draw_text(font, al_map_rgb(255, 255, 255), 8, 550, NULL, "Has contestado toda las preguntas");
                     al_flip_display();
@@ -211,10 +211,10 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         //texto
 
         ALLEGRO_DISPLAY* ventana = al_create_display(800, 600);
-        ALLEGRO_FONT* font = al_load_font("VPPixel-Simplified.otf", 18, 0);
+        ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
 
-        ALLEGRO_BITMAP* prota = al_load_bitmap("SheetZelda2.png");
-        ALLEGRO_BITMAP* fondo = al_load_bitmap("dungeon.png");
+        ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
+        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/dungeon.png");
         
 
         // defino lista de eventos

@@ -12,12 +12,46 @@
 #include "headersProy/MinijuegoHistoria.h"
 #include "headersProy/animN3.h"
 #include "headersProy/Laberinto.h"
+#include "headersProy/Minijuego3.h"
+#include "headersProy/escena.h"
+
+struct datos {
+	int FPS;
+	ALLEGRO_EVENT_QUEUE* Mis_eventos;
+	ALLEGRO_COLOR fondo;
+	ALLEGRO_BITMAP* img;
+} sistema;
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
 
 	if (minijuegoP == 'A')
-		cout << "SE CREA MINIJUEGO ARTE" << endl;
+	{
+		minijuego3 Mimini3;
+		ALLEGRO_TIMER* timer = NULL;
+
+		al_set_window_title(pantallaMain, "Zelda");
+
+		
+		sistema.FPS = 30;
+		timer = al_create_timer(1.0 / sistema.FPS);
+
+		// creo lista de eventos
+		sistema.Mis_eventos = al_create_event_queue();
+
+		// asigno eventos a la lista de eventos
+		al_register_event_source(sistema.Mis_eventos, al_get_keyboard_event_source());
+
+		al_register_event_source(sistema.Mis_eventos, al_get_display_event_source(pantallaMain));
+		al_register_event_source(sistema.Mis_eventos, al_get_timer_event_source(timer));
+		al_start_timer(timer);
+
+		Mimini3.juego(sistema.Mis_eventos);
+
+		// al_unlock_bitmap(choque);
+
+		//cout << "SE CREA MINIJUEGO ARTE" << endl;
+	}
 
 	else if (minijuegoP == 'H')
 		MinijuegoHistoria miniHistoria(pantallaMain);
@@ -26,7 +60,8 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		MinijuegoCofres miMiniCofres(pantallaMain);
 
 	else if (minijuegoP == 'C')
-	{ mapa juego;juego.laberinto(pantallaMain); }
+	{ mapa juego;juego.laberinto(pantallaMain);
+	}
 
 }
 
@@ -104,7 +139,9 @@ int main()
 	
 	//NIVEL 3
 	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones(); 
+	mianimN3.crearAnimaciones();  
+
+	//crearSigMinijuego('A', ventana);
 
 	return 0;
 

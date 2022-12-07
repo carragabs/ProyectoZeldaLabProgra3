@@ -5,11 +5,15 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <iostream>
-#include "escena.h"
-#include "Header.h"
+#include "headersProy/escena.h"
+#include "headersProy/Header.h"
+
+//int contador = 0;
 
 class minijuego3 {
-
+public:
+	int contador = 0;
+	int vidaM3 = 50;
 
 	struct charco
 	{
@@ -18,25 +22,24 @@ class minijuego3 {
 
 	};
 	Header teste;
-	void definirPreguntas();
+	//void M3definirPreguntas();
 	ALLEGRO_EVENT_QUEUE* event_queue;
-	void jugar();
+	//void M3jugar();
 
-	void damage();
-
-	int contador = 0;
-	int vida = 100;
+	//void M3damage();
 
 
-	struct datos {
+
+
+	/*struct datos {
 		int FPS;
 		ALLEGRO_EVENT_QUEUE* Mis_eventos;
 		ALLEGRO_COLOR fondo;
 		ALLEGRO_BITMAP* img;
-	} sistema;
+	} sistema; */
 
 	bool crearColisionesCharco(charco  charcoActual, double charcoActualW, double charcoActualH,
-		int& x, int& y, double protaW, double protaH, int vida, int contador)
+		int& x, int& y, double protaW, double protaH, int vidaM3, int contador)
 	{
 		if (x  < charcoActual.x + charcoActualW && x >(charcoActual.x + charcoActualW) - 8
 			&& (y < charcoActual.y + charcoActualH + 2) && (y + protaH > charcoActual.y))
@@ -62,60 +65,60 @@ class minijuego3 {
 			&& (x < charcoActual.x + charcoActualW) && (x + protaW > charcoActual.x))
 		{
 			if (charcoActual.x == 65 && charcoActual.y == 85) {
-				if (charcoActual.colisionArriba == P[contador].correcta) {
-					cout << "COLLISION TRUE y Respuesta verdadera!" << vida << endl;
+				if (charcoActual.colisionArriba == Q[contador].correcta) {
+					cout << "COLLISION TRUE y Respuesta verdadera!" << vidaM3 << endl;
 
-					jugar();
+					M3jugar();
 
 					return true;
 
 				}
 				else {
-					damage();
+					M3damage();
 					return false;
 				}
 
 			}
 
 			if (charcoActual.x == 272 && charcoActual.y == 85) {
-				if (charcoActual.colisionArriba == P[contador].correcta) {
-					cout << "COLLISION TRUE y Respuesta verdadera!" << vida << endl;
-					jugar();
+				if (charcoActual.colisionArriba == Q[contador].correcta) {
+					cout << "COLLISION TRUE y Respuesta verdadera!" << vidaM3 << endl;
+					M3jugar();
 
 					return true;
 
 				}
 				else {
-					damage();
+					M3damage();
 					return false;
 				}
 
 			}
 
 			if (charcoActual.x == 480 && charcoActual.y == 85) {
-				if (charcoActual.colisionArriba == P[contador].correcta) {
-					cout << "COLLISION TRUE y Respuesta verdadera!" << vida << endl;
-					jugar();
+				if (charcoActual.colisionArriba == Q[contador].correcta) {
+					cout << "COLLISION TRUE y Respuesta verdadera!" << vidaM3 << endl;
+					M3jugar();
 
 					return true;
 
 				}
 				else {
-					damage();
+					M3damage();
 					return false;
 				}
 
 			}
 			if (charcoActual.x == 656 && charcoActual.y == 85) {
-				if (charcoActual.colisionArriba == P[contador].correcta) {
-					cout << "COLLISION TRUE y Respuesta verdadera!" << vida << endl;
-					jugar();
+				if (charcoActual.colisionArriba ==	Q[contador].correcta) {
+					cout << "COLLISION TRUE y Respuesta verdadera!" << vidaM3 << endl;
+					M3jugar();
 
 					return true;
 
 				}
 				else {
-					damage();
+					M3damage();
 					return false;
 				}
 
@@ -129,10 +132,10 @@ class minijuego3 {
 		return false;
 	}
 
-	void dibuja(ALLEGRO_COLOR fondo, int vida, int contador)
+	void dibuja(int vidaM3, int contador)
 	{
 
-		al_clear_to_color(fondo);
+		//al_clear_to_color(fondo);
 
 
 		escena.pinta(jugador.getCamX(), jugador.getCamY());
@@ -146,10 +149,10 @@ class minijuego3 {
 
 	}
 
-	void juego(ALLEGRO_COLOR fondo, ALLEGRO_EVENT_QUEUE* Mis_eventos)
+	void juego(ALLEGRO_EVENT_QUEUE* Mis_eventos)
 	{
-	
-		ALLEGRO_FONT* Triforce = al_load_font("Fonts/TNR.ttf", 23, 0);
+		M3definirPreguntas();
+		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 23, 0);
 		// nuevi
 
 		font = al_load_ttf_font("neuropol.ttf", 64, 0);
@@ -163,7 +166,7 @@ class minijuego3 {
 
 		while (repetir)
 		{
-
+			//cout << "VIDAAAAAAAAA:" << vidaM3 << endl;
 
 
 
@@ -173,7 +176,7 @@ class minijuego3 {
 			{
 
 
-				dibuja(fondo, vida, contador);
+				dibuja(vidaM3, contador);
 
 				int charcoWidth = 95;
 				int charcoHeight = 59;
@@ -185,11 +188,11 @@ class minijuego3 {
 
 
 
-				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 1, 30, NULL, P[contador].pregunta.c_str());
-				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 100, 250, NULL, P[contador].respuesta1.c_str());
-				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 100, 300, NULL, P[contador].respuesta2.c_str());
-				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 500, 250, NULL, P[contador].respuesta3.c_str());
-				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 500, 300, NULL, P[contador].respuesta4.c_str());
+				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 1, 30, NULL, Q[contador].pregunta.c_str());
+				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 100, 250, NULL, Q[contador].respuesta1.c_str());
+				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 100, 300, NULL, Q[contador].respuesta2.c_str());
+				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 500, 250, NULL, Q[contador].respuesta3.c_str());
+				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 500, 300, NULL, Q[contador].respuesta4.c_str());
 
 
 				al_draw_text(Triforce, al_map_rgb(255, 255, 255), 105, 85, NULL, "A");
@@ -199,16 +202,17 @@ class minijuego3 {
 
 
 				crearColisionesCharco(charco1, charcoWidth, charcoHeight,
-					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vida, contador);
+					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vidaM3, contador);
 				crearColisionesCharco(charco2, charcoWidth, charcoHeight,
-					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vida, contador);
+					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vidaM3, contador);
 				crearColisionesCharco(charco3, charcoWidth, charcoHeight,
-					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vida, contador);
+					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vidaM3, contador);
 				crearColisionesCharco(charco4, charcoWidth, charcoHeight,
-					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vida, contador);
-				teste.LifeBar(vida);
+					jugador.x, jugador.y, jugador.tamx, jugador.tamy, vidaM3, contador);
+				teste.LifeBar(vidaM3);
+			
 				al_flip_display();
-				al_draw_filled_rectangle(10, 20, vida, 10, al_map_rgb(0, 255, 0));
+			//	al_draw_filled_rectangle(10, 20, vidaM3, 10, al_map_rgb(0, 255, 0));
 
 
 				dibujar = false;
@@ -270,34 +274,38 @@ class minijuego3 {
 	}
 
 
-	void jugar()
+	void M3jugar()
 	{
 
 		ALLEGRO_EVENT Evento;
 
 		contador++;
-		vida = vida + 10;
+		vidaM3 = vidaM3 + 10;
+		al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+		al_draw_filled_rectangle(10, 20, vidaM3, 30, al_map_rgb(0, 255, 0));
+		al_flip_display();
 
+	jugador.inicia();
 
-		jugador.inicia();
-
-		//juego(sistema.fondo, sistema.Mis_eventos, vida, contador);
+		//juego(sistema.fondo, sistema.Mis_eventos, vidaM3, contador);
 
 
 
 	}
 
-	void damage() {
+	void M3damage() {
 
 
 
 		ALLEGRO_EVENT Evento;
 
 		contador++;
-
+		al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+		al_draw_filled_rectangle(10, 20, vidaM3, 30, al_map_rgb(0, 255, 0));
+		al_flip_display();
 		jugador.inicia();
 
-		//juego(sistema.fondo, sistema.Mis_eventos, vida, contador);
+		//juego(sistema.fondo, sistema.Mis_eventos, vidaM3, contador);
 
 
 
@@ -306,42 +314,42 @@ class minijuego3 {
 
 
 
-	void definirPreguntas() {
+	void M3definirPreguntas() {
 
-		P[0].pregunta = "Uno de los siguientes personajes fue el encargado de pintar la capilla Sixtina:";
-		P[0].respuesta1 = "1)Donatello";
-		P[0].respuesta2 = "2)Miguel Angel";
-		P[0].respuesta3 = "3)Leonardo Da Vinci";
-		P[0].respuesta4 = "4)Francis Bacon";
-		P[0].correcta = 2;
+		Q[0].pregunta = "Uno de los siguientes personajes fue el encargado de pintar la capilla Sixtina:";
+		Q[0].respuesta1 = "1)Donatello";
+		Q[0].respuesta2 = "2)Miguel Angel";
+		Q[0].respuesta3 = "3)Leonardo Da Vinci";
+		Q[0].respuesta4 = "4)Francis Bacon";
+		Q[0].correcta = 2;
 
-		P[1].pregunta = "Genio del renacimiento que esculpio el Moises, el David y la Pieta";
-		P[1].respuesta1 = "1) Miguel Angel Buonarroti";
-		P[1].respuesta2 = "2) Rafael Sanzio";
-		P[1].respuesta3 = "3)Leonardo Da Vinci";
-		P[1].respuesta4 = "4)Galileo Galiley";
-		P[1].correcta = 1;
+		Q[1].pregunta = "Genio del renacimiento que esculpio el Moises, el David y la Pieta";
+		Q[1].respuesta1 = "1) Miguel Angel Buonarroti";
+		Q[1].respuesta2 = "2) Rafael Sanzio";
+		Q[1].respuesta3 = "3)Leonardo Da Vinci";
+		Q[1].respuesta4 = "4)Galileo Galiley";
+		Q[1].correcta = 1;
 
-		P[2].pregunta = "Durante el renacimiento el estilo artistico que impregno el arte, la filosofia, la pintura escritura fue el:";
-		P[2].respuesta1 = "1)Romantisimo";
-		P[2].respuesta2 = "2)Gotico";
-		P[2].respuesta3 = "3)El barroco.";
-		P[2].respuesta4 = "4)Clasismo";
-		P[2].correcta = 3;
+		Q[2].pregunta = "Durante el renacimiento el estilo artistico que impregno el arte, la filosofia, la pintura escritura fue el:";
+		Q[2].respuesta1 = "1)Romantisimo";
+		Q[2].respuesta2 = "2)Gotico";
+		Q[2].respuesta3 = "3)El barroco.";
+		Q[2].respuesta4 = "4)Clasismo";
+		Q[2].correcta = 3;
 
-		P[3].pregunta = "Durante el renacimiento surge una nueva vision del hombre, que se vio reflejada en el arte, en la politica y en las ciencias sociales y humanas, a lo que se denomina";
-		P[3].respuesta1 = "1)Humanismo";
-		P[3].respuesta2 = "2)Teocentrismo";
-		P[3].respuesta3 = "3)Antropocentrismo";
-		P[3].respuesta4 = "4)Paradigma antropologico";
-		P[3].correcta = 1;
+		Q[3].pregunta = "Durante el renacimiento surge una nueva vision del hombre, que se vio reflejada en el arte, en la politica y en las ciencias sociales y humanas, a lo que se denomina";
+		Q[3].respuesta1 = "1)Humanismo";
+		Q[3].respuesta2 = "2)Teocentrismo";
+		Q[3].respuesta3 = "3)Antropocentrismo";
+		Q[3].respuesta4 = "4)Paradigma antropologico";
+		Q[3].correcta = 1;
 
-		P[4].pregunta = "Cuatro genios del renacimiento (Leonardo, Donatello, Rafael y Michelangelo) han sido llevados a la pantalla en los comics de:";
-		P[4].respuesta1 = "1)Tortugas Ninja";
-		P[4].respuesta2 = "2)Los cuatro Fantasticos";
-		P[4].respuesta3 = "3)Los antagonistas de Attack on Titan";
-		P[4].respuesta4 = "4)Los 4 Requesones";
-		P[4].correcta = 1;
+		Q[4].pregunta = "Cuatro genios del renacimiento (Leonardo, Donatello, Rafael y Michelangelo) han sido llevados a la pantalla en los comics de:";
+		Q[4].respuesta1 = "1)Tortugas Ninja";
+		Q[4].respuesta2 = "2)Los cuatro Fantasticos";
+		Q[4].respuesta3 = "3)Los antagonistas de Attack on Titan";
+		Q[4].respuesta4 = "4)Los 4 Requesones";
+		Q[4].correcta = 1;
 
 	}
 

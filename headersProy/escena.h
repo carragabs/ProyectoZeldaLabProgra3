@@ -10,10 +10,10 @@
 
 using namespace std;
 
-struct preguntas {
+struct preguntasL3 {
     int correcta;
     string pregunta, respuesta1, respuesta2, respuesta3, respuesta4;
-}P[5];
+}Q[5];
 
 struct posicion
 {
@@ -25,7 +25,7 @@ int escenax = 800;
 int escenay = 480;
 
 int pantallax = 800;
-int pantallay = 450;
+int pantallay = 600;
 
 int desplaza = 3;
 int mueve = 18;

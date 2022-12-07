@@ -19,7 +19,7 @@ public :
 private:
     bool validarRespuesta(int, preguntas*, int);
     int numAleatorio();
-    int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7, contador = 0;
+    int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7,num5=7, contador = 0;
     int corazones=0;
     void Preguntas();
 };
@@ -117,7 +117,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         }
 
-    if (contador == 4) {
+    if (contador == 5) {
         while (sec < 6) {
             al_wait_for_event(queue, &evento);
             if (evento.type == ALLEGRO_EVENT_TIMER) {
@@ -144,7 +144,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
     int mapa::numAleatorio() {
 
         aleatorio = 0 + rand() % 5;
-        if (num1 != 7 && num2 != 7 && num3 != 7 && num4 != 7) {
+        if (num1 != 7 && num2 != 7 && num3 != 7 && num4 != 7 &&num5!=7) {
             aleatorio = 5;
         }
         while (aleatorio == num1 || aleatorio == num2 || aleatorio == num3 || aleatorio == num4) {
@@ -168,6 +168,9 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         else if (num3 != aleatorio && num1 != aleatorio && num2 != aleatorio && num4 == 7) {
             num4 = aleatorio;
             cout << "num4 :" << num4 << endl;
+        }else if (num3 != aleatorio && num1 != aleatorio && num2 != aleatorio && num4 != aleatorio&&num5==7) {
+            num5 = aleatorio;
+            cout << "num5 :" << num5 << endl;
         }
 
       

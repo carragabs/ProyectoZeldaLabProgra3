@@ -19,7 +19,7 @@ public :
 private:
     bool validarRespuesta(int, preguntas*, int);
     int numAleatorio();
-    int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7, contador = 0;
+    int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7,num5=7, contador = 0;
     int corazones=0;
     void Preguntas();
 };

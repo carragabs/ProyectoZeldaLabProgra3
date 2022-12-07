@@ -98,10 +98,11 @@ int main()
 	miHUbN2.crearNivel2(resultadominijuego);
 	crearSigMinijuego(sigMini, ventana);
 
-
+	//ELECCION DE BANDO
 	eleccionDeBando miEDB(ventana);
 	miEDB.crearEleccionBando();	
 	
+	//NIVEL 3
 	animacionN3 mianimN3(ventana);
 	mianimN3.crearAnimaciones();
 

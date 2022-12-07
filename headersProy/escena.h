@@ -47,8 +47,8 @@ public:
 
     void carga()
     {
-        suelo = al_load_bitmap("MapaMini.jpeg");
-        choque = al_load_bitmap("MapaRojo_Nivel2.png");
+        suelo = al_load_bitmap("Imagenes/MapaMini.jpeg");
+        choque = al_load_bitmap("Imagenes/MapaRojo_Nivel2.png");
 
     }
 
@@ -64,7 +64,7 @@ public:
         if (!sup) al_draw_bitmap(suelo, x, y, 0);
     }
 
-    // para poder utilizar el getpixel mas r·pido
+    // para poder utilizar el getpixel mas r√°pido
     void bloquea()
     {
         lock = al_lock_bitmap(choque, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
@@ -113,7 +113,7 @@ public:
 
     void inicia()
     {
-        img = al_load_bitmap("SheetZelda2.png");
+        img = al_load_bitmap("Imagenes/SheetZelda2.png");
         tiempoPaso = int(30 / mueve);
         tiempoCont = 0;
         x = 400;

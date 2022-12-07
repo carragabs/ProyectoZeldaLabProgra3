@@ -18,9 +18,9 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <string>
+#include "Transicion.h"
 using std::string;
 using namespace std;
-
 
 class MinijuegoHistoria
 {
@@ -34,8 +34,6 @@ public:
 	void LifeBar(int vida);
 	int menu();
 	ALLEGRO_DISPLAY* ventana;
-
-
 
 };
 
@@ -93,8 +91,13 @@ int MinijuegoHistoria ::menu() {
 	ALLEGRO_BITMAP* dermedio = al_load_bitmap("Imagenes/dermedio.jpeg");
 	ALLEGRO_BITMAP* menu_null = al_load_bitmap("Imagenes/vacios.jpeg");
 
+	Transition transHisto;
+	transHisto.drawTransitionReversa(ventana, menu_null, 800, 600,
+		dermedio, 0, 0, 0, 0);
+
 	//menu
 	int botones[] = { 0 };
+
 
 	while (true)
 	{
@@ -551,6 +554,14 @@ int MinijuegoHistoria ::menu() {
 
 		}switch (Evento.keyboard.keycode) {
 		case ALLEGRO_KEY_ESCAPE: {
+			transHisto.drawTransition(ventana, menu_null, 800, 600,
+				dermedio, 0, 0, 0, 0);
+			transHisto.destroyTrans();
+
+			al_clear_to_color(al_map_rgb(255, 255, 255));
+			al_flip_display();
+			al_rest(1);
+
 			return 1;
 		}
 		}

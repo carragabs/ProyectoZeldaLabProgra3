@@ -3,6 +3,7 @@
 #include<Windows.h>
 #include<iostream>
 #include <string>
+#include "Transicion.h"
 using namespace std;
 
 struct preguntas {
@@ -87,7 +88,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                     sec++;
 
                     if (aleatorio != 5) {
-                        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/Heart.png");
+                        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/HeartLink.png");
                         al_draw_scaled_bitmap(fondo, 0, 0, 234, 208, 0, 0, 800, 500, 0);
                         al_draw_text(font, al_map_rgb(255, 255, 255), 8, 550, NULL, "Respuesta Correcta");
                         corazones++;
@@ -210,7 +211,8 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         //texto
 
-        ALLEGRO_DISPLAY* ventana = al_create_display(800, 600);
+        //ALLEGRO_DISPLAY* ventana = al_create_display(800, 600);
+        ALLEGRO_DISPLAY* ventana = pantalla;
         ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
 
         ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
@@ -267,9 +269,12 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         salir = false;
 
+        Transition transLaberinto;
+        transLaberinto.drawTransitionReversa(ventana, fondo, 960, 704,
+            prota, 0, 0, 0, 0);
 
-
-
+        al_clear_to_color(al_map_rgb(0,0,0));
+        al_flip_display();
         while (!salir)
 
         {
@@ -454,7 +459,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         }
         al_destroy_bitmap(prota);
-        al_destroy_display(pantalla);
+        //al_destroy_display(pantalla);
         al_clear_to_color(al_map_rgb(255, 255, 255));
         al_flip_display();
     }

@@ -11,6 +11,7 @@
 #include "headersProy/eleccionDeBando.h"
 #include "headersProy/MinijuegoHistoria.h"
 #include "headersProy/animN3.h"
+#include "headersProy/Laberinto.h"
 
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 {
@@ -19,16 +20,13 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		cout << "SE CREA MINIJUEGO ARTE" << endl;
 
 	else if (minijuegoP == 'H')
-		//MinijuegoHistoria miniHistoria(pantallaMain);
-		cout << "SE CREA MINIJUEGO HISTORIA" << endl;
+		MinijuegoHistoria miniHistoria(pantallaMain);
 
 	else if (minijuegoP == 'P')
 		MinijuegoCofres miMiniCofres(pantallaMain);
 
 	else if (minijuegoP == 'C')
-		Mapa juego;
-	        juego.laberinto(pantallaMain);
-		//cout << "SE CREA MINIJUEGO CIENCIA" << endl;
+	{ mapa juego;juego.laberinto(pantallaMain); }
 
 }
 
@@ -59,7 +57,7 @@ int main()
 		return -1;
 
 	int resultadoReturn;
-
+	
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
@@ -105,7 +103,7 @@ int main()
 	miEDB.crearEleccionBando();	
 	
 	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones();	
+	mianimN3.crearAnimaciones();
 
 	return 0;
 

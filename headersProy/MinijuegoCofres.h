@@ -64,9 +64,20 @@ public:
     void setPreguntas();
     void drawPreguntas(int rondaActual);
     int vidasCount = 0;
+    void LifeBar(int vida);
 private:
 
 };
+
+void MinijuegoCofres::LifeBar(int vida) {
+
+    //al_draw_filled_rectangle(20, 85, 80, 110, al_map_rgba(0, 0, 0, 150));
+
+    al_draw_filled_rectangle(20, 100, 210, 110, al_map_rgb(255, 0, 0));
+    al_draw_filled_rectangle(20, 100, 10 + (vida + 1) * 10, 110, al_map_rgb(0, 255, 0));
+    al_flip_display();
+
+}
 
 bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres cofre, double cofreW, double cofreH)
 {
@@ -292,9 +303,10 @@ void MinijuegoCofres::crearMinijuego()
 
     int rondaCount = 0;
     respuesta = rondas[rondaCount].respuesta;
-    string vidas;
+    //string vidas;
     al_start_timer(timer);
 
+    int xfinLifeBar = 0;
     while (!salir)
 
     {
@@ -305,7 +317,7 @@ void MinijuegoCofres::crearMinijuego()
             coordCofres[i].colisionAbajo = false;
         }
 
-        vidas = "VIDAS: " + to_string(vidasCount);
+        //vidas = "VIDAS: " + to_string(vidasCount);
 
         al_clear_to_color(al_map_rgb(120, 90, 90));
 
@@ -324,8 +336,13 @@ void MinijuegoCofres::crearMinijuego()
         al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 450, 240, 0, "C");
         al_draw_text(triforceFont, al_map_rgb(255, 255, 255), 560, 240, 0, "D");
 
-        al_draw_filled_rectangle(20, 85, 80, 110, al_map_rgba(0, 0, 0, 150));
-        al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 85, 0, vidas.c_str());
+        //al_draw_filled_rectangle(20, 85, 80, 110, al_map_rgba(0, 0, 0, 150));
+        //al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 85, 0, vidas.c_str());
+        //LifeBar(vidasCount);
+        xfinLifeBar = 10 + (vidasCount + 1) * 10;
+        al_draw_filled_rectangle(20, 100, 210, 110, al_map_rgb(255, 0, 0));
+        al_draw_filled_rectangle(20, 100, xfinLifeBar, 110, al_map_rgb(0, 255, 0));
+        al_flip_display();
 
         if (rondaCount > 4)
         {
@@ -336,7 +353,6 @@ void MinijuegoCofres::crearMinijuego()
 
         respuesta = rondas[rondaCount].respuesta;
         drawPreguntas(rondaCount);
-
 
 
         al_flip_display();

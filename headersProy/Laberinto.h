@@ -461,6 +461,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         al_destroy_bitmap(prota);
         //al_destroy_display(pantalla);
         al_clear_to_color(al_map_rgb(255, 255, 255));
+        al_rest(1);
         al_flip_display();
     }
 

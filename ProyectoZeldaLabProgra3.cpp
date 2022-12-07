@@ -104,7 +104,7 @@ int main()
 	
 	//NIVEL 3
 	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones();
+	mianimN3.crearAnimaciones(); 
 
 	return 0;
 

@@ -12,6 +12,8 @@ struct coordenadasEntradas {
     int yRect;
     string minijuego;
 };
+ALLEGRO_LOCKED_REGION* lockHub;
+ALLEGRO_BITMAP* choque;
 
 struct Sprite
 {
@@ -52,9 +54,31 @@ public:
     coordenadasEntradas coordWarp;
 
 private:
-
+    void bloquea();
+    void desbloquea();
 };
 
+void bloquea()
+{
+    lockHub = al_lock_bitmap(choque, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+}
+
+// libera memoria
+void desbloquea()
+{
+    al_unlock_bitmap(choque);
+}
+
+// comprueba si esta bloqueado
+bool esRojo(int x, int y)
+{
+    unsigned char r, g, b;
+    ALLEGRO_COLOR colorMira;
+    colorMira = al_get_pixel(choque, x, y);
+    al_unmap_rgb(colorMira, &r, &g, &b);
+
+    return (r == 255 && g == 0 && b == 0);
+}
 
 void HubN2::validarMinijuego(ALLEGRO_BITMAP* obsP, coordenadasEntradas entrada, coordenadasEntradas warp, string minijuegoAjugar) {
     if (minijuegoAjugar == entrada.minijuego)
@@ -135,12 +159,32 @@ bool HubN2::crearColisionesWarp(coordenadasEntradas warp , double warpW, double 
     return false;
 }
 
+bool colisiona(int x, int y)
+{
+    bloquea();
+    bool valor = false;
+    for (int i = 1; i < 32 - 1; i++)
+    {
+        for (int j = 35 / 2; j < 35; j++)
+        {
+            int vx = x + i;
+            int vy = y + j;
+            if (esRojo(vx, vy))
+            {
+                valor = true;
+            }
+        }
+    }
+    desbloquea();
+    return valor;
+}
 
 HubN2::HubN2(ALLEGRO_DISPLAY* pantallaMain)
 {
     pantalla = pantallaMain;
     minijuego = "";
 }
+
 void HubN2::crearNivel2(string minijuegoP)
 
 {
@@ -151,6 +195,8 @@ void HubN2::crearNivel2(string minijuegoP)
     int curFrame = 0;
     int frameCount = 0;
     int frameDelay = 2;
+
+    choque = al_load_bitmap("Imagenes/MapaRojo8.png");
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
     ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
@@ -194,6 +240,8 @@ void HubN2::crearNivel2(string minijuegoP)
     paso = 0;
 
     dir = 0;
+
+    int ax, ay;
 
 
     salir = false;
@@ -240,6 +288,9 @@ void HubN2::crearNivel2(string minijuegoP)
     while (!salir)
 
     {
+        ax = x;
+        ay = y;
+
         ALLEGRO_EVENT evento;
         al_wait_for_event(Mis_eventos, &evento);
 
@@ -345,6 +396,15 @@ void HubN2::crearNivel2(string minijuegoP)
                 paso++;
 
             }
+
+            if ((x != ax || y != ay) && colisiona(x, y))
+            {
+                cout << "ES ROJO" << endl;
+                cout << "X: " << x << endl;
+                //x = ax;
+                //y = ay;
+            }
+
         }
 
 

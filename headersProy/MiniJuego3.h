@@ -5,6 +5,8 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <iostream>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "headersProy/escena.h"
 #include "headersProy/Header.h"
 
@@ -13,8 +15,8 @@
 class minijuego3 {
 public:
 	int contador = 0;
-	int vidaM3 = 50;
-
+	int vidaM3;
+	int* vidaptr;
 	struct charco
 	{
 		double x, y;
@@ -149,11 +151,13 @@ public:
 
 	}
 
-	void juego(ALLEGRO_EVENT_QUEUE* Mis_eventos)
+	void juego(ALLEGRO_EVENT_QUEUE* Mis_eventos , int* vida)
 	{
+		vidaptr = vida;
+		vidaM3 = *vidaptr;
+
 		M3definirPreguntas();
 		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 23, 0);
-		// nuevi
 
 		font = al_load_ttf_font("neuropol.ttf", 64, 0);
 		ALLEGRO_EVENT evento;
@@ -261,7 +265,7 @@ public:
 
 
 		}
-
+		*vidaptr = vidaM3;
 		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_flip_display();
 
@@ -269,7 +273,7 @@ public:
 		al_rest(1);
 
 
-		cout << "THE END";
+		cout << "THE END" << endl;
 
 	}
 
@@ -282,7 +286,7 @@ public:
 		contador++;
 		vidaM3 = vidaM3 + 10;
 		al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
-		al_draw_filled_rectangle(10, 20, vidaM3, 30, al_map_rgb(0, 255, 0));
+		al_draw_filled_rectangle(10, 20, vidaM3+10, 30, al_map_rgb(0, 255, 0));
 		al_flip_display();
 
 	jugador.inicia();

@@ -14,13 +14,14 @@ struct preguntas {
 class mapa {
 public :
 	
-    void laberinto(ALLEGRO_DISPLAY* pantalla);
+    void laberinto(ALLEGRO_DISPLAY* pantalla , int* vida);
 
 private:
     bool validarRespuesta(int, preguntas*, int);
     int numAleatorio();
     int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7,num5=7, contador = 0;
-    int corazones=0;
+    int* vidaptr;
+    int corazones;
     void Preguntas();
 };
 
@@ -91,7 +92,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                         ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/HeartLink.png");
                         al_draw_scaled_bitmap(fondo, 0, 0, 234, 208, 0, 0, 800, 500, 0);
                         al_draw_text(font, al_map_rgb(255, 255, 255), 8, 550, NULL, "Respuesta Correcta");
-                        corazones++;
+                        //corazones++;
                         al_flip_display();
                     }
 
@@ -101,6 +102,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
             }
 
         }
+        corazones++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
 
@@ -177,7 +179,10 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         return aleatorio;
     };
 
-    void mapa::laberinto(ALLEGRO_DISPLAY* pantalla) {
+    void mapa::laberinto(ALLEGRO_DISPLAY* pantalla , int* vida) {
+        vidaptr = vida;
+        corazones = *vidaptr / 10;
+
         Preguntas();
         int respuesta;
         //int Ancho = GetSystemMetrics(SM_CXSCREEN);
@@ -272,16 +277,16 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         salir = false;
 
-        Transition transLaberinto;
-        transLaberinto.drawTransitionReversa(ventana, fondo, 960, 704,
-            prota, 0, 0, 0, 0);
+        //Transition transLaberinto;
+        //transLaberinto.drawTransitionReversa(ventana, fondo, 960, 704,
+         //   prota, 0, 0, 0, 0);
 
         al_clear_to_color(al_map_rgb(0,0,0));
         al_flip_display();
         while (!salir)
 
         {
-
+            //cout << "corazones" << corazones << endl << endl;
             borrar = false;
 
             // pinta el fondo de un color 
@@ -461,6 +466,8 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
             }
 
         }
+        //cout << "corazones" << corazones << endl << endl;
+        *vidaptr = corazones *10;
         al_destroy_bitmap(prota);
         //al_destroy_display(pantalla);
         al_clear_to_color(al_map_rgb(255, 255, 255));

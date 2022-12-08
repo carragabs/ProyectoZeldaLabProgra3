@@ -1,5 +1,4 @@
 #pragma once
-// BARRA DE VIDA
 
 #include <allegro5/allegro.h>
 #include <iostream>
@@ -35,10 +34,9 @@ struct variablesDrawExplosion
 
 class MinijuegoCofres {
 public:
-    //MinijuegoCofres(string respueta P);
     ALLEGRO_DISPLAY* pantalla;
     bool salir = false;
-    MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain);
+    MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain , int* vida);
     char respuesta;
     void crearMinijuego();
 
@@ -52,6 +50,7 @@ public:
     int paso;
     int dir;
     int rot;
+    int* vidaptr;
     coordenadasCofres  coordCofres[4];
     coordenadasCofres  cofre1;
     coordenadasCofres  cofre2;
@@ -63,7 +62,7 @@ public:
     ALLEGRO_FONT* textboxFont = al_load_font("Fonts/ReturnofGanon.ttf", 22, 0);
     void setPreguntas();
     void drawPreguntas(int rondaActual);
-    int vidasCount = 0;
+    int vidasCount;
     void LifeBar(int vida);
 private:
 
@@ -125,9 +124,11 @@ coordenadasCofres validarCofres(coordenadasCofres cofre1, coordenadasCofres cofr
         return cofre4;
 }
 
-MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain)
+MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain , int* vida)
 {
     pantalla = pantallaMain;
+    vidaptr = vida;
+    vidasCount = *vidaptr/10;
     respuesta = ' ';
     setPreguntas();
     crearMinijuego();
@@ -212,6 +213,8 @@ void MinijuegoCofres::drawPreguntas(int rondaActual)
 void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCofres cofre,
     ALLEGRO_BITMAP* bitmapCorrecto, ALLEGRO_BITMAP* bitmapIncorrecto)
 {
+
+
     if (cofre.respuesta == respuesta)
     {
         vidasCount++; 
@@ -237,6 +240,7 @@ void MinijuegoCofres::crearMinijuego()
 
 {   
     al_set_window_title(pantalla, "Nivel 2 - POLITICA:Minijuego Cofres");
+
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
     fondo = al_load_bitmap("Imagenes/mapacofres.png");
@@ -518,7 +522,7 @@ void MinijuegoCofres::crearMinijuego()
         }
 
     }
-
+    *vidaptr = vidasCount*10;
    transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
    transCofres.destroyTrans();
 

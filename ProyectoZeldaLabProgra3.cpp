@@ -22,7 +22,7 @@ struct datos {
 	ALLEGRO_BITMAP* img;
 } sistema;
 
-void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
+void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain , int* vidaGlobal)
 {
 
 	if (minijuegoP == 'A')
@@ -30,8 +30,7 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		minijuego3 Mimini3;
 		ALLEGRO_TIMER* timer = NULL;
 
-		al_set_window_title(pantallaMain, "Zelda");
-
+		al_set_window_title(pantallaMain, "Minijuego Arte");
 		
 		sistema.FPS = 30;
 		timer = al_create_timer(1.0 / sistema.FPS);
@@ -46,28 +45,27 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain)
 		al_register_event_source(sistema.Mis_eventos, al_get_timer_event_source(timer));
 		al_start_timer(timer);
 
-		Mimini3.juego(sistema.Mis_eventos);
+		Mimini3.juego(sistema.Mis_eventos , vidaGlobal);
 
-		// al_unlock_bitmap(choque);
-
-		//cout << "SE CREA MINIJUEGO ARTE" << endl;
 	}
 
 	else if (minijuegoP == 'H')
-		MinijuegoHistoria miniHistoria(pantallaMain);
+		MinijuegoHistoria miniHistoria(pantallaMain,vidaGlobal);
 
 	else if (minijuegoP == 'P')
-		MinijuegoCofres miMiniCofres(pantallaMain);
+		MinijuegoCofres miMiniCofres(pantallaMain , vidaGlobal);
 
 	else if (minijuegoP == 'C')
-	{ mapa juego;juego.laberinto(pantallaMain);
+	{ mapa juego;juego.laberinto(pantallaMain , vidaGlobal);
 	}
 
 }
 
+
 int main()
 
 {
+	int vidaGlobal = 0;
 	bool salir = true;
 
 	int ancho = 800;
@@ -102,7 +100,7 @@ int main()
 	al_destroy_sample(miMenuI.songFondo);
 	al_destroy_sample_instance(miMenuI.instanceFondo);
 
-
+	cout << "VIDA " << vidaGlobal << endl << endl;
 	//NIVEL 2
 	string resultadominijuego;
 	char sigMini;
@@ -113,25 +111,29 @@ int main()
 	sigMini = resultadominijuego[0];
 	HubN2 miHUbN2(ventana);
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);
+	crearSigMinijuego(sigMini, ventana, &vidaGlobal);
+	cout << "VIDA " << vidaGlobal << endl << endl;
 
 	miRuleta.crearRuleta();
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);
+	crearSigMinijuego(sigMini, ventana, &vidaGlobal);
+	cout << "VIDA " << vidaGlobal << endl << endl;
 
 	miRuleta.crearRuleta();
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);
+	crearSigMinijuego(sigMini, ventana, &vidaGlobal);
+	cout << "VIDA " << vidaGlobal << endl << endl;
 
 	miRuleta.crearRuleta();
 	resultadominijuego = miRuleta.getMinijuego(miRuleta.resultadoruleta);
 	sigMini = resultadominijuego[0];
 	miHUbN2.crearNivel2(resultadominijuego);
-	crearSigMinijuego(sigMini, ventana);
+	crearSigMinijuego(sigMini, ventana, &vidaGlobal);
+	cout << "VIDA " << vidaGlobal << endl << endl;
 
 	//ELECCION DE BANDO
 	eleccionDeBando miEDB(ventana);
@@ -141,7 +143,6 @@ int main()
 	animacionN3 mianimN3(ventana);
 	mianimN3.crearAnimaciones();  
 
-	//crearSigMinijuego('A', ventana);
 
 	return 0;
 

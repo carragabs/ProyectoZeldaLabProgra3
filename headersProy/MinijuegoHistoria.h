@@ -28,7 +28,8 @@ public:
 
 	int ancho = 768;
 	int alto = 576;
-	MinijuegoHistoria(ALLEGRO_DISPLAY* ventanaMain);
+	int* vidaptr;
+	MinijuegoHistoria(ALLEGRO_DISPLAY* ventanaMain , int* vidaptr);
 	void texto(string, int, int, int);
 	int minjuego();
 	void LifeBar(int vida);
@@ -37,8 +38,9 @@ public:
 
 };
 
-MinijuegoHistoria::MinijuegoHistoria(ALLEGRO_DISPLAY* ventanaMain) {
+MinijuegoHistoria::MinijuegoHistoria(ALLEGRO_DISPLAY* ventanaMain , int* vida) {
 	ventana = ventanaMain;
+	vidaptr = vida;
 	minjuego();
 }
 
@@ -55,16 +57,14 @@ int MinijuegoHistoria::minjuego() {
 }
 void MinijuegoHistoria::LifeBar(int vida) {
 
-
 	al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
-	al_draw_filled_rectangle(10, 20, vida, 30, al_map_rgb(0, 255, 0));
+	al_draw_filled_rectangle(10, 20, vida+10, 30, al_map_rgb(0, 255, 0));
 	al_flip_display();
 
 }
 int MinijuegoHistoria ::menu() {
-	al_register_event_source(event_queue, al_get_display_event_source(ventana));
-	al_register_event_source(event_queue, al_get_keyboard_event_source());
-	int vida = 10;
+
+	int vida = *vidaptr;
 	int m = 1;
 	ALLEGRO_FONT* Triforce = al_load_font("Fonts/Triforce.ttf", 19, 0);
 	ALLEGRO_FONT* Triforce1 = al_load_font("Fonts/Triforce.ttf", 23, 0);
@@ -91,13 +91,15 @@ int MinijuegoHistoria ::menu() {
 	ALLEGRO_BITMAP* dermedio = al_load_bitmap("Imagenes/dermedio.jpeg");
 	ALLEGRO_BITMAP* menu_null = al_load_bitmap("Imagenes/vacios.jpeg");
 
-	Transition transHisto;
-	transHisto.drawTransitionReversa(ventana, menu_null, 800, 600,
-		dermedio, 0, 0, 0, 0);
+	//Transition transHisto;
+	//transHisto.drawTransitionReversa(ventana, menu_null, 800, 600,
+		//dermedio, 0, 0, 0, 0);
 
 	//menu
 	int botones[] = { 0 };
 
+	al_register_event_source(event_queue, al_get_display_event_source(ventana));
+	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	while (true)
 	{
@@ -552,18 +554,22 @@ int MinijuegoHistoria ::menu() {
 			}
 
 
-		}switch (Evento.keyboard.keycode) {
-		case ALLEGRO_KEY_ESCAPE: {
-			transHisto.drawTransition(ventana, menu_null, 800, 600,
-				dermedio, 0, 0, 0, 0);
-			transHisto.destroyTrans();
+		}
+		switch (Evento.keyboard.keycode) {
+		case ALLEGRO_KEY_ESCAPE: 
+			cout << "ESCAPE" << endl;
+			*vidaptr = vida;
+			//transHisto.drawTransition(ventana, menu_null, 800, 600,
+				//dermedio, 0, 0, 0, 0);
+			//transHisto.destroyTrans();
 
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			al_flip_display();
 			al_rest(1);
 
 			return 1;
-		}
+		default:
+			break;
 		}
 
 		al_flip_display();

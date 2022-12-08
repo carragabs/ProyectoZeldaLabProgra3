@@ -11,6 +11,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <Windows.h>
+#include "animN3.h"
 
 using namespace std;
 
@@ -87,13 +88,13 @@ public:
 
 
 
-	int juegoGrafico(ALLEGRO_EVENT_QUEUE* Mis_eventos, int vida) {
+	int juegoGrafico(ALLEGRO_DISPLAY* displayMain , ALLEGRO_EVENT_QUEUE* Mis_eventos, int vida) {
 
 		definirPreguntas();
 
 		ALLEGRO_EVENT evento;
 		bool game = true;
-
+		int contRondas = 0;
 
 		cout << F[BatallaContable].pregunta << endl;
 		cout << F[BatallaContable].respuesta1 << endl;
@@ -103,8 +104,18 @@ public:
 
 		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 20, 0);
 		ALLEGRO_FONT* Triforce1 = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
-		ALLEGRO_BITMAP* test = al_load_bitmap("Imagenes/batalla.png");
+		ALLEGRO_BITMAP* test = al_load_bitmap("Imagenes/batallaLevel3.png");
 
+		animacionN3 miAnimN3(displayMain);
+		
+		miAnimN3.paso = 3;
+		miAnimN3.rot = 1;
+		miAnimN3.x = 50; miAnimN3.y = 360;
+
+		miAnimN3.batMapa = al_load_bitmap("Imagenes/batallaLevel3.png");
+		miAnimN3.link = al_load_bitmap("Imagenes/linkred.png");
+		miAnimN3.enemigo = al_load_bitmap("Imagenes/4Senemies.png");
+		al_convert_mask_to_alpha(miAnimN3.enemigo, al_map_rgb(0, 128, 255));
 		int x = -1, y = -1;
 		//int vida = 100;
 
@@ -112,13 +123,28 @@ public:
 		if (vida != 0) {
 			while (game)
 			{
-					int resp = F[BatallaContable].correcta;
+				if (BatallaContable > 7) {
+					game = false;
+					al_rest(3);
+				}
+				if (vida < 0)
+				{
+					cout << "GAME OVER!" << endl;
+					game = false;
+				}
+
+				int resp = F[BatallaContable].correcta;
 				al_draw_bitmap((test), 0, 0, 0);
-
-
 
 				al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
 				al_draw_filled_rectangle(11, 20, vida, 30, al_map_rgb(0, 255, 0));
+
+				//al_draw_bitmap(miAnimN3.batMapa, 0, 0, 0);
+				//al_draw_scaled_bitmap(miAnimN3.link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);
+				//al_convert_mask_to_alpha(miAnimN3.enemigo, al_map_rgb(0, 128, 255));
+				//al_draw_scaled_bitmap(miAnimN3.enemigo, 13, 271, 27, 35, 600, 320, 150, 180, 1);
+				//al_flip_display();
+
 				int ancho = 768;
 				int alto = 576;
 
@@ -133,8 +159,11 @@ public:
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 500, 210, NULL, F[BatallaContable].respuesta4.c_str());
 
 
+				al_draw_scaled_bitmap(miAnimN3.link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);
+				al_draw_scaled_bitmap(miAnimN3.enemigo, 13, 271, 27, 35, 600, 320, 150, 180, 1);
 
 				al_flip_display();
+
 				//	al_clear_to_color(al_map_rgb(0, 0, 0));
 
 				if (botones[0] == 0)
@@ -160,14 +189,24 @@ public:
 						if (Evento.mouse.button & 1) {
 							int boton = 1;
 
-							if (boton == resp) {
+							if (boton == resp) { //RESP CORRECTA
 								BatallaContable++;
+								/*miAnimN3.drawWalkLink();
+								miAnimN3.drawAtkLink(600 - 50, 360);
+								miAnimN3.drawDmgEnmy();
+								miAnimN3.drawWalkLinkRev();
+								al_rest(1);*/
 								cout << boton << endl;
 
 							}
-							else {
+							else { //RESP INCORRECTA
 								BatallaContable++;
-								vida = vida - 10;
+								vida = vida - 25;
+								/*miAnimN3.drawWalkEnmy();
+								miAnimN3.drawAtkEnmy(50 + 30, 360);
+								miAnimN3.drawDmgLink();
+								miAnimN3.drawWalkEnmyRev();
+								al_rest(1);*/
 								cout << boton << endl;
 							}
 						}
@@ -179,11 +218,19 @@ public:
 							if (boton2 == resp) {
 								BatallaContable++;
 								cout << boton2 << endl;
-
+								/*miAnimN3.drawWalkLink();
+								miAnimN3.drawAtkLink(600 - 50, 360);
+								miAnimN3.drawDmgEnmy();
+								miAnimN3.drawWalkLinkRev();
+								al_rest(1);*/
 							}
 							else {
 								BatallaContable++;
-								vida = vida - 10;
+								vida = vida - 25;
+								/*miAnimN3.drawWalkEnmy();
+								miAnimN3.drawAtkEnmy(50 + 30, 360);
+								miAnimN3.drawDmgLink();
+								miAnimN3.drawWalkEnmyRev();*/
 								cout << boton2 << endl;
 
 							}
@@ -201,7 +248,7 @@ public:
 							}
 							else {
 								BatallaContable++;
-								vida = vida - 10;
+								vida = vida - 25;
 								cout << boton3 << endl;
 
 							}
@@ -223,7 +270,7 @@ public:
 								}
 								else {
 									BatallaContable++;
-									vida = vida - 10;
+									vida = vida - 25;
 									cout << boton4 << endl;
 								}
 						}
@@ -237,6 +284,7 @@ public:
 				}
 
 				al_flip_display();
+
 			}
 
 		}

@@ -14,6 +14,7 @@
 #include "headersProy/Laberinto.h"
 #include "headersProy/Minijuego3.h"
 #include "headersProy/escena.h"
+#include "headersProy/BattallaLevel3.h"
 
 struct datos {
 	int FPS;
@@ -90,7 +91,7 @@ int main()
 		return -1;
 
 	int resultadoReturn;
-	
+	/*
 	//NIVEL 1
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
@@ -141,8 +142,15 @@ int main()
 	
 	//NIVEL 3
 	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones();  
+	mianimN3.crearAnimaciones();
 
+ */
+	BattallaLevel3 miBL3;
+
+	event_queue = al_create_event_queue();
+
+	al_register_event_source(event_queue, al_get_mouse_event_source());
+	miBL3.juegoGrafico(ventana , event_queue, 200);
 
 	return 0;
 

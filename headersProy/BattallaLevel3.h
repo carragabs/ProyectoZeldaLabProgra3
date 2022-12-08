@@ -41,7 +41,7 @@ public:
 		F[1].respuesta4 = "4)Escepticos";
 		F[1].correcta = 2;
 
-		F[2].pregunta = "Para unos de los siguientes filosofos, la experiencia como única fuente del conocimiento";
+		F[2].pregunta = "Para unos de los siguientes filosofos, la experiencia como Ãºnica fuente del conocimiento";
 		F[2].respuesta1 = "1)Epistemologos";
 		F[2].respuesta2 = "2)Racionalistas";
 		F[2].respuesta3 = "3)Empiristas";
@@ -103,7 +103,7 @@ public:
 
 		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 20, 0);
 		ALLEGRO_FONT* Triforce1 = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
-		ALLEGRO_BITMAP* test = al_load_bitmap("I/batalla.png");
+		ALLEGRO_BITMAP* test = al_load_bitmap("Imagenes/batalla.png");
 
 		int x = -1, y = -1;
 		//int vida = 100;

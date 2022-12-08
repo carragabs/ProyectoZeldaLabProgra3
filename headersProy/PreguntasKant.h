@@ -34,21 +34,21 @@ public:
 		K[0].respuesta4 = "4)Ninguno";
 		K[0].correcta = 1;
 
-		K[1].pregunta = "Para Kant, es posible conocer lo que las cosas nos permiten (como lo superficial) a travÈs de nuestros sentidos:";
+		K[1].pregunta = "Para Kant, es posible conocer lo que las cosas nos permiten (como lo superficial) a trav√©s de nuestros sentidos:";
 		K[1].respuesta1 = "1) Conocimiento Noumenico";
 		K[1].respuesta2 = "2) Conocimiento Fenomenico";
 		K[1].respuesta3 = "3) Conocimiento Empirico";
 		K[1].respuesta4 = "4) Conocimiento Racional";
 		K[1].correcta = 2;
 
-		K[2].pregunta = " Kant decÌa que el lema de la ilustraciÛn era ìSapere audeî, que significa: ";
+		K[2].pregunta = " Kant dec√≠a que el lema de la ilustraci√≥n era ‚ÄúSapere aude‚Äù, que significa: ";
 		K[2].respuesta1 = "1)Sopesa tus acciones";
 		K[2].respuesta2 = "2)Atrevete a saber por ti mismo";
 		K[2].respuesta3 = "3)Saber a la fuerza";
 		K[2].respuesta4 = "4)Someterse al conocimiento";
 		K[2].correcta = 2;
 
-		K[3].pregunta = " Kant (CopÈrnico cambiÛ el centro del universo),cambia el centro del conocimiento del objeto al sujeto, a esto se le llama : ";
+		K[3].pregunta = " Kant (Cop√©rnico cambi√≥ el centro del universo),cambia el centro del conocimiento del objeto al sujeto, a esto se le llama : ";
 		K[3].respuesta1 = "1)Subjetivismo";
 		K[3].respuesta2 = "2)Prejuicio";
 		K[3].respuesta3 = "3)giro copernicano";
@@ -63,7 +63,7 @@ public:
 		K[4].correcta = 3;
 
 
-		K[5].pregunta = " De las siguientes obras de Emanuel Kant, seleccione aquella que define su epistemologÌa:";
+		K[5].pregunta = " De las siguientes obras de Emanuel Kant, seleccione aquella que define su epistemolog√≠a:";
 		K[5].respuesta1 = "1)Critica de la razon practica";
 		K[5].respuesta2 = "2)Critica de la razon pura";
 		K[5].respuesta3 = "3)Critica del juicio.";
@@ -90,7 +90,7 @@ public:
 
 		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 30, 0);
 		ALLEGRO_FONT* Triforce1 = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
-		ALLEGRO_BITMAP* test = al_load_bitmap("I/EscenarioKant.png");
+		ALLEGRO_BITMAP* test = al_load_bitmap("Imagenes/EscenarioKant.png");
 
 		int x = -1, y = -1;
 		//int vida = 100;

@@ -32,7 +32,9 @@ int ancho = 768;
 int alto = 576;
 
 ALLEGRO_EVENT_QUEUE* event_queueJ;
-
+struct text {
+	char intro[100];
+}T[10];
 class Jugar
 {
 public:
@@ -40,6 +42,10 @@ public:
 	Jugar(ALLEGRO_DISPLAY* ventanaMain);
 	int jugar();
 private:
+	int contador = 0;
+	void Texto();
+	void mostrar(ALLEGRO_DISPLAY* pantalla);
+	int show = 0;
 };
 
 Jugar::Jugar(ALLEGRO_DISPLAY* ventanaMain)
@@ -47,7 +53,19 @@ Jugar::Jugar(ALLEGRO_DISPLAY* ventanaMain)
 	ventanaJ = ventanaMain;
 	jugar();
 }
+void Jugar::Texto() {
+	strcpy_s(T[0].intro, "En el reino de Hyrule, la trifuerza un");
+	strcpy_s(T[1].intro, "objeto deseado por muchas personas, algunas");
+	strcpy_s(T[2].intro, "intentando dominarse del mundo. Dos bandos,");
+	strcpy_s(T[3].intro, "los empiristas y los racionalistas quieren ");
+	strcpy_s(T[4].intro, "apoderarse de ese poder para demostrar quien ");
+	strcpy_s(T[5].intro, "es superior, en una lucha constante. Quien ");
+	strcpy_s(T[6].intro, "ganara? Link, un mercenario en busca de trabajo ");
+	strcpy_s(T[7].intro, "se topa con dos personas que estan en peligro,");
+	strcpy_s(T[8].intro, "corriendo a su llamado de auxilio, Link elige ");
+	strcpy_s(T[9].intro, "ayudar a estas dos personas.");
 
+}
 int Jugar::jugar() {
 	/*
 	if (!al_init()) {
@@ -81,6 +99,7 @@ int Jugar::jugar() {
 	int botones[] = { 0 };
 	
 	int x = -1, y = -1;
+
 	while (true)
 	{
 
@@ -90,21 +109,26 @@ int Jugar::jugar() {
 		//ALLEGRO_KEYBOARD_STATE teclado;
 
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_scaled_bitmap(Nivel1, 0, 0, 768, 576, 0, 0, 800, 600, 0);
 
+		//al_draw_scaled_bitmap(Nivel1, 0, 0, 768, 576, 0, 0, 800, 600, 0);
+		if (show < 1) {
+			mostrar(ventanaJ);
+			show++;
+		}
 		//al_draw_(200, 200, 100, al_map_rgb(255, 255, 255));
-		al_draw_text(Triforce, al_map_rgb(0, 0, 0), 250, 1, NULL, "Historia:");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 63, NULL, "En el reino de Hyrule, la trifuerza un objeto deseado por muchas personas,");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 93, NULL, "algunas intentando dominarse del mundo. Dos bandos,los empiristas y los racionalistas");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 123, NULL, "apoderarse de ese poder para demostrar quien es superior, en una lucha");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 153, NULL, "constante.Link, un mercenario en busca de trabajo, este se topa");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 183, NULL, "con dos personas que estan en peligro, corriendo a su llamado de auxilio,");
-		al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 213, NULL, "Link elige ayudar a estas dos personas.");
-		al_draw_text(Triforce, al_map_rgb(0, 0, 0), 250, 375, NULL, "Jugar");
+		//al_draw_text(Triforce, al_map_rgb(0, 0, 0), 250, 1, NULL, "Historia:");
+		//al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 63, NULL, "En el reino de Hyrule, la trifuerza un objeto deseado por muchas personas,");
+		//al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 93, NULL, "algunas intentando dominarse del mundo. Dos bandos,los empiristas y los racionalistas");
+		///al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 123, NULL, "apoderarse de ese poder para demostrar quien es superior, en una lucha");
+		//al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 153, NULL, "constante.Link, un mercenario en busca de trabajo, este se topa");
+		//al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 183, NULL, "con dos personas que estan en peligro, corriendo a su llamado de auxilio,");
+		//al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 1, 213, NULL, "Link elige ayudar a estas dos personas.");
+		al_draw_text(Triforce, al_map_rgb(225, 225, 225), 250, 375, NULL, "Jugar");
 		al_flip_display();
-
+		al_draw_text(Triforce, al_map_rgb(225, 225, 225), 250, 375, NULL, "Jugar");
+		al_flip_display();
 		if (botones[0] == 0)
-			al_draw_text(Triforce, al_map_rgb(0, 0, 0), 250, 375, NULL, "Jugar");
+			al_draw_text(Triforce, al_map_rgb(225, 225, 225), 250, 375, NULL, "Jugar");
 		else
 			al_draw_text(Triforce, al_map_rgb(255, 0, 0), 250, 375, NULL, "Jugar");
 
@@ -147,3 +171,120 @@ int Jugar::jugar() {
 
 	return 1;
 } 
+void Jugar::mostrar(ALLEGRO_DISPLAY* pantalla) {
+	al_init_image_addon();
+	Texto();
+
+	al_install_keyboard();
+
+	//Incializa texto
+	al_init_font_addon();
+	al_init_ttf_addon();
+
+
+
+
+	//ALLEGRO_DISPLAY* pantalla = al_create_display(800, 600);
+
+
+
+
+	//texto
+	text h;
+	strcpy_s(h.intro, "En el reino de Hyrule, la trifuerza un objeto");
+
+	cout << h.intro << endl;
+
+	char hola[100];
+	strcpy_s(hola, h.intro);
+
+
+	ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
+	ALLEGRO_EVENT evento;
+
+
+	char a;
+	string b;
+
+	ALLEGRO_EVENT_QUEUE* Mis_eventos;
+
+
+
+
+	// creo lista de eventos
+
+	Mis_eventos = al_create_event_queue();
+
+
+	// asigno eventos a la lista de eventos
+
+	al_register_event_source(Mis_eventos, al_get_keyboard_event_source());
+
+	al_register_event_source(Mis_eventos, al_get_display_event_source(pantalla));
+
+	int respuesta;
+	contador++;
+
+	//cout << answer<<endl;
+	ALLEGRO_TIMER* segundo = al_create_timer(0.1);
+
+	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
+
+	al_register_event_source(queue, al_get_timer_event_source(segundo));
+	al_start_timer(segundo);
+	int sec = 0, line = 0;
+	ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/introduccion.png");
+	al_draw_scaled_bitmap(fondo, 0, 0, 256, 239, 0, 0, 800, 600, 0);
+	string lenght;
+	while (line < 10) {
+		lenght = T[line].intro;
+
+		while (sec <= lenght.size()) {
+			al_wait_for_event(queue, &evento);
+			if (evento.type == ALLEGRO_EVENT_TIMER) {
+				if (evento.timer.source == segundo) {
+
+
+
+					a = lenght[sec];
+					sec++;
+					b = a;
+					cout << a;
+					//cout << a << endl;
+					al_draw_text(font, al_map_rgb(255, 255, 255), 70 + (sec * 14), 100 + (line * 40), NULL, b.c_str());
+
+
+					al_flip_display();
+
+
+
+
+				}
+			}
+
+		}
+		sec = 0;
+		line++;
+	}
+	while (sec <= 20) {
+		al_wait_for_event(queue, &evento);
+		if (evento.type == ALLEGRO_EVENT_TIMER) {
+			if (evento.timer.source == segundo) {
+
+
+
+				
+				sec++;
+				b = a;
+				
+
+
+
+
+			}
+		}
+
+	}
+	// al_clear_to_color(al_map_rgb(0, 0, 0));
+
+}

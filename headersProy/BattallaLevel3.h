@@ -171,7 +171,7 @@ public:
 				al_wait_for_event(Mis_eventos, &Evento);
 
 
-				al_draw_text(Triforce, al_map_rgb(25, 25, 255), 1, 50, NULL, F[BatallaContable].pregunta.c_str());
+				al_draw_text(Triforce, al_map_rgb(0, 0, 0), 1, 50, NULL, F[BatallaContable].pregunta.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 60, 155, NULL, F[BatallaContable].respuesta1.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 60, 210, NULL, F[BatallaContable].respuesta2.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 500, 155, NULL, F[BatallaContable].respuesta3.c_str());

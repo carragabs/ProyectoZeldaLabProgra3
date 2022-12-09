@@ -354,6 +354,7 @@ public:
 				miAnimN3.drawDmgLink();
 				miAnimN3.drawDeathLink();
 				al_rest(10);
+				exit(0);
 			}
 			else
 			{

@@ -171,10 +171,12 @@ int main()
 		miPK.juegoGrafico(event_queue, 100);
 
 		//DESPUES AL LABORATORIO
+		Descartes miDes(ventana);
 
 	}
 	else if (definir == false) {
 		cout << "AL LABORATORIO" << endl;
+		Descartes miDes(ventana);
 		//DESPUES AL AULA
 		PreguntasKant miPK;
 		event_queue = al_create_event_queue();
@@ -182,16 +184,6 @@ int main()
 		al_register_event_source(event_queue, al_get_mouse_event_source());
 		miPK.juegoGrafico(event_queue, 100);
 	}
-	/*
-	Descartes miDes(ventana);
-
-	PreguntasKant miPK;
-	event_queue = al_create_event_queue();
-
-	al_register_event_source(event_queue, al_get_mouse_event_source());
-	miPK.juegoGrafico(event_queue, 100);
-	
-	Descartes miDes(ventana); */
 
 	return 0;
 

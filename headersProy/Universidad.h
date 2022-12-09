@@ -147,6 +147,11 @@ bool Dentro::crearUni()
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/MapaAdentro4.png");
 
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/Hub2.mpeg");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
     ALLEGRO_TIMER* timer;
@@ -213,6 +218,7 @@ bool Dentro::crearUni()
     double warpH = 20;
     Transition transHub;
     transHub.drawTransitionReversa(pantalla, fondo, 800, 608, prota, paso, dir, x, y);
+    al_play_sample_instance(instance);
 
     al_start_timer(timer);
 
@@ -364,6 +370,7 @@ bool Dentro::crearUni()
     transHub.drawTransition(pantalla, fondo, 800, 608, prota, paso, dir, x, y);
     transHub.destroyTrans();
 
+    al_destroy_sample_instance(instance);
     al_destroy_bitmap(prota);
     al_destroy_bitmap(fondo);
     al_destroy_bitmap(choque5);

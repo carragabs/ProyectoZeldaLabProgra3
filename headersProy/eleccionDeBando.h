@@ -155,7 +155,9 @@ void eleccionDeBando::crearEleccionBando()
 	al_set_window_title(pantalla, "Eleccion de Bando");
 
 	choque1 = al_load_bitmap("Imagenes/MapaBandoROJO2.png");
-
+	ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 30, 0);
+	ALLEGRO_BITMAP* ESCUDOEMP = al_load_bitmap("Imagenes/EscudoEmpirista.png");
+	ALLEGRO_BITMAP* ESCUDORECIO = al_load_bitmap("Imagenes/EscudoRacionalistas1.png");
 	ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
 	ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
 	ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/MapaNuevoBando.png");
@@ -256,6 +258,11 @@ void eleccionDeBando::crearEleccionBando()
 		al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKL.xRect, coordRedKL.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKR.xRect, coordRedKR.yRect, 30, 30, 0);
 		al_draw_scaled_bitmap(manRed, 0, 0, 1280, 1733, 553, 80, 25, 25, 0);
+		al_draw_bitmap(ESCUDOEMP, 650, 50,0);
+		al_draw_bitmap(ESCUDORECIO, 100, 50, 0);
+
+		al_draw_text(Triforce, al_map_rgb(0, 0, 0), 170, 30, NULL, "Racionalistas ");
+		al_draw_text(Triforce, al_map_rgb(0, 0, 0), 525, 30, NULL, "Empiristas");
 
 		al_flip_display();
 

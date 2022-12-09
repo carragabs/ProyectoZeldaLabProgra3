@@ -424,7 +424,8 @@ void animacionN3::crearAnimaciones()
 		drawDeathEnmy();
 
 		drawVictoryLink();
-		al_rest(1);
+		//AQUI CANCION Hallowed be thy Name de Iron Maiden
+		al_rest(10);
 
 		//ENEMIGO
 		//ATK ENEMIGO
@@ -440,7 +441,8 @@ void animacionN3::crearAnimaciones()
 		drawDmgLink();
 		drawDeathLink();
 
-		al_rest(1);
+		//AQUI CANCION Oh Fortuna de Carmina Burana
+		al_rest(10);
 		
 		//EMPATE
 		drawEmpate();

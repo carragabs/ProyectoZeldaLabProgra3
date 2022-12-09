@@ -148,6 +148,12 @@ void Nivel4::crearOverworld()
     ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/MapaNivel4.png");
 
+    al_reserve_samples(2);
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/Town.mp3");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
     ALLEGRO_TIMER* timer;
@@ -210,6 +216,7 @@ void Nivel4::crearOverworld()
     double warpH = 20;
     Transition transHub;
     transHub.drawTransitionReversa(pantalla, fondo, 800, 608, prota, paso, dir, x, y);
+    al_play_sample_instance(instance);
 
     al_start_timer(timer);
 
@@ -356,6 +363,7 @@ void Nivel4::crearOverworld()
     transHub.drawTransition(pantalla, fondo, 800, 608, prota, paso, dir, x, y);
     transHub.destroyTrans();
 
+    al_destroy_sample_instance(instance);
     al_destroy_bitmap(prota);
     al_destroy_bitmap(fondo);
     al_destroy_bitmap(choque4);

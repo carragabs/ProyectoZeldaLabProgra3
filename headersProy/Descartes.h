@@ -6,7 +6,7 @@
 using std::string;
 using namespace std;
 
-ALLEGRO_EVENT_QUEUE* event_queue;
+//ALLEGRO_EVENT_QUEUE* event_queue;
 
 class Descartes
 {

@@ -27,11 +27,12 @@ class eleccionDeBando
 
 
 
-
 public:
+	bool empirista;
 	eleccionDeBando(ALLEGRO_DISPLAY* pantallaMain)
 	{
 		pantalla = pantallaMain;
+		empirista = false;
 	}
 	void crearEleccionBando();
 private:
@@ -382,6 +383,7 @@ void eleccionDeBando::crearEleccionBando()
 				coordRed = coordRed;
 				ALLEGRO_BITMAP* linkRed = al_load_bitmap("Imagenes/linkred.png");
 				al_draw_text(textboxFont, al_map_rgb(255, 0, 0), 250, 272, NULL, "Bienvenido a los EMPIRISTAS !");
+				empirista = true;
 				al_draw_scaled_bitmap(linkRed, 92, 2282, 28, 31, x, y, 32.5, 35, 0);
 				al_flip_display();
 				al_rest(5);

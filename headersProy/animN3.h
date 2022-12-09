@@ -24,7 +24,7 @@ public:
 		display = displayMain;
 
 	}
-	void crearAnimaciones();
+	void crearAnimaciones(bool emp);
 	void drawAtkLink(double dxAtk, double dyAtk);
 	void drawWalkLink();
 	void drawWalkLinkRev();
@@ -387,7 +387,7 @@ void animacionN3::drawEmpate()
 
 }
 
-void animacionN3::crearAnimaciones()
+void animacionN3::crearAnimaciones(bool emp)
 {
 	bool salir = false;
 	while(!salir)
@@ -397,8 +397,16 @@ void animacionN3::crearAnimaciones()
 		x = 50; y = 360;
 
 		batMapa = al_load_bitmap("Imagenes/Batallabase.png");
-		link = al_load_bitmap("Imagenes/linkred.png");
-		enemigo = al_load_bitmap("Imagenes/4Senemies.png");
+		if(emp)
+		{
+			link = al_load_bitmap("Imagenes/linkred.png");
+			enemigo = al_load_bitmap("Imagenes/4Senemies.png");
+		}
+		else
+		{
+			link = al_load_bitmap("Imagenes/linkwhite.png");
+			enemigo = al_load_bitmap("Imagenes/4SenemiesRed.png");		
+		}
 
 		al_draw_bitmap(batMapa, 0, 0, 0);
 		al_draw_scaled_bitmap(link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);

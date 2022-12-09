@@ -156,6 +156,7 @@
     <ClInclude Include="headersProy\Laberinto.h" />
     <ClInclude Include="headersProy\MenuInicial.h" />
     <ClInclude Include="headersProy\MinijuegoCofres.h" />
+    <ClInclude Include="headersProy\MinijuegoHistoria.h" />
     <ClInclude Include="headersProy\Ruleta.h" />
     <ClInclude Include="headersProy\SpritesheetRow.h" />
     <ClInclude Include="headersProy\Transicion.h" />

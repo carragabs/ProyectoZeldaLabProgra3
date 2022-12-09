@@ -7,7 +7,7 @@
 using std::string;
 using namespace std;
 
-ALLEGRO_EVENT_QUEUE* event_queue;
+ALLEGRO_EVENT_QUEUE* event_queueD;
 
 class Descartes
 {
@@ -36,9 +36,9 @@ int Descartes::minjuego() {
 	int alto_W = GetSystemMetrics(SM_CYSCREEN);
 
 	al_set_window_title(ventana, "Minijuego Historia");
-	event_queue = al_create_event_queue();
+	event_queueD = al_create_event_queue();
 
-	al_register_event_source(event_queue, al_get_mouse_event_source());
+	al_register_event_source(event_queueD, al_get_mouse_event_source());
 
 	return menu();
 }
@@ -51,8 +51,8 @@ void Descartes::LifeBar(int vida) {
 
 }
 int Descartes::menu() {
-	al_register_event_source(event_queue, al_get_display_event_source(ventana));
-	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queueD, al_get_display_event_source(ventana));
+	al_register_event_source(event_queueD, al_get_keyboard_event_source());
 	int vida = 10;
 	int m = 1;
 	ALLEGRO_FONT* Triforce = al_load_font("Fonts/Triforce.ttf", 19, 0);
@@ -89,7 +89,7 @@ int Descartes::menu() {
 	while (true)
 	{
 		ALLEGRO_EVENT Evento;
-		al_wait_for_event(event_queue, &Evento);
+		al_wait_for_event(event_queueD, &Evento);
 
 		if (botones[0] == 0) {
 			al_clear_to_color(al_map_rgb(0, 0, 0));

@@ -546,6 +546,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         //cout << "corazones" << corazones << endl << endl;
         *vidaptr = corazones * 10;
 
+        al_destroy_sample_instance(instance);
         al_destroy_bitmap(prota);
         al_destroy_bitmap(choque2);
         //al_destroy_display(pantalla);

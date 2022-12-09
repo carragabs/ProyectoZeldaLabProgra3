@@ -15,6 +15,8 @@
 #include "headersProy/Minijuego3.h"
 #include "headersProy/escena.h"
 #include "headersProy/BattallaLevel3.h"
+#include "headersProy/PreguntasKant.h"
+#include "headersProy/Descartes.h"
 
 struct datos {
 	int FPS;
@@ -66,7 +68,7 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain , int* vid
 int main()
 
 {
-	int vidaGlobal = 0;
+	int vidaGlobal = 50;
 	bool salir = true;
 
 	int ancho = 800;
@@ -135,21 +137,32 @@ int main()
 	miHUbN2.crearNivel2(resultadominijuego);
 	crearSigMinijuego(sigMini, ventana, &vidaGlobal);
 	cout << "VIDA " << vidaGlobal << endl << endl;
+	
 
 	//ELECCION DE BANDO
 	eleccionDeBando miEDB(ventana);
 	miEDB.crearEleccionBando();	
-	*/
+	
 	//NIVEL 3
 
 	BattallaLevel3 miBL3;
-
+	
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());
-	miBL3.juegoGrafico(ventana , event_queue, vidaGlobal);  
-		
+	miBL3.juegoGrafico(ventana , event_queue, vidaGlobal, true);  
 
+	eleccionDeBando miEDB(ventana);
+	miEDB.crearEleccionBando(); */
+
+	//NIVEL 4
+	PreguntasKant miPK;
+	event_queue = al_create_event_queue();
+
+	al_register_event_source(event_queue, al_get_mouse_event_source());
+	miPK.juegoGrafico(event_queue, 100);
+	
+	Descartes miDes(ventana);
 
 	return 0;
 

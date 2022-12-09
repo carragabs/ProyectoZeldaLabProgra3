@@ -88,13 +88,14 @@ public:
 
 
 
-	int juegoGrafico(ALLEGRO_DISPLAY* displayMain , ALLEGRO_EVENT_QUEUE* Mis_eventos, int vida) {
+	int juegoGrafico(ALLEGRO_DISPLAY* displayMain , ALLEGRO_EVENT_QUEUE* Mis_eventos, int vida, bool bandoEmp) {
 
 		definirPreguntas();
 
 		ALLEGRO_EVENT evento;
 		bool game = true;
 		int contRondas = 0;
+		bool Emp = bandoEmp;
 
 		cout << F[BatallaContable].pregunta << endl;
 		cout << F[BatallaContable].respuesta1 << endl;
@@ -113,12 +114,29 @@ public:
 		miAnimN3.x = 50; miAnimN3.y = 360;
 
 		miAnimN3.batMapa = al_load_bitmap("Imagenes/batallaLevel3.png");
-		miAnimN3.link = al_load_bitmap("Imagenes/linkred.png");
-		miAnimN3.enemigo = al_load_bitmap("Imagenes/4Senemies.png");
+
+		if (Emp)
+		{
+			miAnimN3.link = al_load_bitmap("Imagenes/linkred.png");
+			miAnimN3.enemigo = al_load_bitmap("Imagenes/4Senemies.png");
+		}
+		else
+		{
+			miAnimN3.link = al_load_bitmap("Imagenes/linkwhite.png");
+			miAnimN3.enemigo = al_load_bitmap("Imagenes/4SenemiesRed.png");
+		}
+
 		al_convert_mask_to_alpha(miAnimN3.enemigo, al_map_rgb(0, 128, 255));
 		int x = -1, y = -1;
 		//int vida = 100;
 
+		al_reserve_samples(2);
+		ALLEGRO_SAMPLE* song = al_load_sample("Audios/Batalla.mpeg");
+		ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+		al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+		al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+		al_play_sample_instance(instance);
 		int botones[] = { 0 };
 		if (vida != 0) {
 			while (game)
@@ -127,17 +145,18 @@ public:
 					game = false;
 					al_rest(3);
 				}
-				if (vida < 0)
+				if (vida <= 0)
 				{
 					cout << "GAME OVER!" << endl;
-					game = false;
+
+					break;
 				}
 
 				int resp = F[BatallaContable].correcta;
 				al_draw_bitmap((test), 0, 0, 0);
 
 				al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
-				al_draw_filled_rectangle(11, 20, vida, 30, al_map_rgb(0, 255, 0));
+				al_draw_filled_rectangle(10,20, vida+10, 30, al_map_rgb(0, 255, 0));
 
 				//al_draw_bitmap(miAnimN3.batMapa, 0, 0, 0);
 				//al_draw_scaled_bitmap(miAnimN3.link, 206, 1985, 35, 31, 50, 360, 150, 140, 1);
@@ -191,22 +210,22 @@ public:
 
 							if (boton == resp) { //RESP CORRECTA
 								BatallaContable++;
-								/*miAnimN3.drawWalkLink();
+								miAnimN3.drawWalkLink();
 								miAnimN3.drawAtkLink(600 - 50, 360);
 								miAnimN3.drawDmgEnmy();
 								miAnimN3.drawWalkLinkRev();
-								al_rest(1);*/
+								al_rest(1);
 								cout << boton << endl;
 
 							}
 							else { //RESP INCORRECTA
 								BatallaContable++;
 								vida = vida - 25;
-								/*miAnimN3.drawWalkEnmy();
+								miAnimN3.drawWalkEnmy();
 								miAnimN3.drawAtkEnmy(50 + 30, 360);
 								miAnimN3.drawDmgLink();
 								miAnimN3.drawWalkEnmyRev();
-								al_rest(1);*/
+								al_rest(1);
 								cout << boton << endl;
 							}
 						}
@@ -218,19 +237,20 @@ public:
 							if (boton2 == resp) {
 								BatallaContable++;
 								cout << boton2 << endl;
-								/*miAnimN3.drawWalkLink();
+								miAnimN3.drawWalkLink();
 								miAnimN3.drawAtkLink(600 - 50, 360);
 								miAnimN3.drawDmgEnmy();
 								miAnimN3.drawWalkLinkRev();
-								al_rest(1);*/
+								al_rest(1);
 							}
 							else {
 								BatallaContable++;
 								vida = vida - 25;
-								/*miAnimN3.drawWalkEnmy();
+								miAnimN3.drawWalkEnmy();
 								miAnimN3.drawAtkEnmy(50 + 30, 360);
 								miAnimN3.drawDmgLink();
-								miAnimN3.drawWalkEnmyRev();*/
+								miAnimN3.drawWalkEnmyRev();
+								al_rest(1);
 								cout << boton2 << endl;
 
 							}
@@ -244,11 +264,20 @@ public:
 							if (boton3 == resp) {
 								BatallaContable++;
 								cout << boton3<<endl;
-
+								miAnimN3.drawWalkLink();
+								miAnimN3.drawAtkLink(600 - 50, 360);
+								miAnimN3.drawDmgEnmy();
+								miAnimN3.drawWalkLinkRev();
+								al_rest(1);
 							}
 							else {
 								BatallaContable++;
 								vida = vida - 25;
+								miAnimN3.drawWalkEnmy();
+								miAnimN3.drawAtkEnmy(50 + 30, 360);
+								miAnimN3.drawDmgLink();
+								miAnimN3.drawWalkEnmyRev();
+								al_rest(1);
 								cout << boton3 << endl;
 
 							}
@@ -265,13 +294,22 @@ public:
 								if (boton4 == resp) {
 									BatallaContable++;
 									cout << boton4 << endl;
-
+									miAnimN3.drawWalkLink();
+									miAnimN3.drawAtkLink(600 - 50, 360);
+									miAnimN3.drawDmgEnmy();
+									miAnimN3.drawWalkLinkRev();
+									al_rest(1);
 
 								}
 								else {
 									BatallaContable++;
 									vida = vida - 25;
 									cout << boton4 << endl;
+									miAnimN3.drawWalkEnmy();
+									miAnimN3.drawAtkEnmy(50 + 30, 360);
+									miAnimN3.drawDmgLink();
+									miAnimN3.drawWalkEnmyRev();
+									al_rest(1);
 								}
 						}
 						else {
@@ -286,8 +324,65 @@ public:
 				al_flip_display();
 
 			}
+			al_destroy_sample_instance(instance);
+			al_reserve_samples(2);
+			ALLEGRO_SAMPLE* song2 = al_load_sample("Audios/OFortuna.mp3");
+			ALLEGRO_SAMPLE_INSTANCE* fortuna = al_create_sample_instance(song2);
+			al_set_sample_instance_playmode(fortuna, ALLEGRO_PLAYMODE_ONCE);
+			al_attach_sample_instance_to_mixer(fortuna, al_get_default_mixer());
 
+			ALLEGRO_SAMPLE* song = al_load_sample("Audios/Hallowed.mp3");
+			ALLEGRO_SAMPLE_INSTANCE* maiden = al_create_sample_instance(song);
+			al_set_sample_instance_playmode(maiden, ALLEGRO_PLAYMODE_ONCE);
+			al_attach_sample_instance_to_mixer(maiden, al_get_default_mixer());
+
+			if (vida <= 0)
+			{
+
+				if (Emp)
+				{
+
+					al_play_sample_instance(fortuna);
+				}
+				else
+				{
+
+					al_play_sample_instance(maiden);
+				}
+				miAnimN3.drawWalkEnmy();
+				miAnimN3.drawAtkEnmy(50 + 30, 360);
+				miAnimN3.drawDmgLink();
+				miAnimN3.drawDeathLink();
+				al_rest(10);
+			}
+			else
+			{
+				if (Emp)
+				{
+
+					al_play_sample_instance(maiden);
+				}
+				else
+				{
+
+					al_play_sample_instance(fortuna);
+				}
+
+				miAnimN3.drawWalkLink();
+				miAnimN3.drawAtkLink(600 - 50, 360);
+				miAnimN3.drawDmgEnmy();
+				miAnimN3.drawDeathEnmy();
+
+				miAnimN3.drawVictoryLink();
+				al_rest(10);
+
+
+			
+			}
+			al_destroy_sample_instance(fortuna);
+			al_destroy_sample_instance(maiden);
 		}
+
 		else {
 
 			// esperamos a que ocurra un evento
@@ -309,6 +404,9 @@ public:
 			}
 
 		}
+		al_clear_to_color(al_map_rgb(0, 0, 0));
+		al_flip_display();
+		al_rest(1);
 		return 0;
 
 	}

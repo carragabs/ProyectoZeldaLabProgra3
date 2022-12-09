@@ -14,7 +14,7 @@
 
 using namespace std;
 
-struct preguntasBattle {
+struct preguntasBattlePK {
 	int correcta;
 	string pregunta, respuesta1, respuesta2, respuesta3, respuesta4;
 }K[6];
@@ -99,9 +99,11 @@ public:
 		if (vida != 0) {
 			while (game)
 			{
+				if (ContadorKant >= 6)
+					break;
+
 				int resp = K[ContadorKant].correcta;
 				al_draw_bitmap((test), 0, 0, 0);
-
 
 
 				int ancho = 768;
@@ -246,6 +248,9 @@ public:
 			}
 
 		}
+		al_clear_to_color(al_map_rgb(0, 0, 0));
+		al_flip_display();
+		al_rest(1);
 		return 0;
 
 	}

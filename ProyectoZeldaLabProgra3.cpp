@@ -47,7 +47,7 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain , int* vid
 		al_register_event_source(sistema.Mis_eventos, al_get_timer_event_source(timer));
 		al_start_timer(timer);
 
-		Mimini3.juego(sistema.Mis_eventos , vidaGlobal);
+		Mimini3.juego(pantallaMain,sistema.Mis_eventos , vidaGlobal);
 
 	}
 
@@ -139,7 +139,7 @@ int main()
 	//ELECCION DE BANDO
 	eleccionDeBando miEDB(ventana);
 	miEDB.crearEleccionBando();	
-	
+	*/
 	//NIVEL 3
 
 	BattallaLevel3 miBL3;
@@ -147,9 +147,9 @@ int main()
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());
-	miBL3.juegoGrafico(ventana , event_queue, 200);  
-		*/
-	crearSigMinijuego('H', ventana, &vidaGlobal);
+	miBL3.juegoGrafico(ventana , event_queue, vidaGlobal);  
+		
+
 
 	return 0;
 

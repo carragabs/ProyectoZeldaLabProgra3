@@ -59,5 +59,8 @@
     <ClInclude Include="headersProy\Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headersProy\Laberinto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

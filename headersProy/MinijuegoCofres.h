@@ -258,22 +258,37 @@ void MinijuegoCofres::drawPreguntas(int rondaActual)
 void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCofres cofre,
     ALLEGRO_BITMAP* bitmapCorrecto, ALLEGRO_BITMAP* bitmapIncorrecto)
 {
+    ALLEGRO_SAMPLE* incorrecta = al_load_sample("Audios/bombexplode.wav");
+    ALLEGRO_SAMPLE_INSTANCE* aexplosion = al_create_sample_instance(incorrecta);
+    al_set_sample_instance_playmode(aexplosion, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(aexplosion, al_get_default_mixer());
 
+    ALLEGRO_SAMPLE* song2 = al_load_sample("Audios/itemget1.wav");
+    ALLEGRO_SAMPLE_INSTANCE* item = al_create_sample_instance(song2);
+    al_set_sample_instance_playmode(item, ALLEGRO_PLAYMODE_ONCE);
+    ALLEGRO_SAMPLE* incorrecta2 = al_load_sample("Audios/heartpiece1.wav");
+    ALLEGRO_SAMPLE_INSTANCE* heartpiece = al_create_sample_instance(incorrecta2);
+    al_set_sample_instance_playmode(heartpiece, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(item, al_get_default_mixer());
+    al_attach_sample_instance_to_mixer(heartpiece, al_get_default_mixer());
 
     if (cofre.respuesta == respuesta)
     {
         vidasCount++;
         al_draw_scaled_bitmap(bitmapCorrecto, 0, 0, 15, 21, cofre.xRect - 1, cofre.yRect - 20, 50, 50, 0);
         //AQUISONIDO itemget1.wav
+        al_play_sample_instance(item);
         //AQUISONIDO heartpiece1.wav
+        al_play_sample_instance(heartpiece);
         al_flip_display();
-        al_rest(5);
+        al_rest(3);
     }
     else
     {
         al_convert_mask_to_alpha(bitmapIncorrecto, al_map_rgb(255, 192, 255));
         SpritesheetRow explosionesSheet;
         //AQUISONIDO bombexplode.wav
+        al_play_sample_instance(aexplosion);
         explosionesSheet.drawSpritesheetRow(17, pantalla, varsExplosion);
 
     }
@@ -293,6 +308,18 @@ void MinijuegoCofres::crearMinijuego()
     ALLEGRO_BITMAP* heart = al_load_bitmap("Imagenes/heart.png");
     ALLEGRO_BITMAP* explosion = al_load_bitmap("Imagenes/alttpExplosion.png");
     ALLEGRO_FONT* triforceFont = al_load_font("Fonts/Triforce.ttf", 40, 0);
+
+    al_reserve_samples(2);
+    ALLEGRO_SAMPLE* song5 = al_load_sample("Audios/Minicofres.mpeg");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song5);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/chestopen.wav");
+    ALLEGRO_SAMPLE_INSTANCE* abrircofre = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(abrircofre, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(abrircofre, al_get_default_mixer());
+
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
 
@@ -350,6 +377,8 @@ void MinijuegoCofres::crearMinijuego()
 
     Transition transCofres;
     transCofres.drawTransitionReversa(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
+    al_play_sample_instance(instance);
+
 
     int rondaCount = 0;
     respuesta = rondas[rondaCount].respuesta;
@@ -530,6 +559,9 @@ void MinijuegoCofres::crearMinijuego()
                 coordenadasCofres cofreElegido = validarCofres(cofre1, cofre2, cofre3, cofre4);
 
                 //AQUISONIDO chestopen.wav
+                al_set_sample_instance_playing(instance, false);
+
+                al_play_sample_instance(abrircofre);
                 al_draw_scaled_bitmap(cofre, 187, 5, 170, 126, cofreElegido.xRect, cofreElegido.yRect, 50, 50, 0);
                 al_flip_display();
                 al_rest(2.5);
@@ -571,12 +603,14 @@ void MinijuegoCofres::crearMinijuego()
 
                 drawResultadoCofre(cofre, cofreElegido, heart, explosion);
                 rondaCount++;
-
+                al_set_sample_instance_playing(instance, true);
             }
         }
 
     }
     *vidaptr = vidasCount * 10;
+    al_destroy_sample_instance(instance);
+
     transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
     transCofres.destroyTrans();
 

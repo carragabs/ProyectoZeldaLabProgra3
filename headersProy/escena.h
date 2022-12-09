@@ -37,11 +37,10 @@ ALLEGRO_LOCKED_REGION* lock;
 
 
 class escenario {
-    ALLEGRO_BITMAP* suelo;
     ALLEGRO_BITMAP* choque;
 
 public:
-
+    ALLEGRO_BITMAP* suelo;
     double x, y;
     //bool crearColisionesWarp(coordenadasEntradas entrada);
 

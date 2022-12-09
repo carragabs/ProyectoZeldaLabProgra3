@@ -139,6 +139,12 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
     al_start_timer(segundo);
     int sec = 0; ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
     if (answer == respuesta) {
+        ALLEGRO_SAMPLE* incorrecta2 = al_load_sample("Audios/heartpiece1.wav");
+        ALLEGRO_SAMPLE_INSTANCE* heartpiece = al_create_sample_instance(incorrecta2);
+        al_set_sample_instance_playmode(heartpiece, ALLEGRO_PLAYMODE_ONCE);
+        al_attach_sample_instance_to_mixer(heartpiece, al_get_default_mixer());
+        al_play_sample_instance(heartpiece);
+
         al_clear_to_color(al_map_rgb(0, 0, 0));
         while (sec < 2) {
             al_wait_for_event(queue, &evento);
@@ -147,6 +153,8 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                     sec++;
 
                     if (aleatorio != 5) {
+
+
                         ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/HeartLink.png");
                         al_draw_scaled_bitmap(fondo, 0, 0, 234, 208, 0, 0, 800, 500, 0);
                         al_draw_text(font, al_map_rgb(255, 255, 255), 8, 550, NULL, "Respuesta Correcta");
@@ -163,10 +171,6 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         corazones++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-
-            /* Transition transCofres;
-             ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/mapa 2d.png");
-             transCofres.drawTransitionReversa(pantalla, fondo, 254, 254, prota, paso, dir, x, y, desplaza);*/
 
 
             return true;
@@ -285,6 +289,13 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
         ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
         ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/dungeon.png");    
 
+        al_reserve_samples(2);
+        ALLEGRO_SAMPLE* song = al_load_sample("Audios/ciencia.mp3");
+        ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+        al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+        al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+
         // defino lista de eventos
 
         ALLEGRO_EVENT_QUEUE* Mis_eventos;
@@ -336,9 +347,10 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         salir = false;
 
-        //Transition transLaberinto;
-        //transLaberinto.drawTransitionReversa(ventana, fondo, 960, 704,
-         //   prota, 0, 0, 0, 0);
+        Transition transLaberinto;
+        transLaberinto.drawTransitionReversa(ventana, fondo, 960, 704,
+            prota, 0, 0, 0, 0);
+        al_play_sample_instance(instance);
 
         al_clear_to_color(al_map_rgb(0,0,0));
         al_flip_display();
@@ -532,13 +544,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         }
         //cout << "corazones" << corazones << endl << endl;
-        al_draw_scaled_bitmap(fondo, 0, 0, 960, 704, 0, 0, 800, 500, 0);
-        LifeBar(corazones);
-        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x* desplaza, y* desplaza, rot);
-        al_flip_display();
-        al_rest(1);
-
-        *vidaptr = corazones *10;
+        *vidaptr = corazones * 10;
 
         al_destroy_bitmap(prota);
         al_destroy_bitmap(choque2);

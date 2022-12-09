@@ -151,7 +151,7 @@ public:
 
 	}
 
-	void juego(ALLEGRO_EVENT_QUEUE* Mis_eventos , int* vida)
+	void juego(ALLEGRO_DISPLAY* displayMain, ALLEGRO_EVENT_QUEUE* Mis_eventos , int* vida)
 	{
 		vidaptr = vida;
 		vidaM3 = *vidaptr;
@@ -167,6 +167,18 @@ public:
 		jugador.inicia();
 		escena.carga();
 
+		al_reserve_samples(2);
+
+		ALLEGRO_SAMPLE* song4 = al_load_sample("Audios/charcos.mp3");
+		ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song4);
+		al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+		al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+		Transition transM3;
+		transM3.drawTransitionReversa(displayMain, escena.suelo, 800, 480,
+			jugador.img, 0, 0, 0, 0);
+
+		al_play_sample_instance(instance);
 
 		while (repetir)
 		{
@@ -270,6 +282,9 @@ public:
 		al_flip_display();
 		al_rest(1);
 
+		al_destroy_sample_instance(instance);
+		transM3.drawTransition(displayMain, escena.suelo, 800, 480,
+			jugador.img, 0, 0, 0, 0);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_flip_display();
 
@@ -364,41 +379,3 @@ public:
 
 
 };
-
-/*int main(void)
-{
-	definirPreguntas();
-	// inicializamos las librerías utilizadas
-	al_init();
-	al_init_primitives_addon();
-	al_init_font_addon();
-	al_init_ttf_addon();
-	al_init_image_addon();
-	al_install_keyboard();
-	ALLEGRO_DISPLAY* display = al_create_display(800, 450);
-
-	//ALLEGRO_DISPLAY* display = al_create_display(800, 450);
-	ALLEGRO_TIMER* timer = NULL;
-
-	al_set_window_title(display, "Zelda");
-
-	sistema.img = al_load_bitmap("escenario.png");
-	sistema.fondo = al_map_rgb(255, 0, 0);
-	sistema.FPS = 30;
-	timer = al_create_timer(1.0 / sistema.FPS);
-
-	// creo lista de eventos
-	sistema.Mis_eventos = al_create_event_queue();
-
-	// asigno eventos a la lista de eventos
-	al_register_event_source(sistema.Mis_eventos, al_get_keyboard_event_source());
-	al_register_event_source(sistema.Mis_eventos, al_get_display_event_source(display));
-	al_register_event_source(sistema.Mis_eventos, al_get_timer_event_source(timer));
-	al_start_timer(timer);
-
-	juego(sistema.fondo, sistema.Mis_eventos);
-
-	// al_unlock_bitmap(choque);
-
-}
-*/

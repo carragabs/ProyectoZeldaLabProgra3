@@ -163,6 +163,17 @@ void eleccionDeBando::crearEleccionBando()
 	ALLEGRO_BITMAP* knightWhite = al_load_bitmap("Imagenes/knightWhite.png");
 	ALLEGRO_BITMAP* knightRed = al_load_bitmap("Imagenes/knightRed.png");
 
+	al_reserve_samples(2);
+	ALLEGRO_SAMPLE* song = al_load_sample("Audios/Hub2.mpeg");
+	ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+	al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+	al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+	ALLEGRO_SAMPLE* song2 = al_load_sample("Audios/itemget1.wav");
+	ALLEGRO_SAMPLE_INSTANCE* item = al_create_sample_instance(song2);
+	al_set_sample_instance_playmode(item, ALLEGRO_PLAYMODE_ONCE);
+	al_attach_sample_instance_to_mixer(item, al_get_default_mixer());
+
 	double protaW = 32;
 	double protaH = 35;
 
@@ -225,7 +236,7 @@ void eleccionDeBando::crearEleccionBando()
 	Transition transBando;
 	transBando.drawTransitionReversa(pantalla, fondo, 960, 960, prota, paso, dir, x, y);
 	transBando.destroyTrans();
-
+	al_play_sample_instance(instance);
 	al_start_timer(timer);
 
 	while (!salir)
@@ -353,7 +364,8 @@ void eleccionDeBando::crearEleccionBando()
 				al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKL.xRect, coordRedKL.yRect, 30, 30, 0);
 				al_draw_scaled_bitmap(knightRed, 0, 0, 64, 70, coordRedKR.xRect, coordRedKR.yRect, 30, 30, 0);
 				ALLEGRO_FONT* textboxFont = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
-
+				al_destroy_sample_instance(instance);
+				al_play_sample_instance(item);
 				if (coordWhite.colisionAbajo)
 				{
 					al_draw_filled_rectangle(248, 270, 680, 320, al_map_rgba(0, 0, 0, 200));

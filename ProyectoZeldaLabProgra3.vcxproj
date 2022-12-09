@@ -153,6 +153,7 @@
     <ClInclude Include="headersProy\Header.h" />
     <ClInclude Include="headersProy\HubNivel2.h" />
     <ClInclude Include="headersProy\Jugar.h" />
+    <ClInclude Include="headersProy\Laberinto.h" />
     <ClInclude Include="headersProy\MenuInicial.h" />
     <ClInclude Include="headersProy\MinijuegoCofres.h" />
     <ClInclude Include="headersProy\Ruleta.h" />

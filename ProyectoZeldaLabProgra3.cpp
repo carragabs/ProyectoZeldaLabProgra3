@@ -17,6 +17,8 @@
 #include "headersProy/BattallaLevel3.h"
 #include "headersProy/PreguntasKant.h"
 #include "headersProy/Descartes.h"
+#include "headersProy/Universidad.h"
+#include "headersProy/Nivel4_Overworld.h"
 
 struct datos {
 	int FPS;
@@ -95,6 +97,7 @@ int main()
 	int resultadoReturn;
 	
 	//NIVEL 1
+	
 	MenuInicial miMenuI(ventana);
 	miMenuI.crearMenuInicial();
 
@@ -151,17 +154,42 @@ int main()
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 	miBL3.juegoGrafico(ventana , event_queue, vidaGlobal, true);  
 
+	
+	miEDB.crearEleccionBando(); */
+
+	miEDB.crearEleccionBando(); */
+
+	miEDB.crearEleccionBando(); */
+
+	miEDB.crearEleccionBando(); */
+
 	//NIVEL 4
+
+	Nivel4 level4(ventana);
+	level4.crearOverworld();
+
+	Dentro den(ventana);
+	bool definir = den.crearUni();
+	if (definir == true) {
+		cout << "A LA AULA" << endl;
+		//DESPUES AL LABORATORIO
+
+	}
+	else if (definir == false) {
+		cout << "AL LABORATORIO" << endl;
+		//DESPUES AL AULA
+	}
+	Descartes miDes(ventana);
+
 	PreguntasKant miPK;
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 	miPK.juegoGrafico(event_queue, 100);
 	
-	//Descartes miDes(ventana);
+	Descartes miDes(ventana);
 
 	return 0;
 
 
 }
-

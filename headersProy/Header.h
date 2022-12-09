@@ -38,7 +38,7 @@ Header::~Header() {
 
 void Header::LifeBar(int vida) {
 
-	al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+	al_draw_filled_rectangle(10, 20, 210, 30, al_map_rgb(255, 0, 0));
 	al_draw_filled_rectangle(10, 20, vida+10, 30, al_map_rgb(0, 255, 0));
 	al_flip_display();
 

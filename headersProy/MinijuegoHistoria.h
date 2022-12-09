@@ -57,11 +57,12 @@ int MinijuegoHistoria::minjuego() {
 }
 void MinijuegoHistoria::LifeBar(int vida) {
 
-	al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+	al_draw_filled_rectangle(10, 20, 210, 30, al_map_rgb(255, 0, 0));
 	al_draw_filled_rectangle(10, 20, vida+10, 30, al_map_rgb(0, 255, 0));
 	al_flip_display();
 
 }
+
 int MinijuegoHistoria ::menu() {
 
 	int vida = *vidaptr;
@@ -74,6 +75,13 @@ int MinijuegoHistoria ::menu() {
 	al_init_font_addon();
 	al_init_acodec_addon();
 	al_reserve_samples(2);
+	al_reserve_samples(2);
+
+	ALLEGRO_SAMPLE* song4 = al_load_sample("Audios/MiniHistoria.mp3");
+	ALLEGRO_SAMPLE_INSTANCE* instance3 = al_create_sample_instance(song4);
+	al_set_sample_instance_playmode(instance3, ALLEGRO_PLAYMODE_LOOP);
+	al_attach_sample_instance_to_mixer(instance3, al_get_default_mixer());
+
 	ALLEGRO_SAMPLE* song = al_load_sample("Audios/Correcta.mp3");
 	ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
 	al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
@@ -83,7 +91,6 @@ int MinijuegoHistoria ::menu() {
 	al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(instance2, al_get_default_mixer());
 
-
 	ALLEGRO_BITMAP* arena = al_load_bitmap("Imagenes/arena.jpeg");
 	ALLEGRO_BITMAP* izqmedio = al_load_bitmap("Imagenes/izqmedio.jpeg");
 	ALLEGRO_BITMAP* derecha = al_load_bitmap("Imagenes/derecha.jpeg");
@@ -91,9 +98,10 @@ int MinijuegoHistoria ::menu() {
 	ALLEGRO_BITMAP* dermedio = al_load_bitmap("Imagenes/dermedio.jpeg");
 	ALLEGRO_BITMAP* menu_null = al_load_bitmap("Imagenes/vacios.jpeg");
 
-	//Transition transHisto;
-	//transHisto.drawTransitionReversa(ventana, menu_null, 800, 600,
-		//dermedio, 0, 0, 0, 0);
+	Transition transHisto;
+	transHisto.drawTransitionReversa(ventana, menu_null, 800, 600,
+		dermedio, 0, 0, 0, 0);
+	al_play_sample_instance(instance3);
 
 	//menu
 	int botones[] = { 0 };
@@ -559,9 +567,10 @@ int MinijuegoHistoria ::menu() {
 		case ALLEGRO_KEY_ESCAPE: 
 			cout << "ESCAPE" << endl;
 			*vidaptr = vida;
-			//transHisto.drawTransition(ventana, menu_null, 800, 600,
-				//dermedio, 0, 0, 0, 0);
-			//transHisto.destroyTrans();
+			al_destroy_sample_instance(instance3);
+			transHisto.drawTransition(ventana, menu_null, 800, 600,
+				dermedio, 0, 0, 0, 0);
+			transHisto.destroyTrans();
 
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			al_flip_display();
@@ -575,6 +584,7 @@ int MinijuegoHistoria ::menu() {
 		al_flip_display();
 
 	}
+
 	al_destroy_sample_instance(instance2);
 	al_destroy_sample_instance(instance);
 

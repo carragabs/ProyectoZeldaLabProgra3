@@ -23,6 +23,7 @@ struct datos {
 	ALLEGRO_BITMAP* img;
 } sistema;
 
+
 void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain , int* vidaGlobal)
 {
 
@@ -57,8 +58,7 @@ void crearSigMinijuego(char minijuegoP, ALLEGRO_DISPLAY* pantallaMain , int* vid
 		MinijuegoCofres miMiniCofres(pantallaMain , vidaGlobal);
 
 	else if (minijuegoP == 'C')
-	{ mapa juego;juego.laberinto(pantallaMain , vidaGlobal);
-	}
+	{ mapa juego;juego.laberinto(pantallaMain , vidaGlobal); }
 
 }
 
@@ -141,16 +141,15 @@ int main()
 	miEDB.crearEleccionBando();	
 	
 	//NIVEL 3
-	animacionN3 mianimN3(ventana);
-	mianimN3.crearAnimaciones();
 
- */
 	BattallaLevel3 miBL3;
 
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_mouse_event_source());
-	miBL3.juegoGrafico(ventana , event_queue, 200);
+	miBL3.juegoGrafico(ventana , event_queue, 200);  
+		*/
+	crearSigMinijuego('H', ventana, &vidaGlobal);
 
 	return 0;
 

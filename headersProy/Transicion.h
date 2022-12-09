@@ -13,10 +13,10 @@ public:
         transition = al_load_bitmap("Imagenes/watertrans.png");
     };
 
-	void drawTransition(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
+    void drawTransition(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
         ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y);
     void drawTransitionReversa(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
-        ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y );
+        ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y);
     void destroyTrans()
     {
         al_destroy_bitmap(transition);
@@ -27,9 +27,15 @@ private:
 
 };
 
-void Transition::drawTransition(ALLEGRO_DISPLAY* pantalla,ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
+void Transition::drawTransition(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
+
     ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y)
 {
+    al_reserve_samples(2);
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/mirrorwarp.wav");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
     varsFrame varsTransition[48];
     varsTransition[0] = { transition,87,62,181,105,0,0,800,600,0.25 }; //FILA 1 DE FOTO
     varsTransition[1] = { fondo, 0, 0, fondow, fondoh, 0, 0, 800, 600, 0 };
@@ -106,13 +112,12 @@ void Transition::drawTransition(ALLEGRO_DISPLAY* pantalla,ALLEGRO_BITMAP* fondo,
 
     SpritesheetRow Sheettrans;
     al_convert_mask_to_alpha(transition, al_map_rgb(0, 0, 0));
-
-    //AQUISONIDO mirrorwarp.wav
+    al_play_sample_instance(instance);
     Sheettrans.drawSpritesheetRow(48, pantalla, varsTransition);
 }
 
 void Transition::drawTransitionReversa(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP* fondo, double fondow, double fondoh,
-    ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y )
+    ALLEGRO_BITMAP* prota, double paso, double dir, double x, double y)
 {
     varsFrame varsTransition[48];
     varsTransition[47] = { transition,87,62,181,105,0,0,800,600,0.25 }; //FILA 1 DE FOTO
@@ -192,7 +197,13 @@ void Transition::drawTransitionReversa(ALLEGRO_DISPLAY* pantalla, ALLEGRO_BITMAP
     al_convert_mask_to_alpha(transition, al_map_rgb(0, 0, 0));
 
     //AQUISONIDO mirrorwarp.wav
+    al_reserve_samples(2);
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/mirrorwarp.wav");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+    al_play_sample_instance(instance);
     Sheettrans.drawSpritesheetRow(48, pantalla, varsTransition);
-   
+
 
 }

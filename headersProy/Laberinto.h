@@ -11,12 +11,16 @@ struct preguntas {
     string pregunta, extra, respuesta1, respuesta2, respuesta3;
 }P[6];
 
+ALLEGRO_LOCKED_REGION* lock2;
+ALLEGRO_BITMAP* choque2;
+
 class mapa {
 public :
 	
     void laberinto(ALLEGRO_DISPLAY* pantalla , int* vida);
 
 private:
+    void LifeBar(int vida);
     bool validarRespuesta(int, preguntas*, int);
     int numAleatorio();
     int aleatorio = 0, num1 = 7, num2 = 7, num3 = 7, num4 = 7,num5=7, contador = 0;
@@ -24,6 +28,14 @@ private:
     int corazones;
     void Preguntas();
 };
+
+void mapa::LifeBar(int vida) {
+
+    al_draw_filled_rectangle(10, 20, 210, 30, al_map_rgb(255, 0, 0));
+    al_draw_filled_rectangle(10, 20, vida * 10 + 10, 30, al_map_rgb(0, 255, 0));
+    al_flip_display();
+
+}
 
 void mapa::Preguntas() {
     P[0].pregunta = ". Entre los siguientes renacentistas seleccione, uno de los precursoresfilosofo-cientifico ";
@@ -68,6 +80,52 @@ void mapa::Preguntas() {
     P[5].respuesta3 = " ";
     P[5].correcta = 0;
 }
+
+//COLISIONES
+void bloquea2()
+{
+    lock2 = al_lock_bitmap(choque2, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+}
+
+// libera memoria
+void desbloquea2()
+{
+    al_unlock_bitmap(choque2);
+}
+
+// comprueba si esta bloqueado
+bool esRojo2(int x, int y)
+{
+    unsigned char r, g, b;
+    ALLEGRO_COLOR colorMira;
+    colorMira = al_get_pixel(choque2, x, y);
+    al_unmap_rgb(colorMira, &r, &g, &b);
+
+    return (r == 255 && g == 0 && b == 0);
+}
+
+bool colisiona2(int x, int y)
+{
+    bloquea2();
+    bool valor = false;
+    for (int i = 1; i < 32 - 1; i++)
+    {
+        for (int j = 35 / 2; j < 35; j++)
+        {
+            int vx = x + i;
+            int vy = y + j;
+            if (esRojo2(vx, vy))
+            {
+                valor = true;
+            }
+        }
+    }
+    desbloquea2();
+    return valor;
+}
+
+
+
 bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
     int respuesta;
     contador++;
@@ -221,11 +279,11 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         //ALLEGRO_DISPLAY* ventana = al_create_display(800, 600);
         ALLEGRO_DISPLAY* ventana = pantalla;
+        choque2 = al_load_bitmap("Imagenes/MapaRojo_Dungeon.png");
         ALLEGRO_FONT* font = al_load_font("Fonts/VPPixel-Simplified.otf", 18, 0);
 
         ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
-        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/dungeon.png");
-        
+        ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/dungeon.png");    
 
         // defino lista de eventos
 
@@ -259,12 +317,13 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         int dir;
 
+        double ax, ay;
 
         // inicializar variables
 
-        x = 96;
+        x = 96*4;
 
-        y = 59;
+        y = 59*4;
 
 
         desplaza = 4;
@@ -287,17 +346,18 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         {
             //cout << "corazones" << corazones << endl << endl;
+            ax = x;
+            ay = y;
             borrar = false;
 
             // pinta el fondo de un color 
 
 
             al_draw_scaled_bitmap(fondo, 0, 0, 960, 704, 0, 0, 800, 500, 0);
+            LifeBar(corazones);
 
 
-
-
-            al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x * desplaza, y * desplaza, rot);
+            al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x, y, rot);
 
             // mostramos la pantalla
             al_flip_display();
@@ -330,7 +390,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
             {
 
-                y--;
+                y -= desplaza;
 
                 dir = 2;
 
@@ -340,7 +400,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
             if (al_key_down(&teclado, ALLEGRO_KEY_DOWN)) {
 
-                y++;
+                y += desplaza;
 
                 dir = 0;
 
@@ -352,7 +412,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
             if (al_key_down(&teclado, ALLEGRO_KEY_LEFT)) {
 
-                x--;
+                x -= desplaza;
 
                 dir = 1;
 
@@ -364,7 +424,7 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
             if (al_key_down(&teclado, ALLEGRO_KEY_RIGHT)) {
 
-                x++;
+                x += desplaza;
 
                 dir = 1;
 
@@ -372,13 +432,19 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
                 rot = 1;
             }
-
+            if ((x != ax || y != ay) && colisiona2(x, y))
+            {
+                cout << "ES ROJO" << endl;
+                x = ax;
+                y = ay;
+            }
             //cout << "X: "<<x << endl;
             //cout << "Y: " << y << endl;
 
 
             // limitadores
 
+            if (y < 0) y = 0;
 
             if (x >= 24 && x <= 62) {
                 if (y < 55) {
@@ -390,69 +456,68 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
                 }
             }
 
-            if (y < 0) y = 0;
 
 
 
             //abajo
-            if (x > 96 - 32.5 && y > 102) {
-                x = 96;
-                y = 102;
+            if (x > (96 - 32.5)*4 && y > 102*4) {
+                x = 96*4;
+                y = 102*4;
 
             }
             //izquierda
-            if (x < 19) {
-                x = 19;
-                y = 59;
+            if (x < 19 * desplaza) {
+                x = 19*4;
+                y = 59*4;
                 respuesta = 2;
                 if (validarRespuesta(respuesta, &P[aleatorio], aleatorio) == false) {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                     borrar = true;
                 }
                 else {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                 }
             }
             //arriba
-            if (y < 18) {
-                x = 96;
-                y = 18;
+            if (y < 18 * desplaza) {
+                x = 96*4;
+                y = 18*4;
                 respuesta = 1;
                 if (validarRespuesta(respuesta, &P[aleatorio], aleatorio) == false) {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                     borrar = true;
                 }
                 else {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                 }
 
             }
             //derecha
-            if (x > 173) {
-                x = 173;
-                y = 59;
+            if (x > 173 * desplaza) {
+                x = 173*4;
+                y = 59*4;
                 respuesta = 3;
                 if (validarRespuesta(respuesta, &P[aleatorio], aleatorio) == false) {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                     borrar = true;
                 }
                 else {
                     aleatorio = numAleatorio();
-                    x = 96;
-                    y = 59;
+                    x = 96*4;
+                    y = 59*4;
                 }
             }
-            if (paso > 3) paso = 0;
+            if (paso > 9) paso = 0;
 
 
             if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE)) {
@@ -467,11 +532,19 @@ bool mapa::validarRespuesta(int  answer, preguntas* pregunta,int aleatorio) {
 
         }
         //cout << "corazones" << corazones << endl << endl;
+        al_draw_scaled_bitmap(fondo, 0, 0, 960, 704, 0, 0, 800, 500, 0);
+        LifeBar(corazones);
+        al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x* desplaza, y* desplaza, rot);
+        al_flip_display();
+        al_rest(1);
+
         *vidaptr = corazones *10;
+
         al_destroy_bitmap(prota);
+        al_destroy_bitmap(choque2);
         //al_destroy_display(pantalla);
         al_clear_to_color(al_map_rgb(255, 255, 255));
-        al_rest(1);
         al_flip_display();
+        al_rest(1);
     }
 

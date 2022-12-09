@@ -12,8 +12,7 @@ struct coordenadasEntradas {
     int yRect;
     string minijuego;
 };
-ALLEGRO_LOCKED_REGION* lockHub;
-ALLEGRO_BITMAP* choque;
+
 
 struct Sprite
 {
@@ -25,6 +24,9 @@ struct Sprite
 
     int dir;
 };
+
+ALLEGRO_LOCKED_REGION* lockHub;
+ALLEGRO_BITMAP* choque;
 
 class HubN2 {
 public:
@@ -196,13 +198,18 @@ void HubN2::crearNivel2(string minijuegoP)
     int frameCount = 0;
     int frameDelay = 2;
 
-    choque = al_load_bitmap("Imagenes/MapaRojo8.png");
+    choque = al_load_bitmap("Imagenes/MapaRojo9.png");
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
     ALLEGRO_BITMAP* warpOff = al_load_bitmap("Imagenes/warpOff.png");
     ALLEGRO_BITMAP* fondo = al_load_bitmap("Imagenes/PrototipoMapa1.jpeg");
     ALLEGRO_BITMAP* obstaculoEntrada = al_load_bitmap("Imagenes/boulderBig.png");
     ALLEGRO_BITMAP* warptile = al_load_bitmap("Imagenes/warpsheetsmall.png");
+    
+    ALLEGRO_SAMPLE* song = al_load_sample("Audios/Hub2.mpeg");
+    ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
     ALLEGRO_TIMER* timer;
@@ -282,6 +289,7 @@ void HubN2::crearNivel2(string minijuegoP)
     double warpH = 40;
     Transition transHub;
     transHub.drawTransitionReversa(pantalla, fondo, 1280, 1022, prota, paso, dir, x, y);
+    al_play_sample_instance(instance);
 
     al_start_timer(timer);
 
@@ -401,8 +409,8 @@ void HubN2::crearNivel2(string minijuegoP)
             {
                 cout << "ES ROJO" << endl;
                 cout << "X: " << x << endl;
-                //x = ax;
-                //y = ay;
+                x = ax;
+                y = ay;
             }
 
         }
@@ -433,6 +441,9 @@ void HubN2::crearNivel2(string minijuegoP)
 
 
     }
+
+    al_destroy_sample(song);
+    al_destroy_sample_instance(instance);
 
     transHub.drawTransition(pantalla, fondo, 1280, 1022,prota, paso, dir, x, y);
     transHub.destroyTrans();

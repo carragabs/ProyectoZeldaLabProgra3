@@ -32,11 +32,14 @@ struct variablesDrawExplosion
     double Dx; double Dy; double Dw; double Dh; double alrestTime;
 };
 
+ALLEGRO_LOCKED_REGION* lock3;
+ALLEGRO_BITMAP* choque3;
+
 class MinijuegoCofres {
 public:
     ALLEGRO_DISPLAY* pantalla;
     bool salir = false;
-    MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain , int* vida);
+    MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain, int* vida);
     char respuesta;
     void crearMinijuego();
 
@@ -45,7 +48,7 @@ public:
         ALLEGRO_BITMAP* bitmapCorrecto, ALLEGRO_BITMAP* bitmapIncorrecto);
 
     double x, y;
-    double protaW , protaH;
+    double protaW, protaH;
     int desplaza;
     int paso;
     int dir;
@@ -68,6 +71,48 @@ private:
 
 };
 
+void bloquea3()
+{
+    lock3 = al_lock_bitmap(choque3, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+}
+
+// libera memoria
+void desbloquea3()
+{
+    al_unlock_bitmap(choque3);
+}
+
+// comprueba si esta bloqueado
+bool esRojo3(int x, int y)
+{
+    unsigned char r, g, b;
+    ALLEGRO_COLOR colorMira;
+    colorMira = al_get_pixel(choque3, x, y);
+    al_unmap_rgb(colorMira, &r, &g, &b);
+
+    return (r == 255 && g == 0 && b == 0);
+}
+
+bool colisiona3(int x, int y)
+{
+    bloquea3();
+    bool valor = false;
+    for (int i = 1; i < 32 - 1; i++)
+    {
+        for (int j = 35 / 2; j < 35; j++)
+        {
+            int vx = x + i;
+            int vy = y + j;
+            if (esRojo3(vx, vy))
+            {
+                valor = true;
+            }
+        }
+    }
+    desbloquea3();
+    return valor;
+}
+
 void MinijuegoCofres::LifeBar(int vida) {
 
     //al_draw_filled_rectangle(20, 85, 80, 110, al_map_rgba(0, 0, 0, 150));
@@ -80,7 +125,7 @@ void MinijuegoCofres::LifeBar(int vida) {
 
 bool MinijuegoCofres::crearColisionesCofres(coordenadasCofres cofre, double cofreW, double cofreH)
 {
-    if (y < cofre.yRect + cofreH && y > (cofre.yRect + cofreH) - 8
+    if (y < cofre.yRect + cofreH && y >(cofre.yRect + cofreH) - 8
         && (x < cofre.xRect + cofreW) && (x + protaW > cofre.xRect))
     {
         //cout << "COLLISION TRUE!" << endl;
@@ -124,11 +169,11 @@ coordenadasCofres validarCofres(coordenadasCofres cofre1, coordenadasCofres cofr
         return cofre4;
 }
 
-MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain , int* vida)
+MinijuegoCofres::MinijuegoCofres(ALLEGRO_DISPLAY* pantallaMain, int* vida)
 {
     pantalla = pantallaMain;
     vidaptr = vida;
-    vidasCount = *vidaptr/10;
+    vidasCount = *vidaptr / 10;
     respuesta = ' ';
     setPreguntas();
     crearMinijuego();
@@ -142,7 +187,7 @@ void MinijuegoCofres::setPreguntas()
     opciones = "A) Monarquia absoluta. B) Tirania republicana. ";
     opciones += "C) Democracia participativa. D) Liberalismo politico";
     respuesta = 'A';
-    rondas.push_back( {pregunta,opciones,respuesta } );
+    rondas.push_back({ pregunta,opciones,respuesta });
 
     pregunta = "2. De los siguientes acontecimientos, selecciones el que inicia ";
     pregunta += "el periodo moderno: ";
@@ -192,7 +237,7 @@ void MinijuegoCofres::drawPreguntas(int rondaActual)
         al_draw_filled_rectangle(15, 3, 780, 85, al_map_rgba(0, 0, 0, 150));
 
         al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 5, 0,
-            rondas[rondaActual].pregunta.substr(0,71).c_str());
+            rondas[rondaActual].pregunta.substr(0, 71).c_str());
         al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 25, 0,
             rondas[rondaActual].pregunta.substr(72, 62).c_str());
 
@@ -217,7 +262,7 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
 
     if (cofre.respuesta == respuesta)
     {
-        vidasCount++; 
+        vidasCount++;
         al_draw_scaled_bitmap(bitmapCorrecto, 0, 0, 15, 21, cofre.xRect - 1, cofre.yRect - 20, 50, 50, 0);
         //AQUISONIDO itemget1.wav
         //AQUISONIDO heartpiece1.wav
@@ -238,16 +283,16 @@ void MinijuegoCofres::drawResultadoCofre(ALLEGRO_BITMAP* cofreBit, coordenadasCo
 
 void MinijuegoCofres::crearMinijuego()
 
-{   
+{
     al_set_window_title(pantalla, "Nivel 2 - POLITICA:Minijuego Cofres");
-
 
     ALLEGRO_BITMAP* prota = al_load_bitmap("Imagenes/SheetZelda2.png");
     fondo = al_load_bitmap("Imagenes/mapacofres.png");
+    choque3 = al_load_bitmap("Imagenes/MapaRojo_Cofres.png");
     ALLEGRO_BITMAP* cofre = al_load_bitmap("Imagenes/chest.png");
     ALLEGRO_BITMAP* heart = al_load_bitmap("Imagenes/heart.png");
     ALLEGRO_BITMAP* explosion = al_load_bitmap("Imagenes/alttpExplosion.png");
-    ALLEGRO_FONT* triforceFont = al_load_font("Fonts/Triforce.ttf",40,0);
+    ALLEGRO_FONT* triforceFont = al_load_font("Fonts/Triforce.ttf", 40, 0);
 
     ALLEGRO_EVENT_QUEUE* Mis_eventos;
 
@@ -285,6 +330,7 @@ void MinijuegoCofres::crearMinijuego()
     paso = 0;
 
     dir = 0;
+    double ax, ay;
 
 
     salir = false;
@@ -302,8 +348,8 @@ void MinijuegoCofres::crearMinijuego()
     double cofreW = 50;
     double cofreH = 50;
 
-   Transition transCofres;
-   transCofres.drawTransitionReversa(pantalla,fondo, 254, 254,prota, paso, dir, x, y);
+    Transition transCofres;
+    transCofres.drawTransitionReversa(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
 
     int rondaCount = 0;
     respuesta = rondas[rondaCount].respuesta;
@@ -314,6 +360,8 @@ void MinijuegoCofres::crearMinijuego()
     while (!salir)
 
     {
+        ax = x;
+        ay = y;
         int i;
 
         for (i = 0; i < 4; i++)
@@ -328,7 +376,7 @@ void MinijuegoCofres::crearMinijuego()
         al_draw_scaled_bitmap(fondo, 0, 0, 254, 254, 0, 0, 800, 600, 0);
 
         al_draw_bitmap_region(prota, paso * 32, dir * 35, 32, 35, x,
-            y , rot);
+            y, rot);
 
         for (i = 0; i < 4; i++)
         {
@@ -344,7 +392,7 @@ void MinijuegoCofres::crearMinijuego()
         //al_draw_text(textboxFont, al_map_rgb(255, 255, 255), 20, 85, 0, vidas.c_str());
         //LifeBar(vidasCount);
         xfinLifeBar = 10 + (vidasCount + 1) * 10;
-        al_draw_filled_rectangle(20, 100, 210, 110, al_map_rgb(255, 0, 0));
+        al_draw_filled_rectangle(20, 100, 220, 110, al_map_rgb(255, 0, 0));
         al_draw_filled_rectangle(20, 100, xfinLifeBar, 110, al_map_rgb(0, 255, 0));
         al_flip_display();
 
@@ -438,6 +486,12 @@ void MinijuegoCofres::crearMinijuego()
             paso++;
 
         }
+        if ((x != ax || y != ay) && colisiona3(x, y))
+        {
+            cout << "ES ROJO" << endl;
+            x = ax;
+            y = ay;
+        }
 
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE))
             exit(0);
@@ -446,11 +500,11 @@ void MinijuegoCofres::crearMinijuego()
 
         if (x < 0) x = 0;
 
-        if (x > 800 - 32) x = 800-32;
+        if (x > 800 - 32) x = 800 - 32;
 
         if (y < 0) y = 0;
 
-        if (y > 600 - 35) y = 600-35;
+        if (y > 600 - 35) y = 600 - 35;
 
 
         if (paso > 9) paso = 0;
@@ -474,7 +528,7 @@ void MinijuegoCofres::crearMinijuego()
                 cofre3.colisionAbajo || cofre4.colisionAbajo)
             {
                 coordenadasCofres cofreElegido = validarCofres(cofre1, cofre2, cofre3, cofre4);
-                
+
                 //AQUISONIDO chestopen.wav
                 al_draw_scaled_bitmap(cofre, 187, 5, 170, 126, cofreElegido.xRect, cofreElegido.yRect, 50, 50, 0);
                 al_flip_display();
@@ -522,15 +576,16 @@ void MinijuegoCofres::crearMinijuego()
         }
 
     }
-    *vidaptr = vidasCount*10;
-   transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
-   transCofres.destroyTrans();
+    *vidaptr = vidasCount * 10;
+    transCofres.drawTransition(pantalla, fondo, 254, 254, prota, paso, dir, x, y);
+    transCofres.destroyTrans();
 
     al_clear_to_color(al_map_rgb(255, 255, 255));
     al_flip_display();
 
     al_destroy_bitmap(prota);
     al_destroy_bitmap(cofre);
+    al_destroy_bitmap(choque3);
     al_destroy_bitmap(explosion);
     al_destroy_bitmap(heart);
     al_destroy_bitmap(fondo);

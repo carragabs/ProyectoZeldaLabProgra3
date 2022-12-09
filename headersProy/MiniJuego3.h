@@ -266,9 +266,12 @@ public:
 
 		}
 		*vidaptr = vidaM3;
+		teste.LifeBar(vidaM3);
+		al_flip_display();
+		al_rest(1);
+
 		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_flip_display();
-
 
 		al_rest(1);
 
@@ -285,7 +288,7 @@ public:
 
 		contador++;
 		vidaM3 = vidaM3 + 10;
-		al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+		al_draw_filled_rectangle(10, 20, 210, 30, al_map_rgb(255, 0, 0));
 		al_draw_filled_rectangle(10, 20, vidaM3+10, 30, al_map_rgb(0, 255, 0));
 		al_flip_display();
 
@@ -304,7 +307,7 @@ public:
 		ALLEGRO_EVENT Evento;
 
 		contador++;
-		al_draw_filled_rectangle(10, 20, 200, 30, al_map_rgb(255, 0, 0));
+		al_draw_filled_rectangle(10, 20, 210, 30, al_map_rgb(255, 0, 0));
 		al_draw_filled_rectangle(10, 20, vidaM3, 30, al_map_rgb(0, 255, 0));
 		al_flip_display();
 		jugador.inicia();

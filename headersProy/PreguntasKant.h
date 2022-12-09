@@ -19,6 +19,12 @@ struct preguntasBattlePK {
 	string pregunta, respuesta1, respuesta2, respuesta3, respuesta4;
 }K[6];
 
+struct posNavi
+{
+	int x, y;
+
+}PosPistas[6];
+
 int ContadorKant;
 
 class PreguntasKant {
@@ -71,16 +77,24 @@ public:
 		K[5].correcta = 2;
 
 	}
+	void definirposPistas()
+	{
+		PosPistas[0] = { 220,150 };
+		PosPistas[1] = { 615,220 };
+		PosPistas[2] = { 460,180 };
+		PosPistas[3] = { 300 , 190 };
+		PosPistas[4] = { 460 , 400 };
+		PosPistas[5] = { 670 , 415 };
 
-
+	}
 
 	int juegoGrafico(ALLEGRO_EVENT_QUEUE* Mis_eventos, int vida) {
 
 		definirPreguntasKant();
+		definirposPistas();
 
 		ALLEGRO_EVENT evento;
 		bool game = true;
-
 
 		cout << K[ContadorKant].pregunta << endl;
 		cout << K[ContadorKant].respuesta1 << endl;
@@ -91,6 +105,24 @@ public:
 		ALLEGRO_FONT* Triforce = al_load_font("Fonts/ReturnofGanon.ttf", 30, 0);
 		ALLEGRO_FONT* Triforce1 = al_load_font("Fonts/ReturnofGanon.ttf", 40, 0);
 		ALLEGRO_BITMAP* test = al_load_bitmap("Imagenes/EscenarioKant.png");
+		ALLEGRO_BITMAP* navi = al_load_bitmap("Imagenes/navi.png");
+		ALLEGRO_BITMAP* kant = al_load_bitmap("Imagenes/kant.jpg");
+		ALLEGRO_BITMAP* link = al_load_bitmap("Imagenes/SheetZelda2.png");;
+
+
+		al_reserve_samples(2);
+
+		ALLEGRO_SAMPLE* song = al_load_sample("Audios/biblio.mp3");
+		ALLEGRO_SAMPLE_INSTANCE* instance = al_create_sample_instance(song);
+		al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_LOOP);
+		al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+		al_play_sample_instance(instance);
+
+		ALLEGRO_SAMPLE* pista = al_load_sample("Audios/fairy.wav");
+		ALLEGRO_SAMPLE_INSTANCE* pistaSonido = al_create_sample_instance(pista);
+		al_set_sample_instance_playmode(pistaSonido, ALLEGRO_PLAYMODE_ONCE);
+		al_attach_sample_instance_to_mixer(pistaSonido, al_get_default_mixer());
 
 		int x = -1, y = -1;
 		//int vida = 100;
@@ -112,17 +144,23 @@ public:
 				ALLEGRO_EVENT Evento;
 				al_wait_for_event(Mis_eventos, &Evento);
 
+				al_convert_mask_to_alpha(kant , al_map_rgb(245,245,245));
 
-				al_draw_text(Triforce, al_map_rgb(0, 0, 0), 1, 50, NULL, K[ContadorKant].pregunta.c_str());
+				al_draw_scaled_bitmap(kant, 1, 7, 84, 150, 490, 220, 60, 100, 0);
+				al_draw_scaled_bitmap(link, 0 * 32, 2 * 35, 32, 35, 490, 320, 60 , 80 , 1);
+
+				al_draw_text(Triforce, al_map_rgb(0, 255, 0), 1, 50, NULL, K[ContadorKant].pregunta.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 70, 250, NULL, K[ContadorKant].respuesta1.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 70, 300, NULL, K[ContadorKant].respuesta2.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 70, 350, NULL, K[ContadorKant].respuesta3.c_str());
 				al_draw_text(Triforce1, al_map_rgb(0, 0, 0), 70, 400, NULL, K[ContadorKant].respuesta4.c_str());
 
-
-
 				al_flip_display();
 				//	al_clear_to_color(al_map_rgb(0, 0, 0));
+
+				al_draw_scaled_bitmap(navi,160,0,600,555,
+					PosPistas[ContadorKant].x , PosPistas[ContadorKant].y,60,60,0);
+				al_flip_display();
 
 				if (botones[0] == 0)
 					al_draw_filled_rectangle(400, 100, 400, 100, al_map_rgb(255, 255, 255));
@@ -148,11 +186,19 @@ public:
 							int boton = 1;
 
 							if (boton == resp) {
+								al_play_sample_instance(pistaSonido);
+
+								al_draw_text(Triforce1, al_map_rgb(0, 255, 0), 70, 250, NULL,
+									K[ContadorKant].respuesta1.c_str());
 								ContadorKant++;
 								cout << boton << endl;
 
 							}
 							else {
+								al_play_sample_instance(pistaSonido);
+
+								al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 250, NULL,
+									K[ContadorKant].respuesta1.c_str());
 								ContadorKant++;
 								vida = vida - 10;
 								cout << boton << endl;
@@ -164,11 +210,19 @@ public:
 						if (Evento.mouse.button & 1) {
 							int boton2 = 2;
 							if (boton2 == resp) {
+								al_play_sample_instance(pistaSonido);
+
+								al_draw_text(Triforce1, al_map_rgb(0, 255, 0), 70, 300, NULL,
+									K[ContadorKant].respuesta1.c_str());
 								ContadorKant++;
 								cout << boton2 << endl;
 
 							}
 							else {
+								al_play_sample_instance(pistaSonido);
+
+								al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 300, NULL,
+									K[ContadorKant].respuesta1.c_str());
 								ContadorKant++;
 								vida = vida - 10;
 								cout << boton2 << endl;
@@ -180,13 +234,22 @@ public:
 					else if (x >= 70 && x <= 300 && y >= 350 && y <= 399) {
 						botones[0] = 2;
 						if (Evento.mouse.button & 1) {
+							al_play_sample_instance(instance);
+							al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 350, NULL,
+								K[ContadorKant].respuesta1.c_str());
 							int boton3 = 3;
 							if (boton3 == resp) {
+								al_play_sample_instance(pistaSonido);
+
 								ContadorKant++;
 								cout << boton3 << endl;
 
 							}
 							else {
+								al_play_sample_instance(pistaSonido);
+
+								al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 350, NULL,
+									K[ContadorKant].respuesta1.c_str());
 								ContadorKant++;
 								vida = vida - 10;
 								cout << boton3 << endl;
@@ -203,12 +266,20 @@ public:
 
 							if (Evento.mouse.button & 1)
 								if (boton4 == resp) {
+									al_play_sample_instance(pistaSonido);
+
+									al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 400, NULL,
+										K[ContadorKant].respuesta1.c_str());
 									ContadorKant++;
 									cout << boton4 << endl;
 
 
 								}
 								else {
+									al_play_sample_instance(pistaSonido);
+
+									al_draw_text(Triforce1, al_map_rgb(255, 0, 0), 70, 400, NULL,
+										K[ContadorKant].respuesta1.c_str());
 									ContadorKant++;
 									vida = vida - 10;
 									cout << boton4 << endl;
@@ -248,6 +319,8 @@ public:
 			}
 
 		}
+		al_destroy_sample_instance(instance);
+
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_flip_display();
 		al_rest(1);
